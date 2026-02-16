@@ -26,6 +26,15 @@ ui_text:
   logo_text: "MD"
   toggle_menu_aria: "Toggle menu"
   
+# Logo Configuration
+logo:
+  type: "image"  # Options: "text" (SVG with text) or "image" (custom image)
+  text: "MD"    # Text to display in SVG logo (only used when type is "text")
+  image_path: "/static/images/logo.png"  # Path to custom logo image (only used when type is "image")
+  image_alt: "NCMDS Logo"  # Alt text for image logo
+  width: 32     # Logo width in pixels
+  height: 32    # Logo height in pixels
+  
   # Sidebar
   sidebar_title: "Documentation"
   no_documents_message: "No documents yet. Add <code>.md</code> files to the <code>docs/</code> folder."
