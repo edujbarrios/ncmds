@@ -976,7 +976,7 @@ body {
 .markdown-body p {
     margin-bottom: 1.25rem;
     line-height: 1.8;
-    text-align: justify;
+    text-align: left;
 }
 
 .markdown-body a {
@@ -1000,7 +1000,7 @@ body {
 .markdown-body li {
     margin-bottom: 0.5rem;
     line-height: 1.7;
-    text-align: justify;
+    text-align: left;
 }
 
 .markdown-body code {
