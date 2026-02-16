@@ -936,7 +936,7 @@ body {
 /* Markdown Content Styles */
 .markdown-body {
     color: var(--text-color);
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     line-height: 1.7;
 }
 
@@ -976,6 +976,7 @@ body {
 .markdown-body p {
     margin-bottom: 1.25rem;
     line-height: 1.8;
+    text-align: justify;
 }
 
 .markdown-body a {
@@ -999,6 +1000,7 @@ body {
 .markdown-body li {
     margin-bottom: 0.5rem;
     line-height: 1.7;
+    text-align: justify;
 }
 
 .markdown-body code {

@@ -6,8 +6,8 @@
 
 **Create beautiful documentation sites with just Markdown**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+![On Active Development](https://img.shields.io/badge/Status-On%20Active%20Development-3b82f6?style=for-the-badge&logo=github&logoColor=white)
+![Unstable Versions](https://img.shields.io/badge/Versions-Unstable-f59e0b?style=for-the-badge&logo=exclamation&logoColor=white)
 
 </div>
 
