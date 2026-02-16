@@ -46,3 +46,5 @@ Thumbs.db
 
 # Local config overrides
 config/config.local.yaml
+
+tests.txt

@@ -99,9 +99,7 @@ Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto
 
 ## 📞 Contact
 
-- **Issues:** [GitHub Issues](https://github.com/edujbarrios/ncmds/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/edujbarrios/ncmds/discussions)
-- **Author:** [edujbarrios](https://github.com/edujbarrios)
+- **Author:** [edujbarrios](https://github.com/edujbarrios) - eduardojbarriosgarcia@gmail.com
 
 ---
 

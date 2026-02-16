@@ -14,6 +14,35 @@ hero:
   company: "edujbarrios"
   tagline: "No Code Markdown Documentation Sites"
   description: "Create beautiful documentation sites with just Markdown - no coding required"
+  
+  # Call to action buttons
+  buttons:
+    primary:
+      text: "Get Started"
+      url: "/docs/01-index"
+      icon: "arrow"  # arrow, rocket, play
+    secondary:
+      text: "View Documentation"
+      url: "/docs/01-index"
+      icon: "book"  # book, docs, info
+  
+  # Feature highlights (4 items max for best display)
+  features:
+    - icon: "zap"  # zap, layers, file, grid, code, check
+      text: "Zero Config"
+    - icon: "layers"
+      text: "7 Themes"
+    - icon: "file"
+      text: "Markdown"
+    - icon: "grid"
+      text: "Responsive"
+  
+  # Visual effects
+  effects:
+    particles: true
+    grid_animation: true
+    glow_effect: true
+    scroll_indicator: true
 
 # Theme selection
 # Available options: ocean, forest, sunset, purple, cyberpunk, monochrome, custom
