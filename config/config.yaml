@@ -26,15 +26,6 @@ ui_text:
   logo_text: "MD"
   toggle_menu_aria: "Toggle menu"
   
-# Logo Configuration
-logo:
-  type: "image"  # Options: "text" (SVG with text) or "image" (custom image)
-  text: "MD"    # Text to display in SVG logo (only used when type is "text")
-  image_path: "/static/images/logo.png"  # Path to custom logo image (only used when type is "image")
-  image_alt: "NCMDS Logo"  # Alt text for image logo
-  width: 32     # Logo width in pixels
-  height: 32    # Logo height in pixels
-  
   # Sidebar
   sidebar_title: "Documentation"
   no_documents_message: "No documents yet. Add <code>.md</code> files to the <code>docs/</code> folder."
@@ -47,7 +38,7 @@ logo:
   toc_title: "On This Page"
   
   # Footer
-  footer_text: "Built with <strong>NCMDS</strong> (No Code Markdown Sites) by"
+  footer_text: "This site was built using <strong>NCMDS</strong> a tool by"
   
   # Code blocks
   copy_button: "Copy"
@@ -57,6 +48,15 @@ logo:
   error_404_title: "404 - Page Not Found"
   error_404_heading: "404 - Page Not Found"
   error_404_message: "The page you are looking for does not exist."
+  
+# Logo Configuration
+logo:
+  type: "image"  # Options: "text" (SVG with text) or "image" (custom image)
+  text: "MD"    # Text to display in SVG logo (only used when type is "text")
+  image_path: "/static/images/logo.png"  # Path to custom logo image (only used when type is "image")
+  image_alt: "NCMDS Logo"  # Alt text for image logo
+  width: 32     # Logo width in pixels
+  height: 32    # Logo height in pixels
 
 # Hero section configuration
 hero:

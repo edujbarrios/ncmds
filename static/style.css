@@ -1193,10 +1193,23 @@ body {
 .footer-content p {
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.footer-content p a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-content p a:hover {
+    color: var(--link-hover);
 }
 
 .footer-meta {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
 }
 
 /* Responsive Design */
