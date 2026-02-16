@@ -1,19 +1,54 @@
 # Configuration Guide
 
-NCMDS (No Code Markdown Sites) is designed to be simple, but also customizable. This guide explains all configuration options.
+NCMDS uses a YAML-based configuration system for easy customization.
 
-## Configuration File
+## 📋 Configuration File
 
-All configuration is done in `config.yaml`. Here's the complete structure:
+The main configuration file is located at `config/config.yaml`.
+
+## ⚙️ Configuration Options
+
+### Site Information
 
 ```yaml
-# Basic Site Information
-site_name: "Your Documentation Site"
-author: "Your Name"
-description: "Site description"
+# Basic site information
+site_name: "NCMDS Documentation"
+author: "edujbarrios"
+description: "Easy documentation site builder with Markdown - no code required"
+```
 
-# Theme Colors
-theme:
+### Hero Section
+
+```yaml
+# Hero section configuration
+hero:
+  enabled: true
+  project_name: "NCMDS"
+  company: "edujbarrios"
+  tagline: "No Code Markdown Documentation Sites"
+  description: "Create beautiful documentation sites with just Markdown - no coding required"
+```
+
+**Hero Options:**
+- `enabled`: Show/hide hero on homepage
+- `project_name`: Main title displayed on hero
+- `company`: Company/author badge
+- `tagline`: Subtitle text
+- `description`: Hero description
+
+### Theme Selection
+
+```yaml
+# Theme selection
+theme_name: "ocean"  # Available: ocean, forest, sunset, purple, cyberpunk, monochrome, turquoise
+```
+
+### Custom Theme
+
+If you want to use a custom theme, set `theme_name: "custom"` and define colors:
+
+```yaml
+custom_theme:
   primary_color: "#2563eb"
   secondary_color: "#7c3aed"
   background_color: "#0f172a"
@@ -27,196 +62,118 @@ theme:
   link_hover: "#93c5fd"
 ```
 
-## Theme Customization
+### Server Configuration
 
-### Color Palette
-
-NoCodeMDX uses a carefully designed dark mode color palette. You can customize every color:
-
-| Color Variable | Description | Default |
-|---------------|-------------|---------|
-| `primary_color` | Main brand color, buttons | `#2563eb` (Blue) |
-| `secondary_color` | Secondary accents | `#7c3aed` (Purple) |
-| `background_color` | Page background | `#0f172a` (Dark blue) |
-| `surface_color` | Sidebar, header, cards | `#1e293b` (Lighter blue) |
-| `text_color` | Main body text | `#e2e8f0` (Light gray) |
-| `text_secondary` | Secondary text, captions | `#94a3b8` (Gray) |
-| `accent_color` | Highlights, badges | `#22d3ee` (Cyan) |
-| `border_color` | Borders, dividers | `#334155` (Dark gray) |
-| `code_background` | Code block background | `#1e293b` (Dark) |
-| `link_color` | Link color | `#60a5fa` (Light blue) |
-| `link_hover` | Link hover state | `#93c5fd` (Lighter blue) |
-
-### Predefined Color Schemes
-
-#### Ocean Theme (Default)
 ```yaml
-theme:
-  primary_color: "#2563eb"
-  secondary_color: "#7c3aed"
-  background_color: "#0f172a"
-  surface_color: "#1e293b"
-  accent_color: "#22d3ee"
+server:
+  host: "0.0.0.0"
+  port: 5000
+  debug: true
 ```
 
-#### Forest Theme
+**Server Options:**
+- `host`: Server host address
+- `port`: Server port number
+- `debug`: Enable/disable debug mode (set to `false` in production)
+
+### Directories
+
 ```yaml
-theme:
-  primary_color: "#059669"
-  secondary_color: "#10b981"
-  background_color: "#064e3b"
-  surface_color: "#065f46"
-  accent_color: "#34d399"
+directories:
+  docs: "docs"
+  static: "static"
+  templates: "templates"
 ```
 
-#### Sunset Theme
+### Features
+
 ```yaml
-theme:
-  primary_color: "#dc2626"
-  secondary_color: "#f59e0b"
-  background_color: "#1c1917"
-  surface_color: "#292524"
-  accent_color: "#fb923c"
+features:
+  table_of_contents: true
+  syntax_highlighting: true
+  auto_reload: true
+  search: false  # Coming soon
 ```
 
-#### Purple Dream Theme
-```yaml
-theme:
-  primary_color: "#7c3aed"
-  secondary_color: "#a78bfa"
-  background_color: "#1e1b4b"
-  surface_color: "#312e81"
-  accent_color: "#c4b5fd"
-```
+**Feature Options:**
+- `table_of_contents`: Show/hide table of contents
+- `syntax_highlighting`: Enable syntax highlighting for code blocks
+- `auto_reload`: Auto-reload on file changes (development)
+- `search`: Enable search functionality (coming soon)
 
-## Site Information
-
-### Basic Settings
+## 📝 Complete Example
 
 ```yaml
-# Your site name appears in the header and page titles
+# NCMDS Site Configuration
 site_name: "My Documentation"
+author: "Your Name"
+description: "My amazing documentation site"
 
-# Author name shown in the footer
-author: "edujbarrios"
+hero:
+  enabled: true
+  project_name: "My Project"
+  company: "Your Company"
+  tagline: "Making documentation simple"
+  description: "Beautiful documentation with zero configuration"
 
-# Site description for SEO
-description: "Comprehensive project documentation"
+theme_name: "forest"
+
+server:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+
+directories:
+  docs: "docs"
+  static: "static"
+  templates: "templates"
+
+features:
+  table_of_contents: true
+  syntax_highlighting: true
+  auto_reload: false
+  search: false
 ```
 
-## Navigation
+## 🔄 Applying Changes
 
-Navigation is auto-generated from your `docs/` folder. Files are automatically discovered and added to the sidebar.
+After modifying `config.yaml`:
 
-### Document Ordering
-
-Documents are ordered in two ways:
-
-1. **Numeric Prefix Method** (Recommended):
-   - Name files with numeric prefixes: `01-index.md`, `02-getting-started.md`, etc.
-   - The system automatically sorts by these numbers
-   - The prefix is removed from the displayed title
-
-2. **Metadata Method**:
-   - Add an `order` field in your document's front matter:
-   ```markdown
-   ---
-   order: 10
-   ---
-   # Your Document Title
+1. Save the file
+2. Restart the server:
+   ```bash
+   # Stop server (Ctrl+C)
+   python app.py
    ```
 
-3. **Alphabetical** (Default):
-   - Without prefixes or metadata, files are sorted alphabetically
+## 💡 Tips
 
-### File Organization
+- Use descriptive site names
+- Keep debug mode off in production
+- Test theme changes with different content
+- Backup your config before major changes
+- Use environment variables for sensitive data
 
-Organize your docs folder logically:
+## 🔧 Advanced Configuration
 
-```
-docs/
-├── 01-index.md           # Home page (required)
-├── 02-getting-started.md # Getting started guide
-├── 03-configuration.md   # Configuration guide
-├── 04-markdown-guide.md  # Markdown features
-├── advanced/             # Folder creates sections
-│   ├── 01-deployment.md
-│   └── 02-optimization.md
-└── api/
-    ├── 01-reference.md
-    └── 02-examples.md
-```
+### Environment Variables
 
-### Document Titles
-
-The first heading (`# Title`) in each Markdown file becomes the navigation label. For example:
-
-```markdown
-# Getting Started Guide
-
-Content goes here...
-```
-
-This document will appear as "Getting Started Guide" in the sidebar.
-
-## Advanced Features
-
-### Metadata
-
-Add metadata to your Markdown files using front matter:
-
-```markdown
----
-title: Custom Page Title
-description: Page description for SEO
-author: John Doe
-date: 2026-02-12
----
-
-# Your Content Here
-```
-
-### Custom Styling
-
-To add custom CSS, edit `static/style.css` or create additional stylesheets.
-
-## Environment Variables
-
-You can also configure some settings via environment variables:
+You can override config values with environment variables:
 
 ```bash
-# Change the port (default: 5000)
-export FLASK_PORT=8080
-
-# Enable debug mode
-export FLASK_DEBUG=1
-
-# Set docs directory
-export DOCS_DIR=my-docs
+export NCMDS_PORT=8000
+export NCMDS_DEBUG=false
 ```
 
-## Best Practices
+### Dynamic Configuration
 
-1. **Keep config simple** - Only customize colors you need
-2. **Test color contrast** - Ensure text is readable
-3. **Use semantic names** - Name your files descriptively
-4. **Organize hierarchically** - Use folders for related docs
-5. **Start with defaults** - Customize gradually as needed
+The configuration is loaded through `ConfigManager` which supports:
+- Hot reloading (in development mode)
+- Theme switching without restart
+- Validation of configuration values
 
-## Troubleshooting
+## 📚 Next Steps
 
-### Colors not updating?
-
-1. Clear your browser cache
-2. Restart the server
-3. Check for YAML syntax errors in config.yaml
-
-### Navigation not showing?
-
-1. Ensure files have `.md` extension
-2. Check file permissions
-3. Verify files are in `docs/` folder
-
----
-
-Need more help? Check the [Getting Started](getting-started) guide or review the example files.
+- Customize your [Theme](05-themes.md)
+- Explore [Markdown Features](04-markdown-guide.md)
+- Learn about [Deployment](06-deployment.md)

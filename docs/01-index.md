@@ -1,83 +1,99 @@
 # Welcome to NCMDS
 
-**NCMDS** (No Code Markdown Sites) is a simple, powerful documentation site builder created by **edujbarrios**. Write your documentation in **standard Markdown** (.md files), and instantly see beautiful, dark-themed pages.
+**NCMDS** (No Code Markdown Documentation Sites) is a documentation site builder designed for creating technical documentation with minimal configuration. The system converts standard Markdown files into a fully functional documentation website with customizable themes and automatic navigation generation.
 
-## ✨ Features
+**Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
-- **Zero Configuration** - Start writing documentation immediately
-- **Dark Mode** - Beautiful dark theme with customizable colors
-- **Standard Markdown** - Full support for Markdown with extended features
-- **Live Preview** - See changes instantly with auto-reload
-- **Syntax Highlighting** - Beautiful code blocks with syntax highlighting
-- **Responsive Design** - Works perfectly on all devices
-- **Table of Contents** - Auto-generated navigation and TOC
-- **Easy Customization** - Parametrized color configuration via YAML
-- **Ordered Navigation** - Automatic document ordering
+## ✨ Key Features
+
+- **Hero Landing Page** with customizable branding
+- **Modular configuration system** with parametrized settings
+- **Seven pre-built dark mode themes**
+- **Custom theme creation** support
+- **Standard Markdown (.md)** file support
+- **Automatic document ordering** and navigation
+- **Syntax highlighting** for code blocks
+- **Responsive design** for all devices
+- **Table of contents** generation
+- **Zero build process** requirement
+
+## 🎨 Available Themes
+
+The system includes seven predefined themes:
+
+- **Ocean**: Blue oceanic tones (default)
+- **Forest**: Green natural tones
+- **Sunset**: Warm orange and red tones
+- **Purple Dream**: Deep violet tones
+- **Cyberpunk**: Futuristic neon colors
+- **Monochrome**: Black and white grayscale
+- **Turquoise**: Professional turquoise with vibrant cyan accents
 
 ## 🚀 Quick Start
 
-1. Create a new Markdown file in the `docs/` folder
-2. Write your content using Markdown syntax
-3. Refresh your browser to see the changes
-4. That's it! No build step required
+1. Create `.md` files in the `docs/` folder
+2. Use numeric prefixes for ordering: `01-index.md`, `02-getting-started.md`
+3. Write your documentation in Markdown
+4. Reload your browser to see changes
 
-## 📝 Writing Documentation
+## 📝 Document Example
 
-You can use all standard Markdown features:
+```markdown
+# Document Title
 
-### Code Blocks
+Document content here.
 
-```python
-def hello_world():
-    print("Hello from NoCodeMDX!")
-    return "Documentation made easy"
+## Section
 
-hello_world()
+Content...
+
+### Code Block
+
+\```python
+def example():
+    print("NCMDS example")
+\```
+
+### Table
+
+| Column 1 | Column 2 |
+|----------|----------|
+| Data 1   | Data 2   |
 ```
 
-```javascript
-const greet = (name) => {
-    console.log(`Hello, ${name}!`);
-    return `Welcome to NoCodeMDX`;
-};
+## 📚 Documentation
 
-greet("Developer");
-```
+- [Getting Started Guide](02-getting-started.md)
+- [Configuration Guide](03-configuration.md)
+- [Markdown Features Guide](04-markdown-guide.md)
+- [Theme Creation Guide](05-themes.md)
+- [Deployment Guide](06-deployment.md)
 
-### Tables
+## 🛠️ Technical Stack
 
-| Feature | Status | Description |
-|---------|--------|-------------|
-| Markdown | ✅ | Full support |
-| Dark Mode | ✅ | Customizable |
-| Syntax Highlighting | ✅ | Multiple languages |
-| Mobile Responsive | ✅ | Works everywhere |
+- **Flask** - Web framework
+- **Python-Markdown** - Markdown processing
+- **PyYAML** - Configuration parsing
+- **Highlight.js** - Syntax highlighting
+- **CSS Variables** - Theme customization
 
-### Lists
+## 🎯 Use Cases
 
-- Simple and intuitive
-- No complex setup
-- Just write documentation
-  - Nested items work too
-  - Multiple levels supported
+- Project documentation
+- Personal wikis
+- Educational materials
+- Technical documentation
+- API documentation
+- User guides and tutorials
 
-### Blockquotes
+## 📄 License
 
-> NoCodeMDX makes documentation beautiful and effortless. Focus on writing great content, not configuring tools.
+This project is licensed under the MIT License.
 
-## 🎨 Customization
+## 🙏 Acknowledgments
 
-Edit `config.yaml` to customize:
-
-- Site name and description
-- Theme colors (all parametrized)
-- Navigation structure
-- Author information
-
-## 📚 Next Steps
-
-Create more documentation files in the `docs/` folder. Each file becomes automatically available in the navigation sidebar.
+Inspired by: Docusaurus, Quarto, MkDocs, Read the Docs
 
 ---
 
-**Built with ❤️ by edujbarrios**
+**Created by:** [edujbarrios](https://github.com/edujbarrios)

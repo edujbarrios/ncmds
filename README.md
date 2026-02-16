@@ -1,308 +1,111 @@
-# NCMDS - No Code Markdown Sites
+# NCMDS - No Code Markdown Documentation Sites
+
+<div align="center">
+
+**Create beautiful documentation sites with just Markdown**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+
+</div>
 
 ## Overview
 
-NCMDS (No Code Markdown Sites) is a documentation site builder designed for creating technical documentation with minimal configuration. The system converts standard Markdown files into a fully functional documentation website with customizable themes and automatic navigation generation.
+NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation and customizable themes.
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
+## ✨ Key Features
 
-## Key Features
+- 🎨 **7 Pre-built Dark Themes** - Ocean, Forest, Sunset, Purple, Cyberpunk, Monochrome, Turquoise
+- 🚀 **Zero Build Process** - Write Markdown, see results instantly
+- 📱 **Fully Responsive** - Perfect on all devices
+- 🎯 **Hero Landing Page** - Customizable branding
+- 💻 **Syntax Highlighting** - Beautiful code blocks
+- 📋 **Auto Navigation** - Automatic sidebar generation
+- ⚙️ **Easy Configuration** - Simple YAML-based settings
 
-- Modular configuration system with parametrized settings
-- Six pre-built dark mode themes
-- Custom theme creation support
-- Standard Markdown (.md) file support
-- Automatic document ordering and navigation
-- Syntax highlighting for code blocks
-- Responsive design for all devices
-- Table of contents generation
-- Zero build process requirement
-
-## Available Themes
-
-The system includes seven predefined themes:
-
-- **Ocean**: Blue oceanic tones (default)
-- **Forest**: Green natural tones
-- **Sunset**: Warm orange and red tones
-- **Purple Dream**: Deep violet tones
-- **Cyberpunk**: Futuristic neon colors
-- **Monochrome**: Black and white grayscale
-- **Turquoise**: Professional turquoise with vibrant cyan accents
-
-## Installation
-
-### Prerequisites
-
-- Python 3.7 or higher
-- pip package manager
-
-### Installation Steps
-
-1. Clone the repository:
+## 🚀 Quick Start
 
 ```bash
+# Clone repository
 git clone https://github.com/edujbarrios/ncmds.git
 cd ncmds
-```
 
-2. Install dependencies:
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-3. Start the server:
-
-```bash
+# Run
 python app.py
 ```
 
-4. Access the application:
+Open `http://localhost:5000` in your browser.
 
-Open your browser and navigate to `http://localhost:5000`
+## 📝 Usage
 
-## Project Structure
+1. Add `.md` files to the `docs/` folder
+2. Use numeric prefixes for ordering: `01-index.md`, `02-guide.md`
+3. Write in Markdown
+4. Reload browser to see changes
 
-```
-ncmds/
-├── config/
-│   ├── config.yaml           # Main configuration file
-│   ├── settings.py           # Configuration manager
-│   └── themes/               # Theme definitions
-│       ├── ocean.yaml
-│       ├── forest.yaml
-│       ├── sunset.yaml
-│       ├── purple.yaml
-│       ├── cyberpunk.yaml
-│       ├── monochrome.yaml
-│       └── turquoise.yaml
-├── docs/                      # Documentation source files
-│   ├── 01-index.md
-│   ├── 02-getting-started.md
-│   ├── 03-configuration.md
-│   └── 04-markdown-guide.md
-├── templates/
-│   └── layout.html           # HTML layout template
-├── static/
-│   └── style.css             # CSS styles
-├── app.py                     # Main application
-└── requirements.txt          # Python dependencies
-```
+## ⚙️ Configuration
 
-## Configuration
-
-### Theme Selection
-
-Edit `config/config.yaml` to change the active theme:
+Edit `config/config.yaml`:
 
 ```yaml
-theme_name: "ocean"  # Available: ocean, forest, sunset, purple, cyberpunk, monochrome, turquoise
-```
-
-### Creating Custom Themes
-
-1. Create a new YAML file in `config/themes/` directory:
-
-```yaml
-name: "Custom Theme"
-description: "Custom theme description"
-author: "Your Name"
-
-colors:
-  primary_color: "#FF6B6B"
-  secondary_color: "#4ECDC4"
-  background_color: "#1A1A2E"
-  surface_color: "#16213E"
-  text_color: "#EAEAEA"
-  text_secondary: "#C4C4C4"
-  accent_color: "#FFE66D"
-  border_color: "#0F3460"
-  code_background: "#0F1419"
-  link_color: "#95E1D3"
-  link_hover: "#A8E6CF"
-```
-
-2. Activate the theme in `config/config.yaml`:
-
-```yaml
-theme_name: "custom-theme"
-```
-
-### Configuration Options
-
-Complete configuration example in `config/config.yaml`:
-
-```yaml
-# Site information
 site_name: "My Documentation"
-author: "Your Name"
-description: "Site description"
+theme_name: "ocean"  # ocean, forest, sunset, purple, cyberpunk, monochrome, turquoise
 
-# Active theme
-theme_name: "ocean"
-
-# Server configuration
-server:
-  host: "0.0.0.0"
-  port: 5000
-  debug: true
-
-# Directories
-directories:
-  docs: "docs"
-  static: "static"
-  templates: "templates"
-
-# Features
-features:
-  table_of_contents: true
-  syntax_highlighting: true
-  auto_reload: true
+hero:
+  enabled: true
+  project_name: "My Project"
+  company: "Your Company"
+  tagline: "Your tagline here"
 ```
 
-## Writing Documentation
+## 📚 Documentation
 
-### Creating Documents
+Full documentation available at `/docs` when running the server, or view:
 
-1. Create a `.md` file in the `docs/` folder
-2. Use numeric prefixes for ordering: `05-document-name.md`
-3. Write content in Markdown
-4. Reload the browser to see changes
+- [Getting Started](docs/02-getting-started.md)
+- [Configuration Guide](docs/03-configuration.md)
+- [Markdown Features](docs/04-markdown-guide.md)
+- [Theme Creation](docs/05-themes.md)
+- [Deployment Guide](docs/06-deployment.md)
 
-### Document Ordering
+## 🛠️ Tech Stack
 
-Documents can be ordered using three methods:
+- **Flask** - Web framework
+- **Python-Markdown** - Markdown processing
+- **PyYAML** - Configuration
+- **Highlight.js** - Syntax highlighting
 
-**Method 1: Numeric Prefix (Recommended)**
-```
-01-index.md
-02-getting-started.md
-03-configuration.md
-```
-
-**Method 2: Metadata**
-```markdown
----
-order: 10
----
-# Document Title
-```
-
-**Method 3: Alphabetical (Default)**
-
-### Document Example
-
-```markdown
-# Document Title
-
-Document content here.
-
-## Section
-
-Content...
-
-### Code Block
-
-\```python
-def example():
-    print("NCMDS example")
-\```
-
-### Table
-
-| Column 1 | Column 2 |
-|----------|----------|
-| Data 1   | Data 2   |
-```
-
-## Technical Architecture
-
-### Core Components
-
-- **ConfigManager**: Centralized configuration management
-- **ThemeLoader**: Dynamic theme loading system
-- **DocumentationSite**: Document processing and navigation generation
-
-### Technology Stack
-
-- Flask (Web framework)
-- Python-Markdown (Markdown processing)
-- PyYAML (Configuration parsing)
-- Highlight.js (Syntax highlighting)
-- CSS Variables (Theme customization)
-
-### Supported Markdown Extensions
-
-- Fenced Code Blocks
-- Tables
-- Table of Contents
-- Syntax Highlighting
-- Admonitions
-- Metadata
-
-## API
-
-### List Available Themes
-
-```
-GET /api/themes
-```
-
-Response:
-```json
-{
-  "themes": {
-    "ocean": {
-      "name": "Ocean",
-      "description": "Ocean blue theme...",
-      "author": "edujbarrios"
-    }
-  },
-  "active_theme": "ocean"
-}
-```
-
-## Deployment
-
-### Development
-
-```bash
-python app.py
-```
-
-### Production
-
-Using Gunicorn WSGI server:
-
-```bash
-pip install gunicorn
-gunicorn app:app --bind 0.0.0.0:8000
-```
-
-## Use Cases
+## 🎯 Use Cases
 
 - Project documentation
-- Personal wikis
-- Educational materials
 - Technical documentation
 - API documentation
-- User guides and tutorials
+- Personal wikis
+- Educational materials
+- User guides
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+MIT License - see [LICENSE](LICENSE) file
 
-## Author
+## 🙏 Acknowledgments
 
-Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
+Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto
 
-## Acknowledgments
+## 📞 Contact
 
-Inspired by: Docusaurus, Quarto, MkDocs, Read the Docs
+- **Issues:** [GitHub Issues](https://github.com/edujbarrios/ncmds/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/edujbarrios/ncmds/discussions)
+- **Author:** [edujbarrios](https://github.com/edujbarrios)
 
-## Contact
+---
 
-- Issues: [GitHub Issues](https://github.com/edujbarrios/ncmds/issues)
-- Discussions: [GitHub Discussions](https://github.com/edujbarrios/ncmds/discussions)
+<div align="center">
+Made with ❤️ by edujbarrios
+</div>
+

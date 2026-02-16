@@ -1,335 +1,284 @@
 # Markdown Features Guide
 
-This document demonstrates all the Markdown features supported by NCMDS (No Code Markdown Sites).
+NCMDS supports standard Markdown plus extended features for richer documentation.
 
-## Text Formatting
+## 📝 Basic Syntax
 
-**Bold text** using double asterisks or double underscores.
+### Headings
 
-*Italic text* using single asterisks or single underscores.
-
-***Bold and italic*** using triple asterisks.
-
-~~Strikethrough~~ using double tildes.
-
-## Headings
-
+```markdown
 # Heading 1
 ## Heading 2
 ### Heading 3
 #### Heading 4
 ##### Heading 5
 ###### Heading 6
+```
 
-## Lists
+### Text Formatting
 
-### Unordered Lists
+```markdown
+**Bold text**
+*Italic text*
+***Bold and italic***
+~~Strikethrough~~
+`Inline code`
+```
 
+**Result:**
+**Bold text**
+*Italic text*
+***Bold and italic***
+~~Strikethrough~~
+`Inline code`
+
+### Lists
+
+**Unordered Lists:**
+```markdown
 - Item 1
 - Item 2
+  - Nested item 2.1
+  - Nested item 2.2
 - Item 3
-  - Nested item 3.1
-  - Nested item 3.2
-    - Deep nested item
-- Item 4
+```
 
-### Ordered Lists
-
+**Ordered Lists:**
+```markdown
 1. First item
 2. Second item
 3. Third item
-   1. Nested ordered item
-   2. Another nested item
-4. Fourth item
+```
 
-### Task Lists
+### Links
 
-- [x] Completed task
-- [x] Another completed task
-- [ ] Pending task
-- [ ] Another pending task
+```markdown
+[Link text](https://example.com)
+[Link with title](https://example.com "Title")
+```
 
-## Links and Images
+### Images
 
-[Visit NoCodeMDX](/)
+```markdown
+![Alt text](image.jpg)
+![Alt text with title](image.jpg "Image title")
+```
 
-[Internal link to Getting Started](getting-started)
-
-[Link with title](configuration "Configuration Guide")
-
-## Code
+## 💻 Code Blocks
 
 ### Inline Code
 
-Use `inline code` with single backticks.
+Use backticks for inline code: \`code here\`
 
-Variables like `x = 5` and functions like `print()` can be highlighted inline.
+### Fenced Code Blocks
 
-### Code Blocks
+Use triple backticks with optional language specification:
 
-#### Python
+**Python:**
+\```python
+def hello_world():
+    print("Hello, NCMDS!")
+    return True
 
-```python
-def fibonacci(n):
-    """Generate Fibonacci sequence up to n terms."""
-    a, b = 0, 1
-    result = []
-    
-    for _ in range(n):
-        result.append(a)
-        a, b = b, a + b
-    
-    return result
+hello_world()
+\```
 
-# Example usage
-fib_sequence = fibonacci(10)
-print(f"Fibonacci sequence: {fib_sequence}")
-```
+**JavaScript:**
+\```javascript
+const greet = (name) => {
+    console.log(`Hello, ${name}!`);
+};
 
-#### JavaScript
+greet("World");
+\```
 
-```javascript
-// Async function example
-async function fetchData(url) {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
-    }
-}
-
-// Usage
-fetchData('https://api.example.com/data')
-    .then(data => console.log(data))
-    .catch(err => console.error(err));
-```
-
-#### Bash/Shell
-
-```bash
+**Bash:**
+\```bash
 #!/bin/bash
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start the server
+echo "Hello, NCMDS!"
+cd /path/to/project
 python app.py
+\```
 
-# Check if service is running
-if systemctl is-active --quiet nocodemdx; then
-    echo "Service is running"
-else
-    echo "Service is not running"
-fi
+## 📊 Tables
+
+```markdown
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
 ```
 
-#### HTML
+**Result:**
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCMDS Example</title>
-</head>
-<body>
-    <h1>Welcome to NCMDS</h1>
-    <p>No Code Markdown Sites - Build beautiful documentation with ease.</p>
-</body>
-</html>
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
+
+**Alignment:**
+
+```markdown
+| Left | Center | Right |
+|:-----|:------:|------:|
+| L1   | C1     | R1    |
+| L2   | C2     | R2    |
 ```
 
-#### CSS
+## 📌 Blockquotes
 
-```css
-/* Custom theme variables */
-:root {
-    --primary-color: #2563eb;
-    --secondary-color: #7c3aed;
-    --background: #0f172a;
-}
+```markdown
+> This is a blockquote
+> 
+> It can span multiple lines
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: var(--background);
-}
-
-.button {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.button:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-}
+> Nested quotes
+>> Level 2
+>>> Level 3
 ```
 
-#### SQL
+**Result:**
+> This is a blockquote
+> 
+> It can span multiple lines
 
-```sql
--- Create users table
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+## 🔗 Horizontal Rules
 
--- Insert sample data
-INSERT INTO users (username, email) VALUES 
-    ('edujbarrios', 'edu@example.com'),
-    ('johndoe', 'john@example.com');
-
--- Query with JOIN
-SELECT u.username, p.title, p.created_at
-FROM users u
-INNER JOIN posts p ON u.id = p.user_id
-WHERE p.published = 1
-ORDER BY p.created_at DESC
-LIMIT 10;
+```markdown
+---
 ```
-
-## Tables
-
-### Basic Table
-
-| Feature | Status | Description |
-|---------|--------|-------------|
-| Markdown Support | ✅ | Full support |
-| Dark Mode | ✅ | Customizable |
-| Themes | ✅ | 6 predefined themes |
-| Responsive | ✅ | Mobile-friendly |
-| Search | 🚧 | Coming soon |
-
-### Aligned Columns
-
-| Left Aligned | Center Aligned | Right Aligned |
-|:-------------|:--------------:|--------------:|
-| Text         | Text           | Text          |
-| More text    | More text      | More text     |
-| Even more    | Even more      | Even more     |
-
-### Complex Table
-
-| Language | Syntax Highlighting | Code Examples | Performance |
-|----------|:------------------:|:-------------:|:-----------:|
-| Python   | ✅ | ✅ | ⭐⭐⭐⭐⭐ |
-| JavaScript | ✅ | ✅ | ⭐⭐⭐⭐ |
-| Go       | ✅ | ✅ | ⭐⭐⭐⭐⭐ |
-| Rust     | ✅ | ✅ | ⭐⭐⭐⭐⭐ |
-
-## Blockquotes
-
-> This is a simple blockquote.
-
-> This is a multi-line blockquote.
-> It can span multiple lines and paragraphs.
->
-> Just like this!
-
-> **Note:** You can use other Markdown inside blockquotes.
->
-> - Including lists
-> - And other elements
-
-> ### Nested Quote
->
-> > This is a nested blockquote
-> > 
-> > It's quoted within another quote
-
-## Horizontal Rules
-
-Use three or more hyphens, asterisks, or underscores:
 
 ---
 
-***
+## ✅ Task Lists
 
-___
+```markdown
+- [x] Completed task
+- [ ] Incomplete task
+- [ ] Another task
+```
 
-## Escaping Characters
+**Result:**
+- [x] Completed task
+- [ ] Incomplete task
+- [ ] Another task
+
+## 🎯 Admonitions
+
+NCMDS supports admonitions for highlighting important information:
+
+```markdown
+!!! note
+    This is a note admonition
+
+!!! warning
+    This is a warning admonition
+
+!!! danger
+    This is a danger admonition
+
+!!! tip
+    This is a tip admonition
+```
+
+## 📋 Document Metadata
+
+Add metadata at the beginning of your document:
+
+```markdown
+---
+order: 10
+title: "My Custom Title"
+author: "Your Name"
+date: "2026-02-16"
+---
+
+# Document content starts here
+```
+
+## 🎨 HTML Support
+
+You can use HTML within Markdown for advanced formatting:
+
+```html
+<div style="background: #f0f0f0; padding: 20px; border-radius: 8px;">
+    <h3>Custom HTML Block</h3>
+    <p>You can use HTML for special formatting.</p>
+</div>
+```
+
+## 🔤 Escaping Characters
 
 Use backslash to escape special characters:
 
-\*Not italic\*
-
-\**Not bold\**
-
+```markdown
+\* Not italic \*
+\` Not code \`
 \# Not a heading
+```
 
-## Special Characters and Symbols
+## 💡 Best Practices
 
-- Arrows: → ← ↑ ↓ ⇒ ⇐ ⇑ ⇓
-- Math: ≤ ≥ ≠ ≈ ∞ ∑ ∏ √
-- Symbols: © ® ™ § ¶ † ‡
-- Emoji: 🚀 🎨 📝 ✅ ❌ ⚠️ 💡 🔧
+1. **Use descriptive headings** - Clear hierarchy improves navigation
+2. **Add code language** - Syntax highlighting improves readability
+3. **Keep paragraphs short** - Easier to read and scan
+4. **Use lists** - Break down complex information
+5. **Include examples** - Show, don't just tell
+6. **Add alt text to images** - Improves accessibility
+7. **Use tables wisely** - Great for structured data
+8. **Test your markdown** - Preview before publishing
 
-## Combinations
+## 📚 Supported Extensions
 
-You can combine multiple Markdown features:
+NCMDS supports these Markdown extensions:
 
-### Code in Lists
+- `fenced_code` - Code blocks with syntax highlighting
+- `tables` - Table support
+- `toc` - Table of contents generation
+- `codehilite` - Code highlighting
+- `attr_list` - Add attributes to elements
+- `md_in_html` - Markdown inside HTML
+- `admonition` - Admonition blocks
+- `meta` - Document metadata
 
-1. **Install Python packages:**
-   
-   ```bash
-   pip install flask markdown pyyaml
-   ```
+## 🔧 Tips and Tricks
 
-2. **Create your configuration:**
-   
-   Edit `config/config.yaml`:
-   
-   ```yaml
-   site_name: "My Docs"
-   theme_name: "ocean"
-   ```
+### Linking to Other Docs
 
-3. **Start the server:**
-   
-   ```bash
-   python app.py
-   ```
+```markdown
+See the [Configuration Guide](03-configuration.md)
+```
 
-### Tables with Code
+### Table of Contents
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `pip install` | Install packages | `pip install flask` |
-| `python app.py` | Run application | `python app.py` |
-| `git clone` | Clone repository | `git clone https://...` |
+TOC is automatically generated from headings.
 
-### Blockquotes with Code
+### Code Block Titles
 
-> **Important Configuration Note**
->
-> Always backup your `config.yaml` before making changes:
->
-> ```bash
-> cp config/config.yaml config/config.yaml.backup
-> ```
+Some code blocks can have titles:
 
-## Best Practices
+```python title="example.py"
+def main():
+    print("Hello!")
+```
 
-1. **Use descriptive headings** - They become the table of contents
-2. **Keep paragraphs short** - Easier to read online
-3. **Use code blocks** - Always specify the language for syntax highlighting
-4. **Add examples** - Show, don't just tell
-5. **Use tables** - Great for comparing features or options
-6. **Break up text** - Use lists, headings, and horizontal rules
-7. **Link between pages** - Help readers navigate your docs
+### Nested Lists
 
----
+```markdown
+1. First level
+   - Second level
+     - Third level
+       - Fourth level
+```
 
-**Pro Tip:** Preview your Markdown as you write to ensure proper formatting!
+## 🎓 Learning Resources
+
+- [Markdown Guide](https://www.markdownguide.org/)
+- [GitHub Flavored Markdown](https://github.github.com/gfm/)
+- [CommonMark Spec](https://commonmark.org/)
+
+## 📖 Next Steps
+
+- Explore [Theme Customization](05-themes.md)
+- Learn about [Deployment](06-deployment.md)
+- Check out [Configuration Options](03-configuration.md)

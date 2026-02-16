@@ -1,116 +1,120 @@
 # Getting Started with NCMDS
 
-Welcome to NCMDS (No Code Markdown Sites)! This guide will help you get up and running in minutes.
+NCMDS is designed to be simple and intuitive. This guide will help you create your first documentation site.
 
-## Prerequisites
+## 📦 Installation
 
-Before you begin, make sure you have:
+### Prerequisites
 
-- Python 3.7 or higher installed
-- pip (Python package manager)
-- A text editor (VS Code, Sublime, or any editor you prefer)
+- Python 3.7 or higher
+- pip package manager
 
-## Installation
+### Installation Steps
 
-1. **Install Required Packages**
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/edujbarrios/ncmds.git
+cd ncmds
+```
+
+2. **Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. **Start the Server**
+3. **Start the server:**
 
 ```bash
 python app.py
 ```
 
-3. **Open Your Browser**
+4. **Access the application:**
 
-Navigate to `http://localhost:5000` and you should see your documentation site!
+Open your browser and navigate to `http://localhost:5000`
 
-## Project Structure
+## 📝 Creating Your First Document
 
-```
-ncmds/
-├── app.py              # Main application
-├── config.yaml         # Site configuration
-├── docs/               # Your documentation files
-│   ├── index.md       # Home page
-│   └── *.md           # Other docs
-├── templates/          # HTML templates
-│   └── layout.html    # Main layout
-└── static/            # CSS and assets
-    └── style.css      # Styling
-```
-
-## Creating Your First Document
-
-1. Create a new file in the `docs/` folder, for example: `05-my-first-doc.md`
-
-   **Tip:** Use numeric prefixes (01-, 02-, etc.) to control the order documents appear in navigation.
-
-2. Add some content:
+1. Navigate to the `docs/` folder
+2. Create a new file: `07-my-first-doc.md`
+3. Add content:
 
 ```markdown
 # My First Document
 
 This is my first documentation page!
 
-## Section 1
+## Features
 
-Write whatever you want here.
+- Easy to use
+- Beautiful design
+- Fast and responsive
 ```
 
-3. Save the file and refresh your browser
+4. Save the file
+5. Reload your browser to see changes
 
-4. Your new document will appear in the sidebar navigation!
+## 📋 Document Ordering
 
-## Tips for Great Documentation
+Documents can be ordered using three methods:
 
-### Use Descriptive Headings
+### Method 1: Numeric Prefix (Recommended)
+```
+01-index.md
+02-getting-started.md
+03-configuration.md
+```
 
-Good heading structure helps readers navigate your content:
-
+### Method 2: Metadata
 ```markdown
-# Main Title
-## Major Section
-### Subsection
-#### Details
+---
+order: 10
+---
+# Document Title
 ```
 
-### Include Code Examples
+### Method 3: Alphabetical (Default)
 
-Code blocks with syntax highlighting make technical docs easier to follow:
+If no numeric prefix or order metadata is provided, documents are sorted alphabetically.
 
-```python
-# Python example for NCMDS
-def calculate_sum(a, b):
-    """Add two numbers together."""
-    return a + b
+## 💡 Best Practices
 
-result = calculate_sum(5, 3)
-print(f"Result: {result}")
+- Use descriptive file names
+- Keep documents focused on one topic
+- Use headings to organize content hierarchically
+- Add code examples when relevant
+- Include images and diagrams for clarity
+- Test your documentation with fresh eyes
+
+## 📂 Project Structure
+
+```
+ncmds/
+├── config/
+│   ├── config.yaml           # Main configuration file
+│   ├── settings.py           # Configuration manager
+│   └── themes/               # Theme definitions
+│       ├── ocean.yaml
+│       ├── forest.yaml
+│       ├── sunset.yaml
+│       ├── purple.yaml
+│       ├── cyberpunk.yaml
+│       ├── monochrome.yaml
+│       └── turquoise.yaml
+├── docs/                      # Documentation source files
+├── templates/
+│   ├── home.html             # Hero landing page
+│   └── layout.html           # Documentation layout
+├── static/
+│   └── style.css             # CSS styles
+├── app.py                     # Main application
+└── requirements.txt          # Python dependencies
 ```
 
-### Add Visual Elements
+## 🔧 Next Steps
 
-Use tables, lists, and blockquotes to break up text:
-
-> **Pro Tip:** Keep paragraphs short and scannable. Use bullet points when listing items.
-
-### Link Between Pages
-
-Create connections between your documentation:
-
-```markdown
-See [Configuration Guide](configuration) for more details.
-```
-
-## Next Steps
-
-- Customize your colors in `config.yaml`
-- Add more documentation files
-- Explore advanced Markdown features
-- Share your documentation site!
-
-Need help? Create an issue or check the documentation examples.
+- Learn about [Configuration](03-configuration.md)
+- Explore [Markdown Features](04-markdown-guide.md)
+- Customize [Themes](05-themes.md)
+- Learn about [Deployment](06-deployment.md)

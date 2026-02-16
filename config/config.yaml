@@ -18,7 +18,7 @@ hero:
 # Theme selection
 # Available options: ocean, forest, sunset, purple, cyberpunk, monochrome, custom
 # Themes are located in config/themes/ folder
-theme_name: "forest"
+theme_name: "ocean"
 
 # Custom theme configuration (optional)
 # If theme_name is "custom", these values will be used
