@@ -1,0 +1,55 @@
+# NCMDS Site Configuration
+# No Code Markdown Sites
+# Created by: edujbarrios
+
+# Basic site information
+site_name: "NCMDS Documentation"
+author: "edujbarrios"
+description: "Easy documentation site builder with Markdown - no code required"
+
+# Hero section configuration
+hero:
+  enabled: true
+  project_name: "NCMDS"
+  company: "edujbarrios"
+  tagline: "No Code Markdown Documentation Sites"
+  description: "Create beautiful documentation sites with just Markdown - no coding required"
+
+# Theme selection
+# Available options: ocean, forest, sunset, purple, cyberpunk, monochrome, custom
+# Themes are located in config/themes/ folder
+theme_name: "forest"
+
+# Custom theme configuration (optional)
+# If theme_name is "custom", these values will be used
+custom_theme:
+  primary_color: "#2563eb"
+  secondary_color: "#7c3aed"
+  background_color: "#0f172a"
+  surface_color: "#1e293b"
+  text_color: "#e2e8f0"
+  text_secondary: "#94a3b8"
+  accent_color: "#22d3ee"
+  border_color: "#334155"
+  code_background: "#1e293b"
+  link_color: "#60a5fa"
+  link_hover: "#93c5fd"
+
+# Server configuration
+server:
+  host: "0.0.0.0"
+  port: 5000
+  debug: true
+
+# Directories
+directories:
+  docs: "docs"
+  static: "static"
+  templates: "templates"
+
+# Features
+features:
+  table_of_contents: true
+  syntax_highlighting: true
+  auto_reload: true
+  search: false  # Coming soon

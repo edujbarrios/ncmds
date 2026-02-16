@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ config.description }}">
+    <meta name="author" content="{{ config.author }}">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --primary-color: {{ config.theme.primary_color }};
+            --secondary-color: {{ config.theme.secondary_color }};
+            --background-color: {{ config.theme.background_color }};
+            --surface-color: {{ config.theme.surface_color }};
+            --text-color: {{ config.theme.text_color }};
+            --text-secondary: {{ config.theme.text_secondary }};
+            --accent-color: {{ config.theme.accent_color }};
+            --border-color: {{ config.theme.border_color }};
+            --code-background: {{ config.theme.code_background }};
+            --link-color: {{ config.theme.link_color }};
+            --link-hover: {{ config.theme.link_hover }};
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .home-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 50%, var(--background-color) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--primary-color) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent-color) 0%, transparent 50%);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section (Full Screen) -->
+    {% if config.hero and config.hero.enabled %}
+    <section class="home-hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg class="hero-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>{{ config.hero.company }}</span>
+                </div>
+                <h1 class="hero-title">{{ config.hero.project_name }}</h1>
+                <p class="hero-tagline">{{ config.hero.tagline }}</p>
+                <p class="hero-description">{{ config.hero.description }}</p>
+                <div class="hero-actions">
+                    <a href="/docs/01-index" class="hero-button primary">
+                        Get Started
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="/docs/01-index" class="hero-button secondary">
+                        View Documentation
+                    </a>
+                </div>
+            </div>
+            <div class="hero-decoration">
+                <div class="hero-glow"></div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+# Old configuration file - DEPRECATED
+# This file has been moved to config/config.yaml
+# Please use the new location to configure your site
+
+# Site Configuration
+site_name: "NoCodeMDX Documentation"
+author: "edujbarrios"
+description: "Easy documentation site builder with no code required"
+
+# Theme Colors - Customize your dark mode palette
+theme:
+  # Primary brand color
+  primary_color: "#2563eb"
+  
+  # Secondary accent color
+  secondary_color: "#7c3aed"
+  
+  # Background colors
+  background_color: "#0f172a"  # Main background
+  surface_color: "#1e293b"      # Cards, sidebar, header
+  
+  # Text colors
+  text_color: "#e2e8f0"         # Main text
+  text_secondary: "#94a3b8"     # Secondary text
+  
+  # Accent and highlights
+  accent_color: "#22d3ee"       # Highlights, badges
+  
+  # Borders and dividers
+  border_color: "#334155"
+  
+  # Code blocks
+  code_background: "#1e293b"
+  
+  # Links
+  link_color: "#60a5fa"
+  link_hover: "#93c5fd"
+
+# Navigation (optional - auto-generated from docs folder)
+# navigation:
+#   - title: "Getting Started"
+#     path: "getting-started"
+#   - title: "Configuration"
+#     path: "configuration"

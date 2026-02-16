@@ -1,0 +1,40 @@
+# Ocean Theme - Blue and oceanic colors
+# Default NCMDS theme
+
+name: "Ocean"
+description: "Ocean blue theme with cool and professional tones"
+author: "edujbarrios"
+
+colors:
+  # Primary color - Deep blue
+  primary_color: "#2563eb"
+  
+  # Secondary color - Purple
+  secondary_color: "#7c3aed"
+  
+  # Main background - Very dark blue
+  background_color: "#0f172a"
+  
+  # Surfaces - Dark blue
+  surface_color: "#1e293b"
+  
+  # Main text - Very light gray
+  text_color: "#e2e8f0"
+  
+  # Secondary text - Medium gray
+  text_secondary: "#94a3b8"
+  
+  # Accent color - Bright cyan
+  accent_color: "#22d3ee"
+  
+  # Borders - Dark bluish gray
+  border_color: "#334155"
+  
+  # Code background - Dark blue
+  code_background: "#1e293b"
+  
+  # Links - Light blue
+  link_color: "#60a5fa"
+  
+  # Link hover - Lighter blue
+  link_hover: "#93c5fd"

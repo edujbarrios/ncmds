@@ -1,0 +1,40 @@
+# Forest Theme - Green and natural colors
+# Inspired by nature and forests
+
+name: "Forest"
+description: "Forest green theme with natural and relaxing tones"
+author: "edujbarrios"
+
+colors:
+  # Primary color - Emerald green
+  primary_color: "#059669"
+  
+  # Secondary color - Bright green
+  secondary_color: "#10b981"
+  
+  # Main background - Very dark green
+  background_color: "#064e3b"
+  
+  # Surfaces - Dark green
+  surface_color: "#065f46"
+  
+  # Main text - Creamy white
+  text_color: "#ecfdf5"
+  
+  # Secondary text - Light grayish green
+  text_secondary: "#a7f3d0"
+  
+  # Accent color - Mint green
+  accent_color: "#34d399"
+  
+  # Borders - Medium green
+  border_color: "#047857"
+  
+  # Code background - Very dark green
+  code_background: "#022c22"
+  
+  # Links - Aqua green
+  link_color: "#6ee7b7"
+  
+  # Link hover - Bright light green
+  link_hover: "#a7f3d0"

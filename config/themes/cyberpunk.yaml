@@ -1,0 +1,40 @@
+# Cyberpunk Theme - Neon and futuristic colors
+# Inspired by cyberpunk and neon aesthetics
+
+name: "Cyberpunk"
+description: "Futuristic theme with bright neons and cyberpunk aesthetics"
+author: "edujbarrios"
+
+colors:
+  # Primary color - Neon magenta
+  primary_color: "#ec4899"
+  
+  # Secondary color - Neon cyan
+  secondary_color: "#06b6d4"
+  
+  # Main background - Pure black
+  background_color: "#000000"
+  
+  # Surfaces - Very dark gray
+  surface_color: "#18181b"
+  
+  # Main text - Pure white
+  text_color: "#ffffff"
+  
+  # Secondary text - Light gray
+  text_secondary: "#a1a1aa"
+  
+  # Accent color - Bright neon pink
+  accent_color: "#f472b6"
+  
+  # Borders - Zinc gray
+  border_color: "#27272a"
+  
+  # Code background - Absolute black
+  code_background: "#09090b"
+  
+  # Links - Bright cyan
+  link_color: "#22d3ee"
+  
+  # Link hover - Neon cyan
+  link_hover: "#67e8f9"

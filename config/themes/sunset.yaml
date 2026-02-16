@@ -1,0 +1,40 @@
+# Sunset Theme - Warm sunset colors
+# Inspired by sunsets and warm tones
+
+name: "Sunset"
+description: "Sunset theme with warm orange and red tones"
+author: "edujbarrios"
+
+colors:
+  # Primary color - Deep red
+  primary_color: "#dc2626"
+  
+  # Secondary color - Amber orange
+  secondary_color: "#f59e0b"
+  
+  # Main background - Very dark charcoal gray
+  background_color: "#1c1917"
+  
+  # Surfaces - Dark brownish gray
+  surface_color: "#292524"
+  
+  # Main text - Warm white
+  text_color: "#fafaf9"
+  
+  # Secondary text - Warm gray
+  text_secondary: "#d6d3d1"
+  
+  # Accent color - Bright orange
+  accent_color: "#fb923c"
+  
+  # Borders - Stone gray
+  border_color: "#44403c"
+  
+  # Code background - Almost black warm
+  code_background: "#0c0a09"
+  
+  # Links - Light orange
+  link_color: "#fdba74"
+  
+  # Link hover - Very light orange
+  link_hover: "#fed7aa"
