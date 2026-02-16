@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="images/logo.png" alt="NCMDS Logo" width="200"/>
+<img src="images/logo.png" alt="NCMDS Logo" width="400"/>
 
 **Create beautiful documentation sites with just Markdown**
 
