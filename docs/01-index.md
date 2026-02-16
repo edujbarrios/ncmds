@@ -49,10 +49,10 @@ Content...
 
 ### Code Block
 
-\```python
+```python
 def example():
     print("NCMDS example")
-\```
+```
 
 ### Table
 
