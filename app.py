@@ -178,12 +178,27 @@ def document(doc_path):
     if doc['metadata'].get('title'):
         title = f"{doc['metadata']['title'][0]} - {title}"
     
+    # Find previous and next documents in navigation
+    prev_doc = None
+    next_doc = None
+    
+    for i, nav_item in enumerate(site.navigation):
+        # Check if this is the current document
+        if nav_item['path'] == doc_path or nav_item['path'].endswith(doc_path):
+            if i > 0:
+                prev_doc = site.navigation[i - 1]
+            if i < len(site.navigation) - 1:
+                next_doc = site.navigation[i + 1]
+            break
+    
     return render_template(
         'layout.html',
         content=doc['html'],
         title=title,
         toc=doc['toc'],
         navigation=site.navigation,
+        prev_doc=prev_doc,
+        next_doc=next_doc,
         config=config
     )
 
