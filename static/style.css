@@ -936,6 +936,8 @@ body {
 /* Markdown Content Styles */
 .markdown-body {
     color: var(--text-color);
+    font-size: 1.125rem;
+    line-height: 1.7;
 }
 
 .markdown-body h1,
@@ -973,7 +975,7 @@ body {
 
 .markdown-body p {
     margin-bottom: 1.25rem;
-    line-height: 1.75;
+    line-height: 1.8;
 }
 
 .markdown-body a {
@@ -996,6 +998,7 @@ body {
 
 .markdown-body li {
     margin-bottom: 0.5rem;
+    line-height: 1.7;
 }
 
 .markdown-body code {
@@ -1003,7 +1006,7 @@ body {
     color: var(--accent-color);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 0.95em;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
 }
 
