@@ -1,0 +1,41 @@
+# NCMDS Default Theme
+# Dark mode optimized for readability
+# Created by: edujbarrios
+
+name: "NCMDS Default"
+description: "Dark theme optimized for comfortable reading and coding"
+author: "edujbarrios"
+
+colors:
+  # Primary color - Vibrant blue for attention
+  primary_color: "#3b82f6"
+  
+  # Secondary color - Purple accent
+  secondary_color: "#8b5cf6"
+  
+  # Main background - Deep blue (noticeably blue, not black)
+  background_color: "#0f1e35"
+  
+  # Surfaces - Blue-tinted dark surface
+  surface_color: "#1a2942"
+  
+  # Main text - Bright but not white for comfort
+  text_color: "#e8edf5"
+  
+  # Secondary text - Blue-tinted gray
+  text_secondary: "#a8b5d1"
+  
+  # Accent color - Electric cyan for highlights
+  accent_color: "#06b6d4"
+  
+  # Borders - Blue-tinted subtle border
+  border_color: "#2a4365"
+  
+  # Code background - Blue-tinted code surface
+  code_background: "#132336"
+  
+  # Links - Bright blue
+  link_color: "#60a5fa"
+  
+  # Link hover - Brighter blue
+  link_hover: "#93c5fd"

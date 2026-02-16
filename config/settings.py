@@ -34,8 +34,8 @@ class ThemeLoader:
     def load_theme(self, theme_name: str) -> Dict[str, Any]:
         """Load a specific theme by name"""
         if theme_name not in self.available_themes:
-            # If theme doesn't exist, load default theme (ocean)
-            theme_name = "ocean"
+            # If theme doesn't exist, load default theme
+            theme_name = "ncmds_default"
         
         theme_path = self.available_themes.get(theme_name)
         if not theme_path:
@@ -78,15 +78,15 @@ class ThemeLoader:
     def _get_default_colors() -> Dict[str, str]:
         """Return default colors if a theme cannot be loaded"""
         return {
-            'primary_color': '#2563eb',
-            'secondary_color': '#7c3aed',
-            'background_color': '#0f172a',
-            'surface_color': '#1e293b',
-            'text_color': '#e2e8f0',
-            'text_secondary': '#94a3b8',
-            'accent_color': '#22d3ee',
-            'border_color': '#334155',
-            'code_background': '#1e293b',
+            'primary_color': '#3b82f6',
+            'secondary_color': '#8b5cf6',
+            'background_color': '#0f1e35',
+            'surface_color': '#1a2942',
+            'text_color': '#e8edf5',
+            'text_secondary': '#a8b5d1',
+            'accent_color': '#06b6d4',
+            'border_color': '#2a4365',
+            'code_background': '#132336',
             'link_color': '#60a5fa',
             'link_hover': '#93c5fd'
         }
@@ -107,8 +107,7 @@ class ConfigManager:
             'site_name': 'NCMDS Documentation',
             'author': 'edujbarrios',
             'description': 'No Code Markdown Sites - Easy documentation builder',
-            'theme_name': 'ocean',
-            'custom_theme': self.theme_loader._get_default_colors(),
+            'theme_name': 'ncmds_default',
             'server': {
                 'host': '0.0.0.0',
                 'port': 5000,
@@ -152,14 +151,10 @@ class ConfigManager:
     
     def _resolve_theme(self):
         """Resolve current theme and add it to configuration"""
-        theme_name = self.config.get('theme_name', 'ocean')
+        theme_name = self.config.get('theme_name', 'ncmds_default')
         
-        if theme_name == 'custom':
-            # Use custom theme from config
-            theme_colors = self.config.get('custom_theme', {})
-        else:
-            # Load theme from file
-            theme_colors = self.theme_loader.load_theme(theme_name)
+        # Load theme from file
+        theme_colors = self.theme_loader.load_theme(theme_name)
         
         # Add theme to configuration
         self.config['theme'] = theme_colors

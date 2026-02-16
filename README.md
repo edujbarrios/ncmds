@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img src="images/logo.png" alt="NCMDS Logo" width="200"/>
+
 **Create beautiful documentation sites with just Markdown**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -11,18 +13,18 @@
 
 ## Overview
 
-NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation and customizable themes.
+NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation and an optimized reading experience.
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
 ## ✨ Key Features
 
-- 🎨 **7 Pre-built Dark Themes** - Ocean, Forest, Sunset, Purple, Cyberpunk, Monochrome, Turquoise
+- 🎨 **Optimized Dark Theme** - Beautiful dark mode designed for comfortable reading
 - 🚀 **Zero Build Process** - Write Markdown, see results instantly
 - 📱 **Fully Responsive** - Perfect on all devices
-- 🎯 **Hero Landing Page** - Customizable branding
-- 💻 **Syntax Highlighting** - Beautiful code blocks
-- 📋 **Auto Navigation** - Automatic sidebar generation
+- 🎯 **Hero Landing Page** - Customizable branding with gradient effects
+- 💻 **Syntax Highlighting** - Beautiful code blocks with copy button
+- 📋 **Auto Navigation** - Automatic sidebar generation with prev/next buttons
 - ⚙️ **Easy Configuration** - Simple YAML-based settings
 
 ## 🚀 Quick Start
@@ -54,14 +56,20 @@ Edit `config/config.yaml`:
 
 ```yaml
 site_name: "My Documentation"
-theme_name: "ocean"  # ocean, forest, sunset, purple, cyberpunk, monochrome, turquoise
+author: "Your Name"
+description: "Your site description"
 
 hero:
   enabled: true
   project_name: "My Project"
   company: "Your Company"
   tagline: "Your tagline here"
+  description: "Your project description"
 ```
+
+The site uses a single, optimized dark theme designed for comfortable reading and coding.
+
+More themes will be added in the future.
 
 ## 📚 Documentation
 

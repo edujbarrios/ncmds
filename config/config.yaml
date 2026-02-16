@@ -7,11 +7,59 @@ site_name: "NCMDS Documentation"
 author: "edujbarrios"
 description: "Easy documentation site builder with Markdown - no code required"
 
+# HTML & Meta Configuration
+html:
+  language: "en"  # HTML lang attribute
+  charset: "UTF-8"
+  viewport: "width=device-width, initial-scale=1.0"
+
+# Syntax Highlighting Theme
+# See: https://cdnjs.com/libraries/highlight.js for more themes
+# Popular options: github-dark, monokai, atom-one-dark, nord, dracula
+highlighting:
+  theme: "github-dark"
+  cdn_version: "11.9.0"
+
+# UI Text Configuration (for easy translation/customization)
+ui_text:
+  # Header
+  logo_text: "MD"
+  toggle_menu_aria: "Toggle menu"
+  
+  # Sidebar
+  sidebar_title: "Documentation"
+  no_documents_message: "No documents yet. Add <code>.md</code> files to the <code>docs/</code> folder."
+  
+  # Navigation buttons
+  nav_previous: "Previous"
+  nav_next: "Next"
+  
+  # Table of Contents
+  toc_title: "On This Page"
+  
+  # Footer
+  footer_text: "Built with <strong>NCMDS</strong> (No Code Markdown Sites) by"
+  
+  # Code blocks
+  copy_button: "Copy"
+  copy_button_copied: "Copied!"
+  
+  # Error pages
+  error_404_title: "404 - Page Not Found"
+  error_404_heading: "404 - Page Not Found"
+  error_404_message: "The page you are looking for does not exist."
+
 # Hero section configuration
 hero:
   enabled: true
   project_name: "NCMDS"
-  company: "edujbarrios"
+  
+  # Badge configuration (appears above title)
+  badge:
+    enabled: true
+    text: "edujbarrios"
+    show_icon: true
+  
   tagline: "No Code Markdown Documentation Sites"
   description: "Create beautiful documentation sites with just Markdown - no coding required"
   
@@ -28,14 +76,32 @@ hero:
   
   # Feature highlights (4 items max for best display)
   features:
-    - icon: "zap"  # zap, layers, file, grid, code, check
+    - icon: "zap"  # zap, layers, file, grid, code, check, palette, monitor
       text: "Zero Config"
-    - icon: "layers"
-      text: "7 Themes"
-    - icon: "file"
+    - icon: "code"
       text: "Markdown"
     - icon: "grid"
       text: "Responsive"
+    - icon: "palette"
+      text: "Dark Mode"
+  
+  # Info Cards (optional - showcasing key benefits or stats)
+  cards:
+    enabled: true
+    title: "Why Choose NCMDS?"
+    list:
+      - title: "Fast Setup"
+        description: "Get your documentation site running in under 5 minutes"
+        icon: "rocket"  # rocket, star, heart, shield, sparkles, trending
+        highlight: "5 min"
+      - title: "Easy to Use"
+        description: "Built for developers and non-developers. Just write Markdown and deploy"
+        icon: "sparkles"
+        highlight: "Simple"
+      - title: "Dark Mode"
+        description: "Optimized dark theme designed for comfortable reading and coding"
+        icon: "palette"
+        highlight: "Beautiful"
   
   # Visual effects
   effects:
@@ -44,25 +110,9 @@ hero:
     glow_effect: true
     scroll_indicator: true
 
-# Theme selection
-# Available options: ocean, forest, sunset, purple, cyberpunk, monochrome, custom
-# Themes are located in config/themes/ folder
-theme_name: "ocean"
-
-# Custom theme configuration (optional)
-# If theme_name is "custom", these values will be used
-custom_theme:
-  primary_color: "#2563eb"
-  secondary_color: "#7c3aed"
-  background_color: "#0f172a"
-  surface_color: "#1e293b"
-  text_color: "#e2e8f0"
-  text_secondary: "#94a3b8"
-  accent_color: "#22d3ee"
-  border_color: "#334155"
-  code_background: "#1e293b"
-  link_color: "#60a5fa"
-  link_hover: "#93c5fd"
+# Theme Configuration
+# NCMDS now uses a single optimized dark theme
+theme_name: "ncmds_default"
 
 # Server configuration
 server:

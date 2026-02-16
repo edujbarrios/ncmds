@@ -212,10 +212,14 @@ def static_files(filename):
 @app.errorhandler(404)
 def page_not_found(e):
     """404 error handler"""
+    error_title = config_manager.get('ui_text.error_404_title', '404 - Page Not Found')
+    error_heading = config_manager.get('ui_text.error_404_heading', '404 - Page Not Found')
+    error_message = config_manager.get('ui_text.error_404_message', 'The page you are looking for does not exist.')
+    
     return render_template(
         'layout.html',
-        content='<h1>404 - Page Not Found</h1><p>The page you are looking for does not exist.</p>',
-        title='404 - Page Not Found',
+        content=f'<h1>{error_heading}</h1><p>{error_message}</p>',
+        title=error_title,
         toc='',
         navigation=site.navigation,
         config=config
@@ -228,17 +232,6 @@ def inject_config():
     return {'site_config': config}
 
 
-@app.route('/api/themes')
-def list_themes():
-    """API endpoint to list available themes"""
-    from flask import jsonify
-    themes = config_manager.get_available_themes()
-    return jsonify({
-        'themes': themes,
-        'active_theme': config_manager.get('active_theme_name')
-    })
-
-
 if __name__ == '__main__':
     # Create necessary directories
     os.makedirs(DOCS_DIR, exist_ok=True)
@@ -249,8 +242,7 @@ if __name__ == '__main__':
     site.navigation = site.build_navigation()
     
     # Get active theme information
-    active_theme = config_manager.get('active_theme_name', 'ocean')
-    themes_available = len(config_manager.get_available_themes())
+    active_theme = config_manager.get('active_theme_name', 'ncmds_default')
     
     # Server configuration
     server_host = config_manager.get('server.host', '0.0.0.0')
@@ -265,15 +257,14 @@ if __name__ == '__main__':
 
 Server starting...
 Docs directory: {DOCS_DIR}
-Active theme: {active_theme} ({themes_available} themes available)
+Theme: {active_theme}
 Documents: {len(site.navigation)} found
 URL: http://localhost:{server_port}
 
  Tips:
-   - Change themes in config/config.yaml
-   - Add new themes in config/themes/
-   - Customize colors for each theme
-   - View available themes: http://localhost:{server_port}/api/themes
+   - Add .md files to docs/ folder
+   - Edit config/config.yaml to customize
+   - Optimized dark theme for comfortable reading
 
 Press Ctrl+C to stop
 """)
