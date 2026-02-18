@@ -1,0 +1,11 @@
+<!-- Table of Contents -->
+{% if toc %}
+<aside class="toc-sidebar">
+    <div class="toc-container">
+        <h3 class="toc-title">{{ config.ui_text.toc_title }}</h3>
+        <div class="toc-content">
+            {{ toc|safe }}
+        </div>
+    </div>
+</aside>
+{% endif %}

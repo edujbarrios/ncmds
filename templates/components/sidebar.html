@@ -1,0 +1,19 @@
+<!-- Sidebar Navigation -->
+<aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav">
+        <h3 class="sidebar-title">{{ config.ui_text.sidebar_title }}</h3>
+        {% if navigation %}
+        <ul class="nav-list">
+            {% for item in navigation %}
+            <li class="nav-item">
+                <a href="/docs/{{ item.path }}" class="nav-link">
+                    {{ item.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="nav-empty">{{ config.ui_text.no_documents_message|safe }}</p>
+        {% endif %}
+    </nav>
+</aside>

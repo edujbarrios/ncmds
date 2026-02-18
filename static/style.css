@@ -1124,32 +1124,96 @@ body {
     text-align: left;
 }
 
+/* Inline Code */
 .markdown-body code {
-    background-color: var(--code-background);
+    background: linear-gradient(135deg, var(--code-background) 0%, var(--code-background) 100%);
     color: var(--accent-color);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-size: 0.95em;
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
+.markdown-body code:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Code Blocks */
 .markdown-body pre {
-    background-color: var(--code-background);
+    background: var(--code-background);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.5rem;
+    border-radius: 12px;
+    padding: 1.75rem;
     overflow-x: auto;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.markdown-body pre:hover {
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Add subtle glow effect for dark mode */
+[data-theme="dark"] .markdown-body pre {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03),
+        0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] .markdown-body pre:hover {
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 30px rgba(59, 130, 246, 0.15);
+}
+
+/* Light theme code blocks */
+[data-theme="light"] .markdown-body pre {
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .markdown-body pre:hover {
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 4px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .markdown-body pre code {
     background-color: transparent;
-    color: var(--text-color);
+    color: inherit;
     padding: 0;
     border-radius: 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
+    border: none;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    box-shadow: none;
+    font-weight: 400;
+}
+
+.markdown-body pre code:hover {
+    transform: none;
+    box-shadow: none;
 }
 
 /* Code Block Copy Button */
@@ -1164,22 +1228,26 @@ body {
 
 .copy-code-button {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 1rem;
+    right: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
+    padding: 0.6rem 1rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.8rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .code-block-wrapper:hover .copy-code-button {
@@ -1187,22 +1255,43 @@ body {
 }
 
 .copy-code-button:hover {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     border-color: var(--primary-color);
     color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 6px 20px rgba(59, 130, 246, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .copy-code-button:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(0.98);
 }
 
 .copy-code-button.copied {
-    background-color: #10b981;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     border-color: #10b981;
     color: white;
     opacity: 1;
+    box-shadow: 
+        0 6px 20px rgba(16, 185, 129, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Light theme copy button */
+[data-theme="light"] .copy-code-button {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .copy-code-button:hover {
+    box-shadow: 
+        0 6px 20px rgba(37, 99, 235, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .copy-code-button svg {

@@ -15,9 +15,10 @@ html:
 
 # Syntax Highlighting Theme
 # See: https://cdnjs.com/libraries/highlight.js for more themes
-# Popular options: github-dark, monokai, atom-one-dark, nord, dracula
+# Popular options: github-dark, monokai, atom-one-dark, nord, dracula, tokyo-night-dark
 highlighting:
-  theme: "github-dark"
+  theme_dark: "atom-one-dark"
+  theme_light: "atom-one-light"
   cdn_version: "11.9.0"
 
 # UI Text Configuration (for easy translation/customization)

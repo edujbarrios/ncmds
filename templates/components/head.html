@@ -1,0 +1,41 @@
+<head>
+    <meta charset="{{ config.html.charset }}">
+    <meta name="viewport" content="{{ config.html.viewport }}">
+    <meta name="description" content="{{ config.description }}">
+    <meta name="author" content="{{ config.author }}">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_dark }}.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/highlight.min.js"></script>
+    <style>
+        :root {
+            /* Dark theme (default) */
+            --primary-color: {{ config.theme.dark.primary_color }};
+            --secondary-color: {{ config.theme.dark.secondary_color }};
+            --background-color: {{ config.theme.dark.background_color }};
+            --surface-color: {{ config.theme.dark.surface_color }};
+            --text-color: {{ config.theme.dark.text_color }};
+            --text-secondary: {{ config.theme.dark.text_secondary }};
+            --accent-color: {{ config.theme.dark.accent_color }};
+            --border-color: {{ config.theme.dark.border_color }};
+            --code-background: {{ config.theme.dark.code_background }};
+            --link-color: {{ config.theme.dark.link_color }};
+            --link-hover: {{ config.theme.dark.link_hover }};
+        }
+        
+        [data-theme="light"] {
+            /* Light theme */
+            --primary-color: {{ config.theme.light.primary_color }};
+            --secondary-color: {{ config.theme.light.secondary_color }};
+            --background-color: {{ config.theme.light.background_color }};
+            --surface-color: {{ config.theme.light.surface_color }};
+            --text-color: {{ config.theme.light.text_color }};
+            --text-secondary: {{ config.theme.light.text_secondary }};
+            --accent-color: {{ config.theme.light.accent_color }};
+            --border-color: {{ config.theme.light.border_color }};
+            --code-background: {{ config.theme.light.code_background }};
+            --link-color: {{ config.theme.light.link_color }};
+            --link-hover: {{ config.theme.light.link_hover }};
+        }
+    </style>
+</head>
