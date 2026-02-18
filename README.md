@@ -40,7 +40,7 @@ cd ncmds
 pip install -r requirements.txt
 
 # Run
-python app.py
+python ncmds.py
 ```
 
 Open `http://localhost:5000` in your browser.

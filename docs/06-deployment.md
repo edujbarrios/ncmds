@@ -9,7 +9,7 @@ Deploy your NCMDS documentation site to production.
 For local development:
 
 ```bash
-python app.py
+python ncmds.py
 ```
 
 Access at `http://localhost:5000`
@@ -23,13 +23,13 @@ For production environments, use a WSGI server like Gunicorn:
 ```bash
 pip install gunicorn
 ``````bash
-gunicorn app:app --bind 0.0.0.0:8000
+gunicorn ncmds:app --bind 0.0.0.0:8000
 ```
 
 3. **With Workers:**
 
 ```bash
-gunicorn app:app --bind 0.0.0.0:8000 --workers 4
+gunicorn ncmds:app --bind 0.0.0.0:8000 --workers 4
 ```
 
 ### Docker Deployment
@@ -49,7 +49,7 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
+CMD ["gunicorn", "ncmds:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
 ```
 
 2. **Build and Run:**
@@ -64,7 +64,7 @@ docker run -p 8000:8000 ncmds
 1. **Create Procfile:**
 
 ```
-web: gunicorn app:app
+web: gunicorn ncmds:app
 ```
 
 2. **Create runtime.txt:**
@@ -212,7 +212,7 @@ kill -9 <PID>
 ### Permission Denied
 ```bash
 # Fix permissions
-chmod +x app.py
+chmod +x ncmds.py
 ```
 
 ### Module Not Found

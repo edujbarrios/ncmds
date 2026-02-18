@@ -143,7 +143,7 @@ After modifying `config.yaml`:
 2. Restart the server:
    ```bash
    # Stop server (Ctrl+C)
-   python app.py
+   python ncmds.py
    ```
 
 ## 💡 Tips

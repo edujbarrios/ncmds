@@ -97,7 +97,7 @@ greet("World");
 #!/bin/bash
 echo "Hello, NCMDS!"
 cd /path/to/project
-python app.py
+python ncmds.py
 \```
 
 ## 📊 Tables

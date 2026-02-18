@@ -27,7 +27,7 @@ pip install -r requirements.txt
 3. **Start the server:**
 
 ```bash
-python app.py
+python ncmds.py
 ```
 
 4. **Access the application:**
@@ -108,7 +108,7 @@ ncmds/
 │   └── layout.html           # Documentation layout
 ├── static/
 │   └── style.css             # CSS styles
-├── app.py                     # Main application
+├── ncmds.py                   # Main application
 └── requirements.txt          # Python dependencies
 ```
 
