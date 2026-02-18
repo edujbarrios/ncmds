@@ -72,16 +72,16 @@ hero:
   tagline: "No Code Markdown Documentation Sites"
   description: "Create beautiful documentation sites with just Markdown - no coding required"
   
-  # Call to action buttons
+  # Call to action buttons (array of buttons - fully customizable)
   buttons:
-    primary:
-      text: "Get Started"
+    - text: "Get Started"
       url: "/docs/01-index"
-      icon: "arrow"  # arrow, rocket, play
-    secondary:
-      text: "View Documentation"
+      icon: "arrow"  # arrow, rocket, zap, play, etc.
+      style: "primary"  # primary, secondary, outline
+    - text: "View Documentation"
       url: "/docs/01-index"
-      icon: "book"  # book, docs, info
+      icon: "book"  # book, github, download, etc.
+      style: "secondary"  # primary, secondary, outline
   
   # Feature highlights (4 items max for best display)
   features:
