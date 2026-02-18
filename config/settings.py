@@ -151,6 +151,14 @@ class ConfigManager:
     
     def _resolve_theme(self):
         """Resolve current theme and add it to configuration"""
+        # Check if theme is defined inline in config (new format with dark/light)
+        if 'theme' in self.config and isinstance(self.config['theme'], dict):
+            # New format with inline theme definition including dark and light variants
+            if 'dark' in self.config['theme'] and 'light' in self.config['theme']:
+                # Themes are already defined in config, no need to load from files
+                return
+        
+        # Legacy format: load theme from file
         theme_name = self.config.get('theme_name', 'ncmds_default')
         
         # Load theme from file

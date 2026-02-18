@@ -11,17 +11,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/highlight.min.js"></script>
     <style>
         :root {
-            --primary-color: {{ config.theme.primary_color }};
-            --secondary-color: {{ config.theme.secondary_color }};
-            --background-color: {{ config.theme.background_color }};
-            --surface-color: {{ config.theme.surface_color }};
-            --text-color: {{ config.theme.text_color }};
-            --text-secondary: {{ config.theme.text_secondary }};
-            --accent-color: {{ config.theme.accent_color }};
-            --border-color: {{ config.theme.border_color }};
-            --code-background: {{ config.theme.code_background }};
-            --link-color: {{ config.theme.link_color }};
-            --link-hover: {{ config.theme.link_hover }};
+            /* Dark theme (default) */
+            --primary-color: {{ config.theme.dark.primary_color }};
+            --secondary-color: {{ config.theme.dark.secondary_color }};
+            --background-color: {{ config.theme.dark.background_color }};
+            --surface-color: {{ config.theme.dark.surface_color }};
+            --text-color: {{ config.theme.dark.text_color }};
+            --text-secondary: {{ config.theme.dark.text_secondary }};
+            --accent-color: {{ config.theme.dark.accent_color }};
+            --border-color: {{ config.theme.dark.border_color }};
+            --code-background: {{ config.theme.dark.code_background }};
+            --link-color: {{ config.theme.dark.link_color }};
+            --link-hover: {{ config.theme.dark.link_hover }};
+        }
+        
+        [data-theme="light"] {
+            /* Light theme */
+            --primary-color: {{ config.theme.light.primary_color }};
+            --secondary-color: {{ config.theme.light.secondary_color }};
+            --background-color: {{ config.theme.light.background_color }};
+            --surface-color: {{ config.theme.light.surface_color }};
+            --text-color: {{ config.theme.light.text_color }};
+            --text-secondary: {{ config.theme.light.text_secondary }};
+            --accent-color: {{ config.theme.light.accent_color }};
+            --border-color: {{ config.theme.light.border_color }};
+            --code-background: {{ config.theme.light.code_background }};
+            --link-color: {{ config.theme.light.link_color }};
+            --link-hover: {{ config.theme.light.link_hover }};
         }
     </style>
 </head>
@@ -49,6 +65,24 @@
                 </a>
             </div>
             <nav class="header-nav">
+                {% if config.theme.toggle_enabled %}
+                <button class="theme-toggle" id="themeToggle" aria-label="{{ config.ui_text.theme_toggle_dark }}">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                {% endif %}
                 <button class="mobile-menu-toggle" aria-label="{{ config.ui_text.toggle_menu_aria }}">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 12h18M3 6h18M3 18h18"/>
@@ -246,6 +280,41 @@
                 wrapper.appendChild(copyButton);
             }
         });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            const htmlElement = document.documentElement;
+            
+            // Check for saved theme preference or default to 'dark'
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            htmlElement.setAttribute('data-theme', currentTheme);
+            updateThemeToggleIcon(currentTheme);
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeToggleIcon(newTheme);
+            });
+            
+            function updateThemeToggleIcon(theme) {
+                const sunIcon = themeToggle.querySelector('.sun-icon');
+                const moonIcon = themeToggle.querySelector('.moon-icon');
+                
+                if (theme === 'dark') {
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                    themeToggle.setAttribute('aria-label', '{{ config.ui_text.theme_toggle_dark }}');
+                } else {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                    themeToggle.setAttribute('aria-label', '{{ config.ui_text.theme_toggle_light }}');
+                }
+            }
+        }
     </script>
 </body>
 </html>

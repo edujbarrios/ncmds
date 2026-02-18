@@ -44,6 +44,10 @@ ui_text:
   copy_button: "Copy"
   copy_button_copied: "Copied!"
   
+  # Theme toggle
+  theme_toggle_dark: "Switch to light mode"
+  theme_toggle_light: "Switch to dark mode"
+  
   # Error pages
   error_404_title: "404 - Page Not Found"
   error_404_heading: "404 - Page Not Found"
@@ -120,8 +124,40 @@ hero:
     scroll_indicator: true
 
 # Theme Configuration
-# NCMDS now uses a single optimized dark theme
-theme_name: "ncmds_default"
+theme:
+  # Default theme on load (dark or light)
+  default: "dark"
+  
+  # Enable theme toggle button
+  toggle_enabled: true
+  
+  # Dark theme colors
+  dark:
+    primary_color: "#3b82f6"
+    secondary_color: "#8b5cf6"
+    background_color: "#0f1e35"
+    surface_color: "#1a2942"
+    text_color: "#e8edf5"
+    text_secondary: "#a8b5d1"
+    accent_color: "#06b6d4"
+    border_color: "#2a4365"
+    code_background: "#132336"
+    link_color: "#60a5fa"
+    link_hover: "#93c5fd"
+  
+  # Light theme colors
+  light:
+    primary_color: "#2563eb"
+    secondary_color: "#7c3aed"
+    background_color: "#ffffff"
+    surface_color: "#f8fafc"
+    text_color: "#0f172a"
+    text_secondary: "#475569"
+    accent_color: "#0891b2"
+    border_color: "#e2e8f0"
+    code_background: "#f1f5f9"
+    link_color: "#2563eb"
+    link_hover: "#1e40af"
 
 # Server configuration
 server:
