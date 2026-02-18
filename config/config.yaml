@@ -163,6 +163,14 @@ theme:
     link_color: "#2563eb"
     link_hover: "#1e40af"
 
+# UI Controls Configuration
+ui_controls:
+  # Enable sidebar toggle button
+  sidebar_toggle: true
+  
+  # Enable table of contents toggle button
+  toc_toggle: true
+
 # Server configuration
 server:
   host: "0.0.0.0"
