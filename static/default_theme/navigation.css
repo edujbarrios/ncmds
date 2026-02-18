@@ -1,0 +1,140 @@
+/* ========================================
+   NAVIGATION & FOOTER
+   Document navigation buttons and footer
+   ======================================== */
+
+/* Documentation Navigation Buttons */
+.doc-navigation {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 48%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:hover svg {
+    transform: translateX(0);
+}
+
+.nav-button-prev:hover svg {
+    transform: translateX(-4px);
+}
+
+.nav-button-next:hover svg {
+    transform: translateX(4px);
+}
+
+.nav-button svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.nav-button-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-button-prev .nav-button-content {
+    align-items: flex-start;
+}
+
+.nav-button-next .nav-button-content {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.nav-button-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.nav-button-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-button:hover .nav-button-title {
+    color: white;
+}
+
+.nav-button:hover .nav-button-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-button-spacer {
+    flex: 1;
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.footer-content p a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-content p a:hover {
+    color: var(--link-hover);
+}
+
+.footer-meta {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}

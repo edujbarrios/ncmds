@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ config.html.language }}">
-{% include 'components/head.html' %}
+{% include 'components/html/head.html' %}
 <body>
-    {% include 'components/header.html' %}
+    {% include 'components/html/header.html' %}
 
     <div class="site-container">
-        {% include 'components/sidebar.html' %}
+        {% include 'components/html/sidebar.html' %}
 
         <!-- Main Content -->
         <main class="main-content">
@@ -14,15 +14,15 @@
                     {{ content|safe }}
                 </article>
                 
-                {% include 'components/doc_navigation.html' %}
+                {% include 'components/html/doc_navigation.html' %}
             </div>
         </main>
 
-        {% include 'components/toc.html' %}
+        {% include 'components/html/toc.html' %}
     </div>
 
-    {% include 'components/footer.html' %}
+    {% include 'components/html/footer.html' %}
 
-    {% include 'components/scripts.html' %}
+    {% include 'components/scripts/scripts.html' %}
 </body>
 </html>

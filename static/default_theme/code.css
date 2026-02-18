@@ -1,0 +1,192 @@
+/* ========================================
+   CODE BLOCKS & SYNTAX HIGHLIGHTING
+   Inline code and code block styling
+   ======================================== */
+
+/* Inline Code */
+.markdown-body code {
+    background: linear-gradient(135deg, var(--code-background) 0%, var(--code-background) 100%);
+    color: var(--accent-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.markdown-body code:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Code Blocks */
+.markdown-body pre {
+    background: var(--code-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.75rem;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.markdown-body pre:hover {
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Dark Theme Code Blocks */
+[data-theme="dark"] .markdown-body pre {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03),
+        0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] .markdown-body pre:hover {
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 30px rgba(59, 130, 246, 0.15);
+}
+
+/* Light Theme Code Blocks */
+[data-theme="light"] .markdown-body pre {
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .markdown-body pre:hover {
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 4px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Code within pre */
+.markdown-body pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    box-shadow: none;
+    font-weight: 400;
+}
+
+.markdown-body pre code:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Code Block Wrapper */
+.code-block-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.code-block-wrapper pre {
+    margin-bottom: 0;
+}
+
+/* Copy Code Button */
+.copy-code-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.code-block-wrapper:hover .copy-code-button {
+    opacity: 1;
+}
+
+.copy-code-button:hover {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 6px 20px rgba(59, 130, 246, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.copy-code-button:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.copy-code-button.copied {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #10b981;
+    color: white;
+    opacity: 1;
+    box-shadow: 
+        0 6px 20px rgba(16, 185, 129, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Light Theme Copy Button */
+[data-theme="light"] .copy-code-button {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .copy-code-button:hover {
+    box-shadow: 
+        0 6px 20px rgba(37, 99, 235, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.copy-code-button svg {
+    flex-shrink: 0;
+}
+
+.copy-code-button span {
+    font-weight: 500;
+}
+
+/* Show copy button on mobile */
+@media (max-width: 768px) {
+    .copy-code-button {
+        opacity: 1;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}

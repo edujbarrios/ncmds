@@ -1,0 +1,182 @@
+/* ========================================
+   RESPONSIVE DESIGN
+   Media queries for mobile and tablet
+   ======================================== */
+
+/* Tablet & Below (max-width: 1200px) */
+@media (max-width: 1200px) {
+    .toc-sidebar {
+        display: none;
+    }
+    
+    .toc-toggle {
+        display: none;
+    }
+    
+    .main-content {
+        max-width: calc(100% - 280px);
+    }
+    
+    .main-content.sidebar-hidden {
+        max-width: 100%;
+    }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Header */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .sidebar-toggle,
+    .toc-toggle {
+        display: none;
+    }
+    
+    .header-container {
+        padding: 0 1rem;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 999;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .sidebar.hidden {
+        transform: translateX(-100%);
+        left: 0;
+    }
+    
+    /* Main Content */
+    .main-content {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 2rem 1rem;
+    }
+    
+    .main-content.sidebar-hidden,
+    .main-content.toc-hidden {
+        margin-left: 0;
+        max-width: 100%;
+    }
+    
+    /* Markdown Typography */
+    .markdown-body h1 {
+        font-size: 2rem;
+    }
+    
+    .markdown-body h2 {
+        font-size: 1.75rem;
+    }
+    
+    .markdown-body h3 {
+        font-size: 1.35rem;
+    }
+    
+    /* Hero Responsive */
+    .hero-section {
+        min-height: 500px;
+    }
+    
+    .hero-container,
+    .home-hero .hero-container {
+        padding: 3rem 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2.75rem;
+    }
+    
+    .hero-tagline {
+        font-size: 1.4rem;
+    }
+    
+    .hero-description {
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-badge {
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .hero-button {
+        justify-content: center;
+        padding: 0.875rem 1.5rem;
+    }
+    
+    .hero-features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 3rem;
+    }
+    
+    .feature-item {
+        padding: 1.25rem 0.75rem;
+    }
+    
+    .feature-item span {
+        font-size: 0.85rem;
+    }
+    
+    .hero-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .hero-cards-section {
+        margin-top: 3rem;
+    }
+    
+    .cards-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
+    
+    .info-card {
+        padding: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+    }
+    
+    .hero-glow {
+        width: 400px;
+        height: 400px;
+        top: -100px;
+        right: -100px;
+    }
+    
+    .scroll-indicator {
+        display: none;
+    }
+    
+    /* Navigation Buttons */
+    .nav-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-button {
+        max-width: 100%;
+    }
+    
+    .nav-button-next .nav-button-content {
+        align-items: flex-start;
+        text-align: left;
+    }
+}

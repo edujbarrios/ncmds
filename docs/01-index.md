@@ -8,6 +8,7 @@
 
 - **Hero Landing Page** with customizable branding
 - **Modular configuration system** with parametrized settings
+- **Modular template components** for clean architecture
 - **Seven pre-built dark mode themes**
 - **Custom theme creation** support
 - **Standard Markdown (.md)** file support
@@ -68,6 +69,7 @@ def example():
 - [Markdown Features Guide](04-markdown-guide.md)
 - [Theme Creation Guide](05-themes.md)
 - [Deployment Guide](06-deployment.md)
+- [Template Components Guide](07-components.md)
 
 ## 🛠️ Technical Stack
 

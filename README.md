@@ -27,6 +27,7 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 - 🎯 **Hero Landing Page** - Customizable branding with gradient effects
 - 💻 **Syntax Highlighting** - Beautiful code blocks with copy button
 - 📋 **Auto Navigation** - Automatic sidebar generation with prev/next buttons
+- 🧩 **Modular Components** - Clean component-based template architecture
 - ⚙️ **Easy Configuration** - Simple YAML-based settings
 
 ## 🚀 Quick Start
@@ -82,6 +83,7 @@ Full documentation available at `/docs` when running the server, or view:
 - [Markdown Features](docs/04-markdown-guide.md)
 - [Theme Creation](docs/05-themes.md)
 - [Deployment Guide](docs/06-deployment.md)
+- [Template Components](docs/07-components.md)
 
 ## 🛠️ Tech Stack
 

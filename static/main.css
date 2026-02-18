@@ -1,0 +1,37 @@
+/* ========================================
+   NCMDS - NO CODE MARKDOWN DOCUMENTATION SITES
+   Main CSS Entry Point (Modular Architecture)
+   Created by: edujbarrios
+   ======================================== */
+
+/* Import all CSS modules in order */
+
+/* 1. Base Styles - Reset & Typography */
+@import url('default_theme/base.css');
+
+/* 2. Header Component */
+@import url('default_theme/header.css');
+
+/* 3. Hero Section */
+@import url('default_theme/hero.css');
+
+/* 4. Sidebar Navigation */
+@import url('default_theme/sidebar.css');
+
+/* 5. Table of Contents */
+@import url('default_theme/toc.css');
+
+/* 6. Main Content & Markdown */
+@import url('default_theme/content.css');
+
+/* 7. Code Blocks & Syntax Highlighting */
+@import url('default_theme/code.css');
+
+/* 8. Navigation & Footer */
+@import url('default_theme/navigation.css');
+
+/* 9. Responsive Design */
+@import url('default_theme/responsive.css');
+
+/* 10. Utilities */
+@import url('default_theme/utilities.css');
