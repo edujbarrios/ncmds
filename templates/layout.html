@@ -83,6 +83,22 @@
                     </svg>
                 </button>
                 {% endif %}
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="{{ config.ui_text.toggle_sidebar }}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="18" rx="1"/>
+                        <rect x="14" y="3" width="7" height="18" rx="1"/>
+                    </svg>
+                </button>
+                <button class="toc-toggle" id="tocToggle" aria-label="{{ config.ui_text.toggle_toc }}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                </button>
                 <button class="mobile-menu-toggle" aria-label="{{ config.ui_text.toggle_menu_aria }}">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 12h18M3 6h18M3 18h18"/>
@@ -187,22 +203,71 @@
             copyButtonCopied: "{{ config.ui_text.copy_button_copied }}"
         };
 
-        // Mobile menu toggle
+        // Get DOM elements
         const menuToggle = document.querySelector('.mobile-menu-toggle');
         const sidebar = document.getElementById('sidebar');
-        
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+        const mainContent = document.querySelector('.main-content');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const tocToggle = document.getElementById('tocToggle');
+        const tocSidebar = document.querySelector('.toc-sidebar');
 
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
+        // Mobile menu toggle
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                        sidebar.classList.remove('active');
+                    }
                 }
+            });
+        }
+        
+        // Sidebar toggle functionality (desktop)
+        if (sidebarToggle && sidebar && mainContent) {
+            // Check for saved sidebar state or default to 'visible'
+            const sidebarVisible = localStorage.getItem('sidebarVisible') !== 'false';
+            
+            if (!sidebarVisible) {
+                sidebar.classList.add('hidden');
+                mainContent.classList.add('sidebar-hidden');
+                sidebarToggle.classList.add('active');
             }
-        });
+            
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                mainContent.classList.toggle('sidebar-hidden');
+                sidebarToggle.classList.toggle('active');
+                
+                const isHidden = sidebar.classList.contains('hidden');
+                localStorage.setItem('sidebarVisible', !isHidden);
+            });
+        }
+        
+        // TOC toggle functionality
+        if (tocToggle && tocSidebar && mainContent) {
+            // Check for saved TOC state or default to 'visible'
+            const tocVisible = localStorage.getItem('tocVisible') !== 'false';
+            
+            if (!tocVisible) {
+                tocSidebar.classList.add('hidden');
+                mainContent.classList.add('toc-hidden');
+                tocToggle.classList.add('active');
+            }
+            
+            tocToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('hidden');
+                mainContent.classList.toggle('toc-hidden');
+                tocToggle.classList.toggle('active');
+                
+                const isHidden = tocSidebar.classList.contains('hidden');
+                localStorage.setItem('tocVisible', !isHidden);
+            });
+        }
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

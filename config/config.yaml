@@ -48,6 +48,10 @@ ui_text:
   theme_toggle_dark: "Switch to light mode"
   theme_toggle_light: "Switch to dark mode"
   
+  # Sidebar and TOC toggles
+  toggle_sidebar: "Toggle navigation sidebar"
+  toggle_toc: "Toggle table of contents"
+  
   # Error pages
   error_404_title: "404 - Page Not Found"
   error_404_heading: "404 - Page Not Found"

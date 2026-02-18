@@ -1,6 +1,6 @@
 <div align="center">
 
-# NCMDS - No Code Markdown Documentation Sites
+# No Code Markdown Documentation Sites
 
 <img src="images/logo.png" alt="NCMDS Logo" width="400"/>
 
