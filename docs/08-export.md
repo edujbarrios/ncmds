@@ -4,13 +4,6 @@ NCMDS includes a powerful export module that allows you to export your documenta
 
 ## Features
 
-### 📄 PDF Export
-- Professional cover page with your project name
-- Automatic table of contents
-- Print-optimized styles
-- Syntax highlighted code
-- Automatic pagination
-
 ### 📝 QMD Export (Quarto Markdown)
 - Files ready to render with Quarto
 - Pre-configured YAML frontmatter
