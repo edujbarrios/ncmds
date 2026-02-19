@@ -29,6 +29,7 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 - 📋 **Auto Navigation** - Automatic sidebar generation with prev/next buttons
 - 🧩 **Modular Components** - Clean component-based template architecture
 - ⚙️ **Easy Configuration** - Simple YAML-based settings
+- 📄 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
 
 ## 🚀 Quick Start
 
@@ -74,6 +75,22 @@ The site uses a single, optimized dark theme designed for comfortable reading an
 
 More themes will be added in the future.
 
+## 📤 Export Documentation
+
+NCMDS includes a powerful export module that allows you to export your documentation to different formats:
+
+- **QMD Export** - Export to Quarto Markdown format for rendering with Quarto
+- **Customizable Settings** - Configure project name, paper size, and more
+- **Easy to Use** - Click floating export buttons on any documentation page
+
+### Export Options
+
+- Automatic table of contents generation
+- Professional cover page with project branding
+- Optimized for print and digital reading
+
+See the [Export Documentation](docs/08-export.md) for detailed usage instructions.
+
 ## 📚 Documentation
 
 Full documentation available at `/docs` when running the server, or view:
@@ -84,6 +101,7 @@ Full documentation available at `/docs` when running the server, or view:
 - [Theme Creation](docs/05-themes.md)
 - [Deployment Guide](docs/06-deployment.md)
 - [Template Components](docs/07-components.md)
+- [Export Documentation](docs/08-export.md)
 
 ## 🛠️ Tech Stack
 
@@ -91,6 +109,8 @@ Full documentation available at `/docs` when running the server, or view:
 - **Python-Markdown** - Markdown processing
 - **PyYAML** - Configuration
 - **Highlight.js** - Syntax highlighting
+- **WeasyPrint** - PDF generation (optional)
+- **Quarto** - QMD rendering support (optional)
 
 ## 🎯 Use Cases
 

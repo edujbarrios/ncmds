@@ -15,6 +15,9 @@ from flask import Flask, render_template, send_from_directory, abort
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'config'))
 from settings import ConfigManager
 
+# Importar módulo de exportación
+from export import register_export_routes
+
 app = Flask(__name__)
 
 # Inicializar configuración modular
@@ -152,6 +155,9 @@ class DocumentationSite:
 
 # Initialize
 site = DocumentationSite(config_manager)
+
+# Register export routes
+register_export_routes(app, config_manager, site)
 
 
 @app.route('/')

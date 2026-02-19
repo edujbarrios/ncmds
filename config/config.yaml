@@ -190,3 +190,18 @@ features:
   syntax_highlighting: true
   auto_reload: true
   search: false  # Coming soon
+
+# Export Configuration
+export:
+  # Show export button on all documentation pages
+  show_on_all_pages: true
+  
+  # QMD (Quarto Markdown) Export Settings
+  qmd:
+    enabled: true
+    button_text: "Export Documentation"
+    # Override project name for QMD exports (optional - uses site_name if not set)
+    project_name: ""  # Leave empty to use site_name
+    # Quarto output format
+    default_format: "pdf"  # pdf, html, docx
+

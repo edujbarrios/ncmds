@@ -1,0 +1,132 @@
+<!-- Export Buttons Component -->
+{% if config.export.show_on_all_pages %}
+<div class="export-buttons">
+    {% if config.export.qmd.enabled %}
+    <button class="export-btn export-btn-qmd" onclick="exportAllToQMD()" title="Export all documentation to QMD (Quarto Markdown)">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+        </svg>
+        <span>{{ config.export.qmd.button_text }}</span>
+    </button>
+    {% endif %}
+</div>
+
+<style>
+.export-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 1000;
+}
+
+.export-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.export-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.export-btn-qmd {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.export-btn-qmd:hover {
+    background: linear-gradient(135deg, #e081e9 0%, #e3465a 100%);
+}
+
+/* Dark mode adjustments */
+body.dark-mode .export-btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .export-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .export-buttons {
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .export-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .export-btn span {
+        display: none;
+    }
+    
+    .export-btn svg {
+        margin: 0;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+</style>
+
+<script>
+// Export all documentation to QMD
+function exportAllToQMD() {
+    window.location.href = '/export/qmd/all';
+}
+
+// Show loading indicator during export
+document.addEventListener('DOMContentLoaded', function() {
+    const exportButtons = document.querySelectorAll('.export-btn');
+    
+    exportButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" class="spin"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4 31.4" stroke-dashoffset="0"></circle></svg><span>Exporting...</span>';
+            this.disabled = true;
+            
+            // Restore button after 3 seconds (in case of error)
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 3000);
+        });
+    });
+});
+</script>
+{% endif %}

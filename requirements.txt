@@ -2,3 +2,5 @@ Flask==3.0.0
 Markdown==3.5.1
 PyYAML==6.0.1
 Pygments==2.17.2
+weasyprint==61.2
+
