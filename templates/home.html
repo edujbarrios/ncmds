@@ -445,40 +445,9 @@
     {% endif %}
     
     <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            const htmlElement = document.documentElement;
-            
-            // Check for saved theme preference or default to 'dark'
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            htmlElement.setAttribute('data-theme', currentTheme);
-            updateThemeToggleIcon(currentTheme);
-            
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                htmlElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeToggleIcon(newTheme);
-            });
-            
-            function updateThemeToggleIcon(theme) {
-                const sunIcon = themeToggle.querySelector('.sun-icon');
-                const moonIcon = themeToggle.querySelector('.moon-icon');
-                
-                if (theme === 'dark') {
-                    sunIcon.style.display = 'block';
-                    moonIcon.style.display = 'none';
-                    themeToggle.setAttribute('aria-label', '{{ config.ui_text.theme_toggle_dark }}');
-                } else {
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
-                    themeToggle.setAttribute('aria-label', '{{ config.ui_text.theme_toggle_light }}');
-                }
-            }
-        }
+        // Set dark theme permanently
+        const htmlElement = document.documentElement;
+        htmlElement.setAttribute('data-theme', 'dark');
     </script>
 </body>
 </html>
