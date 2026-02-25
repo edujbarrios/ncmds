@@ -159,12 +159,22 @@
     margin: 1.5rem 0;
     border-radius: 8px;
     border-left: 4px solid var(--primary-color);
-    background-color: rgba(37, 99, 235, 0.1);
+    background-color: rgba(64, 224, 208, 0.1);
 }
 
 .markdown-body .admonition.note {
     border-left-color: var(--primary-color);
-    background-color: rgba(37, 99, 235, 0.1);
+    background-color: rgba(64, 224, 208, 0.1);
+}
+
+[data-theme="dark"] .markdown-body .admonition.note {
+    border-left-color: #40E0D0;
+    background-color: rgba(64, 224, 208, 0.1);
+}
+
+[data-theme="light"] .markdown-body .admonition.note {
+    border-left-color: #541087;
+    background-color: rgba(84, 16, 135, 0.1);
 }
 
 .markdown-body .admonition.warning {
@@ -180,4 +190,26 @@
 .markdown-body .admonition.tip {
     border-left-color: #10b981;
     background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* Bold and Italic Text in Dark Mode (Docusaurus style) */
+[data-theme="dark"] .markdown-body strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+[data-theme="dark"] .markdown-body em {
+    color: var(--primary-color);
+    font-style: italic;
+}
+
+/* Light Mode keeps default behavior */
+[data-theme="light"] .markdown-body strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Links bold in all themes */
+.markdown-body a {
+    font-weight: bold;
 }

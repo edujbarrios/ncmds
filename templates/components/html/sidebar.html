@@ -15,5 +15,18 @@
         {% else %}
         <p class="nav-empty">{{ config.ui_text.no_documents_message|safe }}</p>
         {% endif %}
+        
+        <!-- Export Button in Sidebar -->
+        {% if config.export.show_on_all_pages and config.export.qmd.enabled %}
+        <div class="sidebar-export">
+            <button class="sidebar-export-btn" onclick="exportAllToQMD()" title="Export all documentation to QMD (Quarto Markdown)">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                </svg>
+                <span>{{ config.export.qmd.button_text }}</span>
+            </button>
+        </div>
+        {% endif %}
     </nav>
 </aside>

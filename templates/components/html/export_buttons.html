@@ -13,14 +13,9 @@
 </div>
 
 <style>
+/* Export button styles moved to sidebar */
 .export-buttons {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    z-index: 1000;
+    display: none; /* Hide the floating button */
 }
 
 .export-btn {
@@ -55,12 +50,14 @@
 }
 
 .export-btn-qmd {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #008080 0%, #40E0D0 100%);
     color: white;
+    box-shadow: 0 2px 8px rgba(64, 224, 208, 0.3);
 }
 
 .export-btn-qmd:hover {
-    background: linear-gradient(135deg, #e081e9 0%, #e3465a 100%);
+    background: linear-gradient(135deg, #006666 0%, #66E6DD 100%);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.5);
 }
 
 /* Dark mode adjustments */
@@ -70,6 +67,24 @@ body.dark-mode .export-btn {
 
 body.dark-mode .export-btn:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .export-btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .export-btn:hover {
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.4), 0 0 20px rgba(64, 224, 208, 0.2);
+}
+
+[data-theme="dark"] .export-btn-qmd {
+    background: linear-gradient(135deg, #006666 0%, #40E0D0 100%);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+}
+
+[data-theme="dark"] .export-btn-qmd:hover {
+    background: linear-gradient(135deg, #008080 0%, #66E6DD 100%);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.5), 0 0 25px rgba(64, 224, 208, 0.3);
 }
 
 /* Responsive */

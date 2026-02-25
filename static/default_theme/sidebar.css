@@ -69,15 +69,52 @@
 }
 
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(64, 224, 208, 0.08);
     color: var(--accent-color);
     transform: translateX(2px);
+    border-left: 2px solid var(--accent-color);
+    padding-left: calc(0.75rem - 2px);
 }
 
 .nav-link.active {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, #006666 0%, #40E0D0 100%);
+    background-size: 200% auto;
     color: white;
     font-weight: 500;
+    box-shadow: 0 2px 8px rgba(64, 224, 208, 0.4), 0 0 15px rgba(64, 224, 208, 0.2);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+    animation: activeGradient 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: activeLinkShine 3s ease-in-out infinite;
+}
+
+@keyframes activeGradient {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
+@keyframes activeLinkShine {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 100%;
+    }
 }
 
 /* Empty State */
@@ -92,4 +129,98 @@
     padding: 0.15rem 0.4rem;
     border-radius: 3px;
     font-size: 0.85rem;
+}
+
+/* ========================================
+   SIDEBAR EXPORT BUTTON
+   Export button integrated in sidebar
+   ======================================== */
+
+.sidebar-export {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-export-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #006666 0%, #40E0D0 100%);
+    background-size: 200% auto;
+    color: white;
+    border: 1px solid rgba(64, 224, 208, 0.3);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(64, 224, 208, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: exportGradient 3s ease-in-out infinite;
+}
+
+.sidebar-export-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: exportShine 3s ease-in-out infinite;
+}
+
+@keyframes exportGradient {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
+@keyframes exportShine {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 100%;
+    }
+}
+
+.sidebar-export-btn:hover {
+    background: linear-gradient(135deg, #008080 0%, #66E6DD 100%);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.5), 0 0 20px rgba(64, 224, 208, 0.3);
+    transform: translateY(-2px);
+    animation: none;
+}
+
+.sidebar-export-btn:active {
+    transform: translateY(0);
+}
+
+.sidebar-export-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-export-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-export-btn.loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }

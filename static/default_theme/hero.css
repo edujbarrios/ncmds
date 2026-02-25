@@ -5,7 +5,7 @@
 
 .hero-section {
     margin-top: 60px;
-    background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+    background: var(--background-color);
     border-bottom: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
@@ -110,22 +110,43 @@
 .hero-title {
     font-size: 5.5rem;
     font-weight: 800;
-    color: #ffffff;
     margin-bottom: 1.5rem;
     line-height: 1.05;
     letter-spacing: -0.03em;
     position: relative;
     display: inline-block;
-    text-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 20px rgba(96, 165, 250, 0.4);
-    animation: titlePulse 3s ease-in-out infinite alternate;
+    background: linear-gradient(
+        135deg,
+        #006666 0%,
+        #008B8B 50%,
+        #20B2AA 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 0 40px rgba(32, 178, 170, 0.6)) drop-shadow(0 0 20px rgba(32, 178, 170, 0.4));
+    animation: titlePulse 3s ease-in-out infinite alternate, heroTitleGradient 4s ease infinite;
+}
+
+@keyframes heroTitleGradient {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
 }
 
 @keyframes titlePulse {
     0% {
         transform: scale(1);
+        filter: drop-shadow(0 0 40px rgba(32, 178, 170, 0.6)) drop-shadow(0 0 20px rgba(32, 178, 170, 0.4));
     }
     100% {
         transform: scale(1.01);
+        filter: drop-shadow(0 0 50px rgba(32, 178, 170, 0.7)) drop-shadow(0 0 30px rgba(32, 178, 170, 0.5));
     }
 }
 
@@ -165,7 +186,7 @@
     color: #e8edf5;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    text-shadow: 0 2px 20px rgba(59, 130, 246, 0.4);
+    text-shadow: 0 2px 20px rgba(64, 224, 208, 0.4);
     line-height: 1.4;
     position: relative;
 }
@@ -254,20 +275,21 @@
 .hero-button.primary {
     background: linear-gradient(
         135deg,
-        #3b82f6 0%,
-        #06b6d4 50%,
-        #8b5cf6 100%
+        #006666 0%,
+        #008B8B 50%,
+        #20B2AA 100%
     );
     background-size: 200% auto;
     color: white;
     box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.3), 
-        0 0 40px #3b82f690,
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 4px 20px rgba(0, 0, 0, 0.4), 
+        0 0 40px rgba(32, 178, 170, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
-    filter: brightness(1.2) saturate(1.2);
+    filter: brightness(1.1) saturate(1.1);
     animation: buttonGradientFlow 4s ease infinite;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes buttonGradientFlow {
@@ -297,10 +319,12 @@
 .hero-button.primary:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 
-        0 10px 35px rgba(0, 0, 0, 0.4), 
-        0 0 50px var(--primary-color),
+        0 10px 35px rgba(0, 0, 0, 0.5), 
+        0 0 50px rgba(32, 178, 170, 0.7),
+        0 0 80px rgba(32, 178, 170, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     animation: none;
+    filter: brightness(1.2) saturate(1.2);
 }
 
 .hero-button.primary:active {
@@ -308,18 +332,18 @@
 }
 
 .hero-button.secondary {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.02);
     color: var(--text-color);
     border-color: var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
 }
 
 .hero-button.secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(64, 224, 208, 0.1);
     border-color: var(--accent-color);
     color: var(--accent-color);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 25px rgba(64, 224, 208, 0.4);
     transform: translateY(-2px);
 }
 
@@ -327,13 +351,13 @@
     background: transparent;
     color: var(--primary-color);
     border-color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .hero-button.outline:hover {
     background: var(--primary-color);
     color: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 25px rgba(64, 224, 208, 0.5);
     transform: translateY(-2px);
 }
 
@@ -384,12 +408,12 @@
 }
 
 .feature-item:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(64, 224, 208, 0.08);
     border-color: var(--primary-color);
     transform: translateY(-6px) scale(1.02);
     box-shadow: 
         0 10px 30px rgba(0, 0, 0, 0.3),
-        0 0 20px var(--primary-color)20;
+        0 0 20px rgba(64, 224, 208, 0.3);
 }
 
 .feature-item svg {
@@ -432,7 +456,7 @@
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 3rem;
-    text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    text-shadow: 0 0 30px rgba(64, 224, 208, 0.5);
     position: relative;
 }
 
@@ -534,9 +558,9 @@
     padding: 0.5rem 1rem;
     background: linear-gradient(
         135deg,
-        #3b82f6 0%,
-        #06b6d4 50%,
-        #8b5cf6 100%
+        var(--primary-color) 0%,
+        var(--accent-color) 50%,
+        var(--secondary-color) 100%
     );
     background-size: 200% auto;
     color: white;
@@ -547,7 +571,7 @@
     position: relative;
     z-index: 1;
     filter: brightness(1.2) saturate(1.2);
-    box-shadow: 0 4px 15px #3b82f670;
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.5);
     animation: highlightGradient 3s ease-in-out infinite;
     overflow: hidden;
 }
@@ -592,8 +616,8 @@
 }
 
 .info-card:hover .card-title {
-    color: #93c5fd;
-    text-shadow: 0 0 20px rgba(147, 197, 253, 0.6);
+    color: var(--primary-color);
+    text-shadow: 0 0 20px rgba(64, 224, 208, 0.6);
 }
 
 .card-description {
@@ -665,4 +689,40 @@
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
+}
+
+/* ========================================
+   DARK MODE HERO CUSTOMIZATION
+   Docusaurus-style turquoise hero in dark mode
+   ======================================== */
+
+[data-theme="dark"] .hero-section {
+    background: linear-gradient(135deg, 
+        #1b1b1d 0%, 
+        #242526 100%
+    );
+    border-bottom: 1px solid #3a3a3c;
+}
+
+[data-theme="dark"] .hero-badge {
+    background: rgba(64, 224, 208, 0.1);
+    border-color: rgba(64, 224, 208, 0.3);
+}
+
+[data-theme="dark"] .hero-badge:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(64, 224, 208, 0.15),
+        rgba(102, 230, 221, 0.2),
+        rgba(64, 224, 208, 0.15)
+    );
+    border-color: #40E0D0;
+    box-shadow: 0 6px 16px rgba(64, 224, 208, 0.3), 0 0 20px rgba(64, 224, 208, 0.2);
+}
+
+[data-theme="light"] .hero-section {
+    background: linear-gradient(135deg, 
+        rgba(84, 16, 135, 0.1) 0%, 
+        rgba(124, 58, 237, 0.05) 100%
+    );
 }

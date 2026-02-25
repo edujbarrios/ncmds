@@ -6,8 +6,6 @@
 
 **Create beautiful documentation sites with just Markdown**
 
-<img src="images/hero.png" alt="NCMDS Logo" width="400"/>
-
 ![On Active Development](https://img.shields.io/badge/Status-On%20Active%20Development-3b82f6?style=for-the-badge&logo=github&logoColor=white)
 ![Unstable Versions](https://img.shields.io/badge/Versions-Unstable-f59e0b?style=for-the-badge&logo=exclamation&logoColor=white)
 

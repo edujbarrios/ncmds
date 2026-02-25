@@ -5,7 +5,7 @@
 
 /* Inline Code */
 .markdown-body code {
-    background: linear-gradient(135deg, var(--code-background) 0%, var(--code-background) 100%);
+    background: var(--code-background);
     color: var(--accent-color);
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
@@ -13,13 +13,14 @@
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
     font-weight: 500;
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease;
 }
 
 .markdown-body code:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(64, 224, 208, 0.3), 0 0 8px rgba(64, 224, 208, 0.1);
     transform: translateY(-1px);
+    border-color: var(--accent-color);
 }
 
 /* Code Blocks */
@@ -31,36 +32,40 @@
     overflow-x: auto;
     margin-bottom: 2rem;
     box-shadow: 
-        0 8px 16px rgba(0, 0, 0, 0.15),
-        0 2px 4px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(64, 224, 208, 0.05);
     position: relative;
     transition: all 0.3s ease;
 }
 
 .markdown-body pre:hover {
     box-shadow: 
-        0 12px 24px rgba(0, 0, 0, 0.2),
-        0 4px 8px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 12px 24px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(64, 224, 208, 0.2),
+        inset 0 1px 0 rgba(64, 224, 208, 0.1),
+        0 0 20px rgba(64, 224, 208, 0.15);
     transform: translateY(-2px);
+    border-color: rgba(64, 224, 208, 0.3);
 }
 
 /* Dark Theme Code Blocks */
 [data-theme="dark"] .markdown-body pre {
+    background-color: #1e1e1e;
+    border-color: #3a3a3c;
     box-shadow: 
-        0 8px 16px rgba(0, 0, 0, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.03),
-        0 0 20px rgba(59, 130, 246, 0.1);
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(64, 224, 208, 0.05);
 }
 
 [data-theme="dark"] .markdown-body pre:hover {
     box-shadow: 
-        0 12px 24px rgba(0, 0, 0, 0.4),
-        0 4px 8px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 0 30px rgba(59, 130, 246, 0.15);
+        0 12px 24px rgba(0, 0, 0, 0.5),
+        0 4px 8px rgba(64, 224, 208, 0.25),
+        inset 0 1px 0 rgba(64, 224, 208, 0.1),
+        0 0 20px rgba(64, 224, 208, 0.2);
+    border-color: rgba(64, 224, 208, 0.4);
 }
 
 /* Light Theme Code Blocks */
@@ -115,7 +120,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1rem;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    background: linear-gradient(135deg, rgba(64, 224, 208, 0.15) 0%, rgba(102, 230, 221, 0.15) 100%);
     border: 1.5px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     color: var(--text-color);
@@ -141,7 +146,7 @@
     color: white;
     transform: translateY(-2px) scale(1.02);
     box-shadow: 
-        0 6px 20px rgba(59, 130, 246, 0.4),
+        0 6px 20px rgba(64, 224, 208, 0.4),
         0 2px 8px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -208,4 +213,13 @@
 
 [data-theme="dark"] .hljs-comment {
     color: #8b949e !important;
+}
+
+/* Highlighted code lines in dark mode */
+[data-theme="dark"] .highlighted-code-line {
+    background-color: rgba(64, 224, 208, 0.3);
+    display: block;
+    margin: 0 -1.75rem;
+    padding: 0 1.75rem;
+    border-left: 3px solid #40E0D0;
 }

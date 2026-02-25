@@ -200,7 +200,14 @@
                     <img src="{{ config.logo.image_path }}" alt="{{ config.logo.image_alt }}" width="{{ config.logo.width }}" height="{{ config.logo.height }}" style="border-radius: 6px; object-fit: contain;">
                     {% else %}
                     <svg width="{{ config.logo.width if config.logo else 32 }}" height="{{ config.logo.height if config.logo else 32 }}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="32" height="32" rx="6" fill="var(--primary-color)"/>
+                        <defs>
+                            <linearGradient id="logoGradientHome" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#40E0D0;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#66E6DD;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8CF0EB;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="32" height="32" rx="6" fill="url(#logoGradientHome)"/>
                         <text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="sans-serif">{{ config.logo.text if config.logo else config.ui_text.logo_text }}</text>
                     </svg>
                     {% endif %}

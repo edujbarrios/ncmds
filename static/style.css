@@ -55,14 +55,46 @@ body {
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
-    color: var(--text-color);
     font-size: 1.25rem;
     font-weight: 600;
-    transition: color 0.2s;
+    transition: all 0.3s ease;
 }
 
-.logo a:hover {
-    color: var(--accent-color);
+.logo a span {
+    background: linear-gradient(
+        135deg,
+        #006666 0%,
+        #008B8B 50%,
+        #20B2AA 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGradientFlow 4s ease infinite;
+}
+
+@keyframes textGradientFlow {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
+.logo a:hover span {
+    filter: brightness(1.2);
+}
+
+.logo svg {
+    filter: drop-shadow(0 2px 8px rgba(64, 224, 208, 0.4));
+    transition: all 0.3s ease;
+}
+
+.logo a:hover svg {
+    filter: drop-shadow(0 4px 12px rgba(64, 224, 208, 0.6));
+    transform: scale(1.05);
 }
 
 .mobile-menu-toggle {
@@ -257,14 +289,27 @@ body {
 .hero-title {
     font-size: 5.5rem;
     font-weight: 800;
-    color: #ffffff;
+    background: linear-gradient(135deg, #006666 0%, #008B8B 50%, #20B2AA 100%);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 1.5rem;
     line-height: 1.05;
     letter-spacing: -0.03em;
     position: relative;
     display: inline-block;
-    text-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 20px rgba(96, 165, 250, 0.4);
-    animation: titlePulse 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 40px rgba(32, 178, 170, 0.6)) drop-shadow(0 0 20px rgba(0, 139, 139, 0.4));
+    animation: titlePulse 3s ease-in-out infinite alternate, heroTitleGradient 4s ease-in-out infinite;
+}
+
+@keyframes heroTitleGradient {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 @keyframes titleGradientFlow {
@@ -440,20 +485,21 @@ body {
 .hero-button.primary {
     background: linear-gradient(
         135deg,
-        #3b82f6 0%,
-        #06b6d4 50%,
-        #8b5cf6 100%
+        #006666 0%,
+        #008B8B 50%,
+        #20B2AA 100%
     );
     background-size: 200% auto;
     color: white;
     box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.3), 
-        0 0 40px #3b82f690,
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 4px 20px rgba(0, 0, 0, 0.4), 
+        0 0 40px rgba(32, 178, 170, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
-    filter: brightness(1.2) saturate(1.2);
+    filter: brightness(1.1) saturate(1.1);
     animation: buttonPulse 3s ease-in-out infinite, buttonGradientFlow 4s ease infinite;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes buttonGradientFlow {
@@ -468,15 +514,15 @@ body {
 @keyframes buttonPulse {
     0%, 100% {
         box-shadow: 
-            0 4px 20px rgba(0, 0, 0, 0.3), 
-            0 0 30px var(--primary-color)60,
+            0 4px 20px rgba(0, 0, 0, 0.4), 
+            0 0 30px rgba(32, 178, 170, 0.5),
             inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     50% {
         box-shadow: 
-            0 4px 20px rgba(0, 0, 0, 0.3), 
-            0 0 40px var(--primary-color)80,
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            0 4px 20px rgba(0, 0, 0, 0.4), 
+            0 0 40px rgba(32, 178, 170, 0.7),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 }
 
@@ -498,10 +544,12 @@ body {
 .hero-button.primary:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 
-        0 10px 35px rgba(0, 0, 0, 0.4), 
-        0 0 50px var(--primary-color),
+        0 10px 35px rgba(0, 0, 0, 0.5), 
+        0 0 50px rgba(32, 178, 170, 0.7),
+        0 0 80px rgba(32, 178, 170, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     animation: none;
+    filter: brightness(1.2) saturate(1.2);
 }
 
 .hero-button.primary:active {
@@ -509,15 +557,20 @@ body {
 }
 
 .hero-button.secondary {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.02);
     color: var(--text-color);
     border-color: var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
 }
 
 .hero-button.secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(64, 224, 208, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 25px rgba(64, 224, 208, 0.4);
+    transform: translateY(-2px);
+}
     border-color: var(--accent-color);
     color: var(--accent-color);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-color);
