@@ -190,3 +190,22 @@
         background-color: rgba(255, 255, 255, 0.15);
     }
 }
+
+/* ========================================
+   SYNTAX HIGHLIGHTING CUSTOMIZATION
+   Custom styles for better code readability
+   ======================================== */
+
+/* Comments - Lighter gray for better visualization */
+.hljs-comment {
+    color: #8b949e !important;
+    font-style: italic;
+}
+
+[data-theme="light"] .hljs-comment {
+    color: #6e7781 !important;
+}
+
+[data-theme="dark"] .hljs-comment {
+    color: #8b949e !important;
+}
