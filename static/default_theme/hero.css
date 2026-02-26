@@ -558,9 +558,9 @@
     padding: 0.5rem 1rem;
     background: linear-gradient(
         135deg,
-        var(--primary-color) 0%,
-        var(--accent-color) 50%,
-        var(--secondary-color) 100%
+        #006666 0%,
+        #008B8B 50%,
+        #20B2AA 100%
     );
     background-size: 200% auto;
     color: white;
@@ -571,7 +571,7 @@
     position: relative;
     z-index: 1;
     filter: brightness(1.2) saturate(1.2);
-    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.5);
+    box-shadow: 0 4px 15px rgba(32, 178, 170, 0.5);
     animation: highlightGradient 3s ease-in-out infinite;
     overflow: hidden;
 }
@@ -605,19 +605,33 @@
     }
 }
 
+@keyframes cardTitleGradient {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+}
+
 .card-title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
-    color: #ffffff;
+    background: linear-gradient(135deg, #8CF0EB 0%, #66E6DD 50%, #40E0D0 100%);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: brightness(1.1);
     transition: all 0.3s ease;
+    animation: cardTitleGradient 4s ease-in-out infinite;
 }
 
 .info-card:hover .card-title {
-    color: var(--primary-color);
-    text-shadow: 0 0 20px rgba(64, 224, 208, 0.6);
+    filter: brightness(1.3) drop-shadow(0 0 20px rgba(64, 224, 208, 0.6));
 }
 
 .card-description {
