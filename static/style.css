@@ -1670,8 +1670,8 @@ button:focus {
     gap: 0.75rem;
     padding: 1.25rem 1.5rem;
     background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border: 2px solid #48FFF0;
+    border-radius: 12px;
     text-decoration: none;
     color: var(--text-color);
     transition: all 0.3s ease;
@@ -1680,9 +1680,11 @@ button:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 .nav-button:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    color: #111;
+    background-color: var(--surface-color);
+    border-color: #00BFFF;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
