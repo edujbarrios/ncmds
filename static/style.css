@@ -792,9 +792,9 @@ body {
     padding: 0.5rem 1rem;
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #40E0D0 0%,
+        #66E6DD 50%,
+        #8CF0EB 100%
     );
     background-size: 200% auto;
     color: white;
@@ -805,7 +805,7 @@ body {
     position: relative;
     z-index: 1;
     filter: brightness(1.2) saturate(1.2);
-    box-shadow: 0 4px 15px rgba(32, 178, 170, 0.5);
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.45);
     animation: highlightGradient 3s ease-in-out infinite;
     overflow: hidden;
 }
