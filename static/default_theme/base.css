@@ -10,7 +10,19 @@
 }
 
 /* Root element */
+
 html {
+    /* Turquoise theme variables */
+    --primary-color: #40E0D0;
+    --secondary-color: #008B8B;
+    --accent-color: #20B2AA;
+    --code-background: #0e2229;
+    --border-color: #20B2AA;
+    --surface-color: #1e1e1e;
+    --background-color: #101820;
+    --text-color: #e0f7fa;
+    --link-color: #40E0D0;
+    --link-hover: #008B8B;
     transition: background-color 0.3s ease;
     scroll-behavior: smooth;
 }
