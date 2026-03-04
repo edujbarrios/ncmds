@@ -210,6 +210,7 @@ ai_chat:
   api_url: "https://api.llm7.io/v1/chat/completions"
   api_key: "Unused"  # Add your LLM7.io API key here (use "unused" for free tier)
   model: "gpt-4o-mini"  # Model to use
+  provider: "LLM7.io"  # Provider name to display in chat
   
   # UI Configuration
   ui:

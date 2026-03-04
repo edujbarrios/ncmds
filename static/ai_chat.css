@@ -370,6 +370,34 @@
     font-size: 11px;
     color: var(--text-secondary, #b4b4b4);
     text-align: center;
+    margin-bottom: 8px;
+}
+
+.ai-chat-provider-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--text-secondary, #b4b4b4);
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px solid rgba(64, 224, 208, 0.1);
+}
+
+.ai-chat-provider-info svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+}
+
+.ai-chat-provider-info strong {
+    color: var(--primary-color, #40E0D0);
+    font-weight: 600;
+}
+
+.ai-chat-provider-info span {
+    line-height: 1.4;
 }
 
 /* Responsive design */
