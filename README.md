@@ -66,7 +66,7 @@ hero:
 
 ai_chat:
   enabled: true
-  api_key: "your-api-key" # ussing LLM7.io
+  api_key: "your-api-key" # using LLM7.io
   model: "gpt-4o-mini"
 ```
 
