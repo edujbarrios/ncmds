@@ -13,10 +13,17 @@
 
 ## Overview
 
-NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation and an optimized reading experience.
+NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation, AI-powered assistance, and an optimized reading experience.
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
-Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
+
+## ✨ Key Features
+
+- 🤖 **AI-Powered Chat** - Ask questions about documentation content with built-in AI assistant
+- 📤 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
+- 🎨 **Dark Theme** - Optimized for comfortable reading and coding
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile
+- 🔍 **Auto Navigation** - Automatic table of contents and page navigation
 
 ## 🚀 Quick Start
 
@@ -56,6 +63,11 @@ hero:
   company: "Your Company"
   tagline: "Your tagline here"
   description: "Your project description"
+
+ai_chat:
+  enabled: true
+  api_key: "your-api-key" # ussing LLM7.io
+  model: "gpt-4o-mini"
 ```
 
 The site uses a single, optimized dark theme designed for comfortable reading and coding.
@@ -96,6 +108,7 @@ Full documentation available at `/docs` when running the server, or view:
 - **Python-Markdown** - Markdown processing
 - **PyYAML** - Configuration
 - **Highlight.js** - Syntax highlighting
+- **LLM7.io** - AI chat integration
 - **WeasyPrint** - PDF generation (optional)
 - **Quarto** - QMD rendering support (optional)
 
@@ -111,7 +124,7 @@ Full documentation available at `/docs` when running the server, or view:
 
 ## 🙏 Acknowledgments
 
-Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto
+Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto.
 
 ## 📞 Contact
 
