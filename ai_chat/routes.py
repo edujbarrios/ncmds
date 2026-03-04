@@ -57,6 +57,7 @@ def register_ai_chat_routes(app, config_manager):
         
         question = data['question']
         page_content = data['page_content']
+        selected_model = data.get('model', model)  # Use selected model or default
         
         # Limit page content length
         max_length = config_manager.get('ai_chat.behavior.context_max_length', 8000)
@@ -73,7 +74,7 @@ def register_ai_chat_routes(app, config_manager):
         
         try:
             # Initialize LLM client
-            client = LLMClient(api_url, api_key, model)
+            client = LLMClient(api_url, api_key, selected_model)
             
             # Get AI response
             answer = client.ask_about_content(
@@ -100,8 +101,53 @@ def register_ai_chat_routes(app, config_manager):
         """Check if AI chat is enabled and configured"""
         enabled = config_manager.get('ai_chat.enabled', False)
         api_key_configured = bool(config_manager.get('ai_chat.api_key'))
+        default_model = config_manager.get('ai_chat.model', 'gpt-4o-mini')
         
         return jsonify({
             'enabled': enabled,
-            'configured': api_key_configured
+            'configured': api_key_configured,
+            'default_model': default_model
         })
+    
+    @app.route('/api/ai-chat/models', methods=['GET'])
+    def ai_chat_models():
+        """Get available models from LLM API"""
+        # Check if AI chat is enabled
+        if not config_manager.get('ai_chat.enabled', False):
+            return jsonify({
+                'error': 'AI chat is not enabled'
+            }), 403
+        
+        # Get configuration
+        api_url = config_manager.get('ai_chat.api_url')
+        api_key = config_manager.get('ai_chat.api_key')
+        
+        if not api_key:
+            return jsonify({
+                'error': 'API key not configured'
+            }), 500
+        
+        try:
+            # Initialize LLM client
+            client = LLMClient(api_url, api_key, 'gpt-4o-mini')
+            
+            # Get available models
+            models = client.get_available_models()
+            
+            return jsonify({
+                'models': models,
+                'success': True
+            })
+        
+        except Exception as e:
+            # Return a default list if API call fails
+            return jsonify({
+                'models': [
+                    {'id': 'gpt-4o-mini', 'name': 'GPT-4o Mini'},
+                    {'id': 'gpt-4o', 'name': 'GPT-4o'},
+                    {'id': 'gpt-4-turbo', 'name': 'GPT-4 Turbo'},
+                    {'id': 'gpt-3.5-turbo', 'name': 'GPT-3.5 Turbo'}
+                ],
+                'success': True,
+                'fallback': True
+            })

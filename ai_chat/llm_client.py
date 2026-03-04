@@ -136,3 +136,66 @@ class LLMClient:
             return response["choices"][0]["message"]["content"]
         else:
             raise Exception("Invalid response format from LLM API")
+    
+    def get_available_models(self) -> List[Dict[str, str]]:
+        """
+        Get available models from the LLM API
+        
+        Returns:
+            List of model dictionaries with 'id' and 'name'
+        """
+        # Try to fetch models from API
+        models_url = self.api_url.replace('/chat/completions', '/models')
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}"
+        }
+        
+        try:
+            response = requests.get(
+                models_url,
+                headers=headers,
+                timeout=10
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            # Filter for text-based models only (exclude image, audio, etc.)
+            text_models = []
+            if "data" in data:
+                for model in data["data"]:
+                    model_id = model.get("id", "")
+                    # Filter out non-text models
+                    if any(excluded in model_id.lower() for excluded in ['dall-e', 'whisper', 'tts', 'embedding']):
+                        continue
+                    
+                    # Create readable name
+                    name = model_id.replace('-', ' ').title()
+                    text_models.append({
+                        'id': model_id,
+                        'name': name
+                    })
+            
+            return text_models if text_models else self._get_fallback_models()
+        
+        except Exception:
+            # Return fallback models if API call fails
+            return self._get_fallback_models()
+    
+    def _get_fallback_models(self) -> List[Dict[str, str]]:
+        """
+        Get fallback list of common text models
+        
+        Returns:
+            List of common model dictionaries
+        """
+        return [
+            {'id': 'gpt-4o-mini', 'name': 'GPT-4o Mini'},
+            {'id': 'gpt-4o', 'name': 'GPT-4o'},
+            {'id': 'gpt-4-turbo', 'name': 'GPT-4 Turbo'},
+            {'id': 'gpt-4', 'name': 'GPT-4'},
+            {'id': 'gpt-3.5-turbo', 'name': 'GPT-3.5 Turbo'},
+            {'id': 'claude-3-5-sonnet-20241022', 'name': 'Claude 3.5 Sonnet'},
+            {'id': 'claude-3-opus-20240229', 'name': 'Claude 3 Opus'},
+            {'id': 'claude-3-sonnet-20240229', 'name': 'Claude 3 Sonnet'}
+        ]

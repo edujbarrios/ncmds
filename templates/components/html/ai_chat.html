@@ -40,6 +40,20 @@
             </div>
         </div>
         
+        <!-- Model selector -->
+        <div class="ai-chat-model-selector">
+            <label for="ai-chat-model-select">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                </svg>
+                Model:
+            </label>
+            <select id="ai-chat-model-select" class="ai-chat-model-select">
+                <option value="{{ config.ai_chat.model }}">{{ config.ai_chat.model }}</option>
+            </select>
+        </div>
+        
         <!-- Chat messages -->
         <div id="ai-chat-messages" class="ai-chat-messages">
             <div class="ai-chat-message ai-message">
@@ -82,7 +96,7 @@
                     <line x1="2" y1="12" x2="22" y2="12"></line>
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                <span>Powered by <strong>{{ config.ai_chat.provider }}</strong> • Model: <strong>{{ config.ai_chat.model }}</strong></span>
+                <span>Powered by <strong>{{ config.ai_chat.provider }}</strong></span>
             </div>
         </div>
     </div>

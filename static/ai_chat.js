@@ -9,13 +9,15 @@
     // Configuration (will be loaded from backend)
     const config = {
         apiEndpoint: '/api/ai-chat',
-        statusEndpoint: '/api/ai-chat/status'
+        statusEndpoint: '/api/ai-chat/status',
+        modelsEndpoint: '/api/ai-chat/models'
     };
     
     // State
     let isOpen = false;
     let isProcessing = false;
     let isFullscreen = false;
+    let modelsLoaded = false;
     
     // DOM elements
     const widget = document.getElementById('ai-chat-widget');
@@ -26,6 +28,7 @@
     const messagesContainer = document.getElementById('ai-chat-messages');
     const inputField = document.getElementById('ai-chat-input');
     const sendButton = document.getElementById('ai-chat-send');
+    const modelSelect = document.getElementById('ai-chat-model-select');
     const pageContentContainer = document.getElementById('page-content-for-ai');
     
     // Check if widget exists (AI chat is enabled)
@@ -93,6 +96,68 @@
         toggleButton.classList.add('hidden');
         isOpen = true;
         inputField.focus();
+        
+        // Add welcome message if messages container is empty
+        if (messagesContainer.children.length === 0) {
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.className = 'ai-chat-message ai-message';
+            welcomeMsg.innerHTML = `
+                <div class="ai-chat-message-avatar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <div class="ai-chat-message-content">
+                    <p>Hi! I can help you understand this page. Ask me anything about the content.</p>
+                </div>
+            `;
+            messagesContainer.appendChild(welcomeMsg);
+        }
+        
+        // Load models if not already loaded
+        if (!modelsLoaded) {
+            loadAvailableModels();
+        }
+    }
+    
+    /**
+     * Load available models from API
+     */
+    async function loadAvailableModels() {
+        try {
+            const response = await fetch(config.modelsEndpoint);
+            const data = await response.json();
+            
+            if (data.success && data.models && data.models.length > 0) {
+                // Clear existing options
+                modelSelect.innerHTML = '';
+                
+                // Get default model from status
+                const statusResponse = await fetch(config.statusEndpoint);
+                const statusData = await statusResponse.json();
+                const defaultModel = statusData.default_model || data.models[0].id;
+                
+                // Populate dropdown
+                data.models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.id;
+                    option.textContent = model.name;
+                    
+                    if (model.id === defaultModel) {
+                        option.selected = true;
+                    }
+                    
+                    modelSelect.appendChild(option);
+                });
+                
+                modelsLoaded = true;
+            }
+        } catch (error) {
+            console.error('Failed to load models:', error);
+            // Keep the default model from config
+        }
     }
     
     /**
@@ -194,6 +259,9 @@
         const loadingMessage = addLoadingMessage();
         
         try {
+            // Get selected model
+            const selectedModel = modelSelect.value;
+            
             // Send request to backend
             const response = await fetch(config.apiEndpoint, {
                 method: 'POST',
@@ -202,7 +270,8 @@
                 },
                 body: JSON.stringify({
                     question: question,
-                    page_content: pageContent
+                    page_content: pageContent,
+                    model: selectedModel
                 })
             });
             

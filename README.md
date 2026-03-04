@@ -64,16 +64,19 @@ hero:
   company: "Your Company"
   tagline: "Your tagline here"
   description: "Your project description"
+```
+### AI intergration
 
+In the same `config/config.yaml`:
+
+```yaml
 ai_chat:
   enabled: true
   api_key: "your-api-key" # using LLM7.io
   model: "gpt-4o-mini"
 ```
+<img src="images/image.png" alt="NCMDS Logo" width="400"/>
 
-The site uses a single, optimized dark theme designed for comfortable reading and coding.
-
-More themes will be added in the future.
 
 ## 📤 Export Documentation
 
