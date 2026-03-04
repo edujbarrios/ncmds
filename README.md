@@ -6,8 +6,9 @@
 
 **Create beautiful documentation sites with just Markdown**
 
-![On Active Development](https://img.shields.io/badge/Status-On%20Active%20Development-3b82f6?style=for-the-badge&logo=github&logoColor=white)
-![Unstable Versions](https://img.shields.io/badge/Versions-Unstable-f59e0b?style=for-the-badge&logo=exclamation&logoColor=white)
+![On Active Development](https://img.shields.io/badge/Status-On%20Active%20Development-0D8B8B?style=for-the-badge&logo=github&logoColor=white)
+![Unstable Versions](https://img.shields.io/badge/Versions-Unstable-0D8B8B?style=for-the-badge&logo=exclamation&logoColor=white)
+![AI Integration](https://img.shields.io/badge/AI%20Integration-LLM7.io-0D8B8B?style=for-the-badge&logo=openai&logoColor=white)
 
 </div>
 
