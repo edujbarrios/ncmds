@@ -15,11 +15,13 @@
     // State
     let isOpen = false;
     let isProcessing = false;
+    let isFullscreen = false;
     
     // DOM elements
     const widget = document.getElementById('ai-chat-widget');
     const toggleButton = document.getElementById('ai-chat-toggle');
     const closeButton = document.getElementById('ai-chat-close');
+    const fullscreenButton = document.getElementById('ai-chat-fullscreen');
     const chatWindow = document.getElementById('ai-chat-window');
     const messagesContainer = document.getElementById('ai-chat-messages');
     const inputField = document.getElementById('ai-chat-input');
@@ -41,8 +43,12 @@
         // Event listeners
         toggleButton.addEventListener('click', toggleChat);
         closeButton.addEventListener('click', closeChat);
+        fullscreenButton.addEventListener('click', toggleFullscreen);
         sendButton.addEventListener('click', sendMessage);
         inputField.addEventListener('keypress', handleKeyPress);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', handleKeyboardShortcuts);
         
         // Load position from config
         const position = widget.getAttribute('data-position') || 'bottom-right';
@@ -96,6 +102,35 @@
         chatWindow.style.display = 'none';
         toggleButton.classList.remove('hidden');
         isOpen = false;
+        
+        // Exit fullscreen if active
+        if (isFullscreen) {
+            toggleFullscreen();
+        }
+    }
+    
+    /**
+     * Toggle fullscreen mode
+     */
+    function toggleFullscreen() {
+        isFullscreen = !isFullscreen;
+        
+        if (isFullscreen) {
+            chatWindow.classList.add('fullscreen');
+            // Swap icons
+            fullscreenButton.querySelector('.fullscreen-icon').style.display = 'none';
+            fullscreenButton.querySelector('.minimize-icon').style.display = 'block';
+            fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
+        } else {
+            chatWindow.classList.remove('fullscreen');
+            // Swap icons back
+            fullscreenButton.querySelector('.fullscreen-icon').style.display = 'block';
+            fullscreenButton.querySelector('.minimize-icon').style.display = 'none';
+            fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
+        }
+        
+        // Scroll to bottom after resize
+        setTimeout(() => scrollToBottom(), 100);
     }
     
     /**
@@ -105,6 +140,32 @@
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
+        }
+    }
+    
+    /**
+     * Handle keyboard shortcuts
+     */
+    function handleKeyboardShortcuts(event) {
+        // Only process if chat is open
+        if (!isOpen) return;
+        
+        // Escape key: Exit fullscreen or close chat
+        if (event.key === 'Escape') {
+            if (isFullscreen) {
+                event.preventDefault();
+                toggleFullscreen();
+            } else if (isOpen) {
+                event.preventDefault();
+                closeChat();
+            }
+        }
+        
+        // F11 or Ctrl/Cmd + Shift + F: Toggle fullscreen
+        if (event.key === 'F11' || 
+            ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === 'f')) {
+            event.preventDefault();
+            toggleFullscreen();
         }
     }
     
