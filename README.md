@@ -89,7 +89,6 @@ NCMDS includes a powerful export module that allows you to export your documenta
 - Professional cover page with project branding
 - Optimized for print and digital reading
 
-See the [Export Documentation](docs/08-export.md) for detailed usage instructions.
 
 ## 📚 Documentation
 
@@ -101,7 +100,6 @@ Full documentation available at `/docs` when running the server, or view:
 - [Theme Creation](docs/05-themes.md)
 - [Deployment Guide](docs/06-deployment.md)
 - [Template Components](docs/07-components.md)
-- [Export Documentation](docs/08-export.md)
 
 ## 🛠️ Tech Stack
 
@@ -110,7 +108,6 @@ Full documentation available at `/docs` when running the server, or view:
 - **PyYAML** - Configuration
 - **Highlight.js** - Syntax highlighting
 - **LLM7.io** - AI chat integration
-- **WeasyPrint** - PDF generation (optional)
 - **Quarto** - QMD rendering support (optional)
 
 ## 🎯 Use Cases
