@@ -73,6 +73,7 @@ ai_chat:
   model: "gpt-4o-mini"  # Default model (switchable in chat UI)
   provider: "LLM7.io"
 ```
+<img src="images/image.png" alt="NCMDS AI chat" width="400"/>
 
 **AI Features:**
 - Model selector dropdown to switch between available models in real-time
