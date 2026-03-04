@@ -20,7 +20,7 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 
 ## ✨ Key Features
 
-- 🤖 **AI-Powered Chat** - Ask questions about documentation content with built-in AI assistant
+- 🤖 **AI-Powered Chat** - Ask questions about documentation with built-in AI assistant and switchable models
 - 📤 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
 - 🎨 **Dark Theme** - Optimized for comfortable reading and coding
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
@@ -64,24 +64,26 @@ hero:
   company: "Your Company"
   tagline: "Your tagline here"
   description: "Your project description"
-```
-### AI intergration
 
-In the same `config/config.yaml`:
-
-```yaml
+# AI Chat Assistant
 ai_chat:
   enabled: true
-  api_key: "your-api-key" # using LLM7.io
-  model: "gpt-4o-mini"
+  api_url: "https://api.llm7.io/v1/chat/completions"
+  api_key: "your-api-key"  # Get your key from LLM7.io
+  model: "gpt-4o-mini"  # Default model (switchable in chat UI)
+  provider: "LLM7.io"
 ```
-<img src="images/image.png" alt="NCMDS Logo" width="400"/>
 
+**AI Features:**
+- Model selector dropdown to switch between available models in real-time
+- Context-aware responses based on current documentation page
+- Fullscreen mode for better reading experience
 
 ## 📤 Export Documentation
 
 NCMDS includes a powerful export module that allows you to export your documentation to different formats:
 
+- **PDF Export** - Generate professional PDFs with WeasyPrint
 - **QMD Export** - Export to Quarto Markdown format for rendering with Quarto
 - **Customizable Settings** - Configure project name, paper size, and more
 - **Easy to Use** - Click floating export buttons on any documentation page
@@ -91,7 +93,6 @@ NCMDS includes a powerful export module that allows you to export your documenta
 - Automatic table of contents generation
 - Professional cover page with project branding
 - Optimized for print and digital reading
-
 
 ## 📚 Documentation
 
@@ -107,10 +108,11 @@ Full documentation available at `/docs` when running the server, or view:
 ## 🛠️ Tech Stack
 
 - **Flask** - Web framework
-- **Python-Markdown** - Markdown processing
-- **PyYAML** - Configuration
+- **Python-Markdown** - Markdown processing with extensions
+- **PyYAML** - Configuration management
 - **Highlight.js** - Syntax highlighting
-- **LLM7.io** - AI chat integration
+- **LLM7.io** - AI chat integration with model switching
+- **WeasyPrint** - PDF generation (optional)
 - **Quarto** - QMD rendering support (optional)
 
 ## 🎯 Use Cases
