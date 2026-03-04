@@ -16,18 +16,7 @@
 NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation and an optimized reading experience.
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
-
-## ✨ Key Features
-
-- 🎨 **Optimized Dark Theme** - Beautiful dark mode designed for comfortable reading
-- 🚀 **Zero Build Process** - Write Markdown, see results instantly
-- 📱 **Fully Responsive** - Perfect on all devices
-- 🎯 **Hero Landing Page** - Customizable branding with gradient effects
-- 💻 **Syntax Highlighting** - Beautiful code blocks with copy button
-- 📋 **Auto Navigation** - Automatic sidebar generation with prev/next buttons
-- 🧩 **Modular Components** - Clean component-based template architecture
-- ⚙️ **Easy Configuration** - Simple YAML-based settings
-- 📄 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
+Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
 
 ## 🚀 Quick Start
 
@@ -119,9 +108,6 @@ Full documentation available at `/docs` when running the server, or view:
 - Educational materials
 - User guides
 
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
@@ -130,10 +116,4 @@ Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto
 ## 📞 Contact
 
 - **Author:** [edujbarrios](https://github.com/edujbarrios) - eduardojbarriosgarcia@gmail.com
-
----
-
-<div align="center">
-Made with ❤️ by edujbarrios
-</div>
 

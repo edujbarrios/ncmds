@@ -18,6 +18,9 @@ from settings import ConfigManager
 # Importar módulo de exportación
 from export import register_export_routes
 
+# Importar módulo de AI chat
+from ai_chat import register_ai_chat_routes
+
 app = Flask(__name__)
 
 # Inicializar configuración modular
@@ -158,6 +161,9 @@ site = DocumentationSite(config_manager)
 
 # Register export routes
 register_export_routes(app, config_manager, site)
+
+# Register AI chat routes
+register_ai_chat_routes(app, config_manager)
 
 
 @app.route('/')

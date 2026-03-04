@@ -201,3 +201,28 @@ export:
     # Quarto output format
     default_format: "pdf"  # pdf, html, docx
 
+# AI Chat Configuration (Explain with AI feature)
+ai_chat:
+  # Enable/disable the AI chat feature
+  enabled: true
+  
+  # LLM7.io API Configuration
+  api_url: "https://api.llm7.io/v1/chat/completions"
+  api_key: "Unused"  # Add your LLM7.io API key here (use "unused" for free tier)
+  model: "gpt-4o-mini"  # Model to use
+  
+  # UI Configuration
+  ui:
+    button_text: "Ask AI"
+    window_title: "Explain with AI"
+    placeholder: "Ask a question about this page..."
+    position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
+    welcome_message: "Hi! I can help you understand this page. Ask me anything about the content."
+    
+  # Behavior Configuration
+  behavior:
+    max_tokens: 1000
+    temperature: 0.7
+    context_max_length: 8000  # Maximum characters from page content to send as context
+    system_prompt: "You are a helpful documentation assistant. Answer questions based on the provided documentation content. Be concise and accurate. If the answer is not in the documentation, say so."
+
