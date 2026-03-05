@@ -37,16 +37,23 @@ class MarkdownProcessor:
     """Process Markdown files with extensions"""
     
     def __init__(self):
-        self.md = markdown.Markdown(extensions=[
-            'fenced_code',
-            'tables',
-            'toc',
-            'codehilite',
-            'attr_list',
-            'md_in_html',
-            'admonition',
-            'meta'
-        ])
+        self.md = markdown.Markdown(
+            extensions=[
+                'fenced_code',
+                'tables',
+                'toc',
+                'codehilite',
+                'attr_list',
+                'md_in_html',
+                'admonition',
+                'meta'
+            ],
+            extension_configs={
+                'toc': {
+                    'toc_depth': '1-2'  # Only show H1 and H2 headers in TOC
+                }
+            }
+        )
     
     def convert(self, content):
         """Convert markdown to HTML"""
