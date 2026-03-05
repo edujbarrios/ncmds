@@ -2,10 +2,10 @@
 <html lang="{{ config.html.language }}">
 {% include 'components/html/head.html' %}
 <body>
-    {% include 'components/html/header.html' %}
+    <div id="ncmds-header"></div>
 
     <div class="site-container">
-        {% include 'components/html/sidebar.html' %}
+        <div id="ncmds-sidebar"></div>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -13,19 +13,19 @@
                 <article class="markdown-body">
                     {{ content|safe }}
                 </article>
-                
-                {% include 'components/html/doc_navigation.html' %}
+
+                <div id="ncmds-doc-navigation"></div>
             </div>
         </main>
 
-        {% include 'components/html/toc.html' %}
+        <div id="ncmds-toc"></div>
     </div>
 
-    {% include 'components/html/footer.html' %}
+    <div id="ncmds-footer"></div>
 
-    {% include 'components/html/export_buttons.html' %}
-    
-    {% include 'components/html/ai_chat.html' %}
+    <div id="ncmds-export-buttons"></div>
+
+    <div id="ncmds-ai-chat"></div>
 
     {% include 'components/scripts/scripts.html' %}
 </body>

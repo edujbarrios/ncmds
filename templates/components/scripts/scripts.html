@@ -2,11 +2,69 @@
     // Inject server-side configuration for use by TypeScript-compiled scripts
     window.ncmdsConfig = {
         uiText: {
-            copyButton: "{{ config.ui_text.copy_button }}",
-            copyButtonCopied: "{{ config.ui_text.copy_button_copied }}"
+            copyButton: {{ config.ui_text.copy_button|tojson }},
+            copyButtonCopied: {{ config.ui_text.copy_button_copied|tojson }},
+            sidebarTitle: {{ config.ui_text.sidebar_title|tojson }},
+            tocTitle: {{ config.ui_text.toc_title|tojson }},
+            footerText: {{ config.ui_text.footer_text|tojson }},
+            navPrevious: {{ config.ui_text.nav_previous|tojson }},
+            navNext: {{ config.ui_text.nav_next|tojson }},
+            themeToggleDark: {{ config.ui_text.theme_toggle_dark|tojson }},
+            themeToggleLight: {{ config.ui_text.theme_toggle_light|tojson }},
+            toggleSidebar: {{ config.ui_text.toggle_sidebar|tojson }},
+            toggleToc: {{ config.ui_text.toggle_toc|tojson }},
+            noDocumentsMessage: {{ config.ui_text.no_documents_message|tojson }},
+            toggleMenuAria: {{ config.ui_text.toggle_menu_aria|tojson }}
+        },
+        siteName: {{ config.site_name|tojson }},
+        author: {{ config.author|tojson }},
+        logo: {
+            type: {{ (config.logo.type if config.logo else 'text')|tojson }},
+            imagePath: {{ (config.logo.image_path if config.logo and config.logo.type == 'image' else '')|tojson }},
+            imageAlt: {{ (config.logo.image_alt if config.logo else '')|tojson }},
+            width: {{ config.logo.width if config.logo else 32 }},
+            height: {{ config.logo.height if config.logo else 32 }},
+            text: {{ (config.logo.text if config.logo and config.logo.text else config.ui_text.logo_text)|tojson }}
+        },
+        theme: {
+            toggleEnabled: {{ config.theme.toggle_enabled|tojson }}
+        },
+        uiControls: {
+            sidebarToggle: {{ config.ui_controls.sidebar_toggle|tojson }},
+            tocToggle: {{ config.ui_controls.toc_toggle|tojson }}
+        },
+        navigation: {{ navigation|tojson }},
+        toc: {{ (toc if toc else '')|tojson }},
+        prevDoc: {{ (prev_doc if prev_doc else None)|tojson }},
+        nextDoc: {{ (next_doc if next_doc else None)|tojson }},
+        aiChat: {
+            enabled: {{ config.ai_chat.enabled|tojson }},
+            model: {{ config.ai_chat.model|tojson }},
+            provider: {{ config.ai_chat.provider|tojson }},
+            ui: {
+                buttonText: {{ config.ai_chat.ui.button_text|tojson }},
+                windowTitle: {{ config.ai_chat.ui.window_title|tojson }},
+                welcomeMessage: {{ config.ai_chat.ui.welcome_message|tojson }},
+                placeholder: {{ config.ai_chat.ui.placeholder|tojson }}
+            }
+        },
+        export: {
+            showOnAllPages: {{ config.export.show_on_all_pages|tojson }},
+            qmd: {
+                enabled: {{ config.export.qmd.enabled|tojson }},
+                buttonText: {{ config.export.qmd.button_text|tojson }}
+            }
         }
     };
 </script>
+
+<!-- Component Scripts (compiled from TypeScript) -->
+<script src="/static/components/header.js"></script>
+<script src="/static/components/sidebar.js"></script>
+<script src="/static/components/footer.js"></script>
+<script src="/static/components/toc.js"></script>
+<script src="/static/components/doc_navigation.js"></script>
+<script src="/static/components/export_buttons.js"></script>
 
 <!-- Main UI Script (compiled from TypeScript) -->
 <script src="/static/main.js"></script>

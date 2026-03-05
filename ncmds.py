@@ -234,6 +234,8 @@ def page_not_found(e):
         title=error_title,
         toc='',
         navigation=site.navigation,
+        prev_doc=None,
+        next_doc=None,
         config=config
     ), 404
 

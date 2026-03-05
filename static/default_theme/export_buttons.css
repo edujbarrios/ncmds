@@ -1,0 +1,107 @@
+/* ========================================
+   Export Buttons Component Styles
+   ======================================== */
+
+.export-buttons {
+    display: none; /* Hidden floating button - export available via sidebar */
+}
+
+.export-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.export-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.export-btn-qmd {
+    background: linear-gradient(135deg, #008080 0%, #40E0D0 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(64, 224, 208, 0.3);
+}
+
+.export-btn-qmd:hover {
+    background: linear-gradient(135deg, #006666 0%, #66E6DD 100%);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.5);
+}
+
+/* Dark mode adjustments */
+body.dark-mode .export-btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .export-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .export-btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .export-btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .export-btn-qmd {
+    background: linear-gradient(135deg, #006666 0%, #40E0D0 100%);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+}
+
+[data-theme="dark"] .export-btn-qmd:hover {
+    background: linear-gradient(135deg, #008080 0%, #66E6DD 100%);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.5), 0 0 25px rgba(64, 224, 208, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .export-buttons {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .export-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .export-btn span {
+        display: none;
+    }
+
+    .export-btn svg {
+        margin: 0;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}

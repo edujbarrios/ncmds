@@ -1,10 +1,108 @@
 "use strict";
 /**
  * AI Chat Widget
- * Handles the "Explain with AI" functionality
+ * Creates the widget HTML structure and handles the "Explain with AI" functionality.
  */
 (function () {
     'use strict';
+    var _a;
+    const aiCfg = (_a = window.ncmdsConfig) === null || _a === void 0 ? void 0 : _a.aiChat;
+    // Render the widget HTML into the placeholder container
+    const aiContainer = document.getElementById('ncmds-ai-chat');
+    if (aiContainer && (aiCfg === null || aiCfg === void 0 ? void 0 : aiCfg.enabled)) {
+        aiContainer.innerHTML = `
+        <div id="ai-chat-widget" class="ai-chat-widget">
+            <button id="ai-chat-toggle" class="ai-chat-toggle" aria-label="${aiCfg.ui.buttonText}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <path d="M8 10h.01M12 10h.01M16 10h.01"></path>
+                </svg>
+                <span>${aiCfg.ui.buttonText}</span>
+            </button>
+            <div id="ai-chat-window" class="ai-chat-window" style="display: none;">
+                <div class="ai-chat-header">
+                    <div class="ai-chat-header-content">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <h3>${aiCfg.ui.windowTitle}</h3>
+                    </div>
+                    <div class="ai-chat-header-actions">
+                        <button id="ai-chat-fullscreen" class="ai-chat-action-btn" aria-label="Toggle fullscreen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fullscreen-icon">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="minimize-icon" style="display: none;">
+                                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                            </svg>
+                        </button>
+                        <button id="ai-chat-close" class="ai-chat-action-btn" aria-label="Close chat">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="ai-chat-model-selector">
+                    <label for="ai-chat-model-select">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                        </svg>
+                        Model:
+                    </label>
+                    <select id="ai-chat-model-select" class="ai-chat-model-select">
+                        <option value="${aiCfg.model}">${aiCfg.model}</option>
+                    </select>
+                </div>
+                <div id="ai-chat-messages" class="ai-chat-messages">
+                    <div class="ai-chat-message ai-message">
+                        <div class="ai-chat-message-avatar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </div>
+                        <div class="ai-chat-message-content">
+                            <p>${aiCfg.ui.welcomeMessage}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-chat-input-container">
+                    <div class="ai-chat-input-wrapper">
+                        <input
+                            type="text"
+                            id="ai-chat-input"
+                            class="ai-chat-input"
+                            placeholder="${aiCfg.ui.placeholder}"
+                            autocomplete="off"
+                        >
+                        <button id="ai-chat-send" class="ai-chat-send" aria-label="Send message">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="ai-chat-notice">
+                        AI responses may contain errors. Verify important information.
+                    </div>
+                    <div class="ai-chat-provider-info">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span>Powered by <strong>${aiCfg.provider}</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
     // Configuration (will be loaded from backend)
     const config = {
         apiEndpoint: '/api/ai-chat',
@@ -26,7 +124,6 @@
     const inputField = document.getElementById('ai-chat-input');
     const sendButton = document.getElementById('ai-chat-send');
     const modelSelect = document.getElementById('ai-chat-model-select');
-    const pageContentContainer = document.getElementById('page-content-for-ai');
     // Check if widget exists (AI chat is enabled)
     if (!widget) {
         return;
@@ -294,14 +391,11 @@
      * Get the current page content for context
      */
     function getPageContent() {
-        var _a, _b, _c, _d;
-        if (pageContentContainer) {
-            return (_b = (_a = pageContentContainer.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : '';
-        }
-        // Fallback: get content from the main article
+        var _a, _b;
+        // Get content from the main article
         const article = document.querySelector('.markdown-body');
         if (article) {
-            return (_d = (_c = article.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : '';
+            return (_b = (_a = article.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : '';
         }
         return '';
     }
