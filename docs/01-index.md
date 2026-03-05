@@ -1,92 +1,181 @@
 # Welcome to NCMDS
 
-**NCMDS** (No Code Markdown Documentation Sites) is a documentation site builder designed for creating technical documentation with minimal configuration. The system converts standard Markdown files into a fully functional documentation website with customizable themes and automatic navigation generation.
+**NCMDS** (No Code Markdown Documentation Sites) is a powerful yet simple documentation site builder that transforms your Markdown files into beautiful, professional documentation websites. No compilation, no complex build processes—just write Markdown and see your documentation come to life instantly.
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
+## 🎯 What is NCMDS?
+
+NCMDS is a Flask-based documentation system that:
+
+- **Reads** your `.md` files from the `docs/` directory
+- **Converts** them to HTML with enhanced styling and features
+- **Serves** them as a navigable website with automatic menus and TOC
+- **Exports** documentation to PDF or Quarto Markdown (QMD) formats
+- **Assists** you with an AI-powered chat that answers questions about your docs
+
+### Perfect For
+
+- Technical documentation
+- Project wikis
+- API documentation
+- User manuals
+- Knowledge bases
+- Tutorial sites
+- Personal notes
+
 ## ✨ Key Features
 
-- **Hero Landing Page** with customizable branding
-- **Modular configuration system** with parametrized settings
-- **Modular template components** for clean architecture
-- **Seven pre-built dark mode themes**
-- **Custom theme creation** support
-- **Standard Markdown (.md)** file support
-- **Automatic document ordering** and navigation
-- **Syntax highlighting** for code blocks
-- **Responsive design** for all devices
-- **Table of contents** generation
-- **Zero build process** requirement
+### 📝 Markdown-Powered
+- Write in standard Markdown—no special syntax required
+- Full GitHub-Flavored Markdown (GFM) support
+- Code blocks with syntax highlighting (Python, JavaScript, YAML, etc.)
+- Tables, lists, images, links—everything you expect
 
-## 🎨 Available Themes
+### 🎨 Beautiful Themes
+- **Seven pre-built themes**: Ocean, Forest, Sunset, Purple Dream, Cyberpunk, Monochrome, and Turquoise
+- **Custom theme creation**: Define your own color palette
+- **Dark mode optimized** for comfortable reading
+- **Responsive design** that works on all devices
 
-The system includes seven predefined themes:
+### 🤖 AI Chat Assistant
+- **Ask questions** about your documentation in natural language
+- **Switch between AI models** (GPT-4, Claude, etc.) on the fly
+- **Context-aware**: The AI reads your current page for relevant answers
+- **Fullscreen mode** for extended conversations
 
-- **Ocean**: Blue oceanic tones (default)
-- **Forest**: Green natural tones
-- **Sunset**: Warm orange and red tones
-- **Purple Dream**: Deep violet tones
-- **Cyberpunk**: Futuristic neon colors
-- **Monochrome**: Black and white grayscale
-- **Turquoise**: Professional turquoise with vibrant cyan accents
+### 📤 Export Anywhere
+- **PDF Export**: Generate professional PDFs with cover pages and TOC
+- **QMD Export**: Export to Quarto Markdown for advanced rendering
+- **Single page or entire site**: Export what you need
+- **One-click download**: Floating buttons on every page
+
+### 🚀 Zero Build Process
+- No compilation step required
+- No npm install or webpack
+- Just start the server and edit files
+- Changes appear instantly on refresh
+
+### 📋 Automatic Navigation
+- Sidebar navigation generated from your files
+- Table of contents for each page
+- Order pages with numeric prefixes (`01-`, `02-`, etc.)
+- Collapsible sections for better organization
 
 ## 🚀 Quick Start
 
-1. Create `.md` files in the `docs/` folder
-2. Use numeric prefixes for ordering: `01-index.md`, `02-getting-started.md`
-3. Write your documentation in Markdown
-4. Reload your browser to see changes
+Get started in 3 simple steps:
 
-## 📝 Document Example
+### 1. Install and Run
+
+```bash
+# Clone the repository
+git clone https://github.com/edujbarrios/ncmds.git
+cd ncmds
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the server
+python ncmds.py
+```
+
+### 2. Create Your First Document
+
+Create a file `docs/08-my-page.md`:
 
 ```markdown
-# Document Title
+# My First Page
 
-Document content here.
+This is my documentation!
 
-## Section
+## Features
 
-Content...
+- Easy to write
+- Beautiful output
+- No configuration needed
 
-### Code Block
 
 ```python
-def example():
-    print("NCMDS example")
+def hello_ncmds():
+    print("Hello from NCMDS!")
 ```
 
-### Table
+### 3. View Your Site
 
-| Column 1 | Column 2 |
-|----------|----------|
-| Data 1   | Data 2   |
+Open your browser to `http://localhost:5000` and see your documentation live!
+
+## 📚 What's Next?
+
+Now that you've seen the basics, explore these guides:
+
+- **[Getting Started →](02-getting-started.md)** - Complete installation and first steps
+- **[Configuration →](03-configuration.md)** - Customize your site (themes, AI chat, export)
+- **[Markdown Guide →](04-markdown-guide.md)** - Learn all supported Markdown features
+- **[Deployment →](06-deployment.md)** - Deploy to production (Docker, Heroku, Railway)
+- **[Export Documentation →](03-configuration.md#export-settings)** - Generate PDFs and QMD files
+
+## 🎨 Available Themes
+
+Choose from seven beautiful themes or create your own:
+
+| Theme | Description | Preview Color |
+|-------|-------------|---------------|
+| **Turquoise** | Professional cyan/turquoise with vibrant accents (default) | `#40E0D0` |
+| **Ocean** | Calm blue oceanic tones | `#2563eb` |
+| **Forest** | Natural green woodland colors | `#10b981` |
+| **Sunset** | Warm orange and red hues | `#f59e0b` |
+| **Purple Dream** | Deep violet mystic tones | `#7c3aed` |
+| **Cyberpunk** | Futuristic neon colors | `#ec4899` |
+| **Monochrome** | Classic black and white | `#ffffff` |
+
+Change themes in `config/config.yaml`:
+
+```yaml
+theme_name: "turquoise"  # or ocean, forest, sunset, purple, cyberpunk, monochrome
 ```
 
-## 📚 Documentation
+## How NCMDS Works
 
-- [Getting Started Guide](02-getting-started.md)
-- [Configuration Guide](03-configuration.md)
-- [Markdown Features Guide](04-markdown-guide.md)
-- [Theme Creation Guide](05-themes.md)
-- [Deployment Guide](06-deployment.md)
-- [Template Components Guide](07-components.md)
+Understanding the system will help you use it effectively:
+
+### 1. File Discovery
+- NCMDS scans the `docs/` folder for `.md` files
+- Files are ordered by numeric prefix (`01-`, `02-`) or alphabetically
+- Nested folders are supported for organization
+
+### 2. Markdown Processing
+- Each `.md` file is parsed using Python-Markdown
+- Extensions add support for tables, code highlighting, and more
+- Metadata (YAML frontmatter) can control page-specific settings
+
+### 3. Template Rendering
+- HTML is generated using Flask and Jinja2 templates
+- Navigation and TOC are built automatically
+- Themes apply your chosen colors via CSS variables
+
+### 4. Live Serving
+- Flask serves the site on `localhost:5000` by default
+- Each page request renders the Markdown fresh
+- Changes to `.md` files appear on page refresh (no restart needed)
+
+### 5. Export & AI
+- Export buttons generate PDFs (via WeasyPrint) or QMD files on-demand
+- AI chat sends your question + current page content to the LLM API
+- Responses stream back in real-time
 
 ## 🛠️ Technical Stack
 
-- **Flask** - Web framework
-- **Python-Markdown** - Markdown processing
-- **PyYAML** - Configuration parsing
-- **Highlight.js** - Syntax highlighting
-- **CSS Variables** - Theme customization
+Built with modern, reliable technologies:
 
-## 🎯 Use Cases
-
-- Project documentation
-- Personal wikis
-- Educational materials
-- Technical documentation
-- API documentation
-- User guides and tutorials
+- **Backend**: Flask (Python web framework)
+- **Markdown**: Python-Markdown with extensions
+- **Templating**: Jinja2
+- **Styling**: CSS with variables for theming
+- **Syntax Highlighting**: Highlight.js
+- **PDF Generation**: WeasyPrint
+- **AI Integration**: LLM7.io API (supports multiple providers)
+- **Configuration**: YAML
 
 ## 📄 License
 
