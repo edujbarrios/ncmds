@@ -12,6 +12,8 @@
 
 </div>
 
+<img src="images/mainpage_v1.png" alt="Main View"/>
+
 ## Overview
 
 NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation, AI-powered assistance, and an optimized reading experience.
