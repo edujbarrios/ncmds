@@ -1,63 +1,73 @@
-"use strict";
 /**
  * AI Chat Widget
  * Handles the "Explain with AI" functionality
  */
-(function () {
+
+(function (): void {
     'use strict';
+
     // Configuration (will be loaded from backend)
     const config = {
         apiEndpoint: '/api/ai-chat',
         statusEndpoint: '/api/ai-chat/status',
         modelsEndpoint: '/api/ai-chat/models'
     };
+
     // State
     let isOpen = false;
     let isProcessing = false;
     let isFullscreen = false;
     let modelsLoaded = false;
+
     // DOM elements
     const widget = document.getElementById('ai-chat-widget');
-    const toggleButton = document.getElementById('ai-chat-toggle');
-    const closeButton = document.getElementById('ai-chat-close');
-    const fullscreenButton = document.getElementById('ai-chat-fullscreen');
-    const chatWindow = document.getElementById('ai-chat-window');
-    const messagesContainer = document.getElementById('ai-chat-messages');
-    const inputField = document.getElementById('ai-chat-input');
-    const sendButton = document.getElementById('ai-chat-send');
-    const modelSelect = document.getElementById('ai-chat-model-select');
+    const toggleButton = document.getElementById('ai-chat-toggle') as HTMLButtonElement | null;
+    const closeButton = document.getElementById('ai-chat-close') as HTMLButtonElement | null;
+    const fullscreenButton = document.getElementById('ai-chat-fullscreen') as HTMLButtonElement | null;
+    const chatWindow = document.getElementById('ai-chat-window') as HTMLDivElement | null;
+    const messagesContainer = document.getElementById('ai-chat-messages') as HTMLDivElement | null;
+    const inputField = document.getElementById('ai-chat-input') as HTMLInputElement | null;
+    const sendButton = document.getElementById('ai-chat-send') as HTMLButtonElement | null;
+    const modelSelect = document.getElementById('ai-chat-model-select') as HTMLSelectElement | null;
     const pageContentContainer = document.getElementById('page-content-for-ai');
+
     // Check if widget exists (AI chat is enabled)
     if (!widget) {
         return;
     }
+
     /**
      * Initialize the AI chat widget
      */
-    function init() {
-        if (!widget)
-            return;
+    function init(): void {
+        if (!widget) return;
+
         // Check AI chat status
         checkStatus();
+
         // Event listeners
-        toggleButton === null || toggleButton === void 0 ? void 0 : toggleButton.addEventListener('click', toggleChat);
-        closeButton === null || closeButton === void 0 ? void 0 : closeButton.addEventListener('click', closeChat);
-        fullscreenButton === null || fullscreenButton === void 0 ? void 0 : fullscreenButton.addEventListener('click', toggleFullscreen);
-        sendButton === null || sendButton === void 0 ? void 0 : sendButton.addEventListener('click', sendMessage);
-        inputField === null || inputField === void 0 ? void 0 : inputField.addEventListener('keypress', handleKeyPress);
+        toggleButton?.addEventListener('click', toggleChat);
+        closeButton?.addEventListener('click', closeChat);
+        fullscreenButton?.addEventListener('click', toggleFullscreen);
+        sendButton?.addEventListener('click', sendMessage);
+        inputField?.addEventListener('keypress', handleKeyPress);
+
         // Keyboard shortcuts
         document.addEventListener('keydown', handleKeyboardShortcuts);
+
         // Load position from config
         const position = widget.getAttribute('data-position') || 'bottom-right';
         widget.classList.add(`position-${position}`);
     }
+
     /**
      * Check if AI chat is properly configured
      */
-    async function checkStatus() {
+    async function checkStatus(): Promise<void> {
         try {
             const response = await fetch(config.statusEndpoint);
-            const data = await response.json();
+            const data = await response.json() as { enabled: boolean; configured: boolean };
+
             if (!data.enabled || !data.configured) {
                 // Disable the widget if not configured
                 if (toggleButton) {
@@ -66,32 +76,33 @@
                 }
                 console.warn('AI chat is not properly configured');
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.error('Failed to check AI chat status:', error);
         }
     }
+
     /**
      * Toggle chat window open/closed
      */
-    function toggleChat() {
+    function toggleChat(): void {
         if (isOpen) {
             closeChat();
-        }
-        else {
+        } else {
             openChat();
         }
     }
+
     /**
      * Open chat window
      */
-    function openChat() {
-        if (!chatWindow || !toggleButton || !inputField || !messagesContainer)
-            return;
+    function openChat(): void {
+        if (!chatWindow || !toggleButton || !inputField || !messagesContainer) return;
+
         chatWindow.style.display = 'flex';
         toggleButton.classList.add('hidden');
         isOpen = true;
         inputField.focus();
+
         // Add welcome message if messages container is empty
         if (messagesContainer.children.length === 0) {
             const welcomeMsg = document.createElement('div');
@@ -110,119 +121,130 @@
             `;
             messagesContainer.appendChild(welcomeMsg);
         }
+
         // Load models if not already loaded
         if (!modelsLoaded) {
             loadAvailableModels();
         }
     }
+
     /**
      * Load available models from API
      */
-    async function loadAvailableModels() {
-        if (!modelSelect)
-            return;
+    async function loadAvailableModels(): Promise<void> {
+        if (!modelSelect) return;
         try {
             const response = await fetch(config.modelsEndpoint);
-            const data = await response.json();
+            const data = await response.json() as {
+                success: boolean;
+                models?: Array<{ id: string; name: string }>;
+            };
+
             if (data.success && data.models && data.models.length > 0) {
                 // Clear existing options
                 modelSelect.innerHTML = '';
+
                 // Get default model from status
                 const statusResponse = await fetch(config.statusEndpoint);
-                const statusData = await statusResponse.json();
+                const statusData = await statusResponse.json() as { default_model?: string };
                 const defaultModel = statusData.default_model || data.models[0].id;
+
                 // Populate dropdown
                 data.models.forEach((model) => {
                     const option = document.createElement('option');
                     option.value = model.id;
                     option.textContent = model.name;
+
                     if (model.id === defaultModel) {
                         option.selected = true;
                     }
+
                     modelSelect.appendChild(option);
                 });
+
                 modelsLoaded = true;
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.error('Failed to load models:', error);
             // Keep the default model from config
         }
     }
+
     /**
      * Close chat window
      */
-    function closeChat() {
-        if (!chatWindow || !toggleButton)
-            return;
+    function closeChat(): void {
+        if (!chatWindow || !toggleButton) return;
+
         chatWindow.style.display = 'none';
         toggleButton.classList.remove('hidden');
         isOpen = false;
+
         // Exit fullscreen if active
         if (isFullscreen) {
             toggleFullscreen();
         }
     }
+
     /**
      * Toggle fullscreen mode
      */
-    function toggleFullscreen() {
-        if (!chatWindow || !fullscreenButton)
-            return;
+    function toggleFullscreen(): void {
+        if (!chatWindow || !fullscreenButton) return;
+
         isFullscreen = !isFullscreen;
+
         if (isFullscreen) {
             chatWindow.classList.add('fullscreen');
             // Swap icons
-            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon');
-            if (fullscreenIcon)
-                fullscreenIcon.style.display = 'none';
-            if (minimizeIcon)
-                minimizeIcon.style.display = 'block';
+            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon') as HTMLElement | null;
+            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon') as HTMLElement | null;
+            if (fullscreenIcon) fullscreenIcon.style.display = 'none';
+            if (minimizeIcon) minimizeIcon.style.display = 'block';
             fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
-        }
-        else {
+        } else {
             chatWindow.classList.remove('fullscreen');
             // Swap icons back
-            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon');
-            if (fullscreenIcon)
-                fullscreenIcon.style.display = 'block';
-            if (minimizeIcon)
-                minimizeIcon.style.display = 'none';
+            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon') as HTMLElement | null;
+            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon') as HTMLElement | null;
+            if (fullscreenIcon) fullscreenIcon.style.display = 'block';
+            if (minimizeIcon) minimizeIcon.style.display = 'none';
             fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
         }
+
         // Scroll to bottom after resize
         setTimeout(() => scrollToBottom(), 100);
     }
+
     /**
      * Handle Enter key press in input field
      */
-    function handleKeyPress(event) {
-        const keyEvent = event;
+    function handleKeyPress(event: Event): void {
+        const keyEvent = event as KeyboardEvent;
         if (keyEvent.key === 'Enter' && !keyEvent.shiftKey) {
             event.preventDefault();
             sendMessage();
         }
     }
+
     /**
      * Handle keyboard shortcuts
      */
-    function handleKeyboardShortcuts(event) {
+    function handleKeyboardShortcuts(event: KeyboardEvent): void {
         // Only process if chat is open
-        if (!isOpen)
-            return;
+        if (!isOpen) return;
+
         // Escape key: Exit fullscreen or close chat
         if (event.key === 'Escape') {
             if (isFullscreen) {
                 event.preventDefault();
                 toggleFullscreen();
-            }
-            else if (isOpen) {
+            } else if (isOpen) {
                 event.preventDefault();
                 closeChat();
             }
         }
+
         // F11 or Ctrl/Cmd + Shift + F: Toggle fullscreen
         if (event.key === 'F11' ||
             ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === 'f')) {
@@ -230,29 +252,37 @@
             toggleFullscreen();
         }
     }
+
     /**
      * Send a message to the AI
      */
-    async function sendMessage() {
-        if (!inputField || !sendButton || !modelSelect)
-            return;
+    async function sendMessage(): Promise<void> {
+        if (!inputField || !sendButton || !modelSelect) return;
+
         const question = inputField.value.trim();
+
         if (!question || isProcessing) {
             return;
         }
+
         // Get page content
         const pageContent = getPageContent();
+
         // Add user message to chat
         addMessage(question, 'user');
+
         // Clear input
         inputField.value = '';
+
         // Show loading state
         isProcessing = true;
         sendButton.disabled = true;
         const loadingMessage = addLoadingMessage();
+
         try {
             // Get selected model
             const selectedModel = modelSelect.value;
+
             // Send request to backend
             const response = await fetch(config.apiEndpoint, {
                 method: 'POST',
@@ -265,54 +295,60 @@
                     model: selectedModel
                 })
             });
-            const data = await response.json();
+
+            const data = await response.json() as { success: boolean; answer?: string; error?: string };
+
             // Remove loading message
             removeMessage(loadingMessage);
+
             if (data.success && data.answer) {
                 // Add AI response
                 addMessage(data.answer, 'ai');
-            }
-            else {
+            } else {
                 // Show error
                 addErrorMessage(data.error || 'Failed to get response from AI');
             }
-        }
-        catch (error) {
+        } catch (error) {
             // Remove loading message
             removeMessage(loadingMessage);
+
             // Show error
             addErrorMessage('Network error. Please try again.');
             console.error('AI chat error:', error);
-        }
-        finally {
+        } finally {
             isProcessing = false;
             sendButton.disabled = false;
             inputField.focus();
         }
     }
+
     /**
      * Get the current page content for context
      */
-    function getPageContent() {
-        var _a, _b, _c, _d;
+    function getPageContent(): string {
         if (pageContentContainer) {
-            return (_b = (_a = pageContentContainer.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : '';
+            return pageContentContainer.textContent?.trim() ?? '';
         }
+
         // Fallback: get content from the main article
         const article = document.querySelector('.markdown-body');
         if (article) {
-            return (_d = (_c = article.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : '';
+            return article.textContent?.trim() ?? '';
         }
+
         return '';
     }
+
     /**
      * Add a message to the chat
      */
-    function addMessage(text, type) {
+    function addMessage(text: string, type: 'user' | 'ai'): HTMLDivElement {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ai-chat-message ${type}-message`;
+
         const avatarDiv = document.createElement('div');
         avatarDiv.className = 'ai-chat-message-avatar';
+
         if (type === 'ai') {
             avatarDiv.innerHTML = `
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -321,8 +357,7 @@
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
             `;
-        }
-        else {
+        } else {
             avatarDiv.innerHTML = `
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -330,24 +365,31 @@
                 </svg>
             `;
         }
+
         const contentDiv = document.createElement('div');
         contentDiv.className = 'ai-chat-message-content';
+
         // Format the text (simple markdown-like formatting)
         const formattedText = formatText(text);
         contentDiv.innerHTML = `<p>${formattedText}</p>`;
+
         messageDiv.appendChild(avatarDiv);
         messageDiv.appendChild(contentDiv);
-        messagesContainer === null || messagesContainer === void 0 ? void 0 : messagesContainer.appendChild(messageDiv);
+        messagesContainer?.appendChild(messageDiv);
+
         // Scroll to bottom
         scrollToBottom();
+
         return messageDiv;
     }
+
     /**
      * Add a loading message
      */
-    function addLoadingMessage() {
+    function addLoadingMessage(): HTMLDivElement {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'ai-chat-message ai-message loading';
+
         messageDiv.innerHTML = `
             <div class="ai-chat-message-avatar">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -364,16 +406,20 @@
                 </div>
             </div>
         `;
-        messagesContainer === null || messagesContainer === void 0 ? void 0 : messagesContainer.appendChild(messageDiv);
+
+        messagesContainer?.appendChild(messageDiv);
         scrollToBottom();
+
         return messageDiv;
     }
+
     /**
      * Add an error message
      */
-    function addErrorMessage(text) {
+    function addErrorMessage(text: string): HTMLDivElement {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'ai-chat-message error ai-message';
+
         messageDiv.innerHTML = `
             <div class="ai-chat-message-avatar">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -386,57 +432,68 @@
                 <p>${escapeHtml(text)}</p>
             </div>
         `;
-        messagesContainer === null || messagesContainer === void 0 ? void 0 : messagesContainer.appendChild(messageDiv);
+
+        messagesContainer?.appendChild(messageDiv);
         scrollToBottom();
+
         return messageDiv;
     }
+
     /**
      * Remove a message from the chat
      */
-    function removeMessage(messageElement) {
+    function removeMessage(messageElement: HTMLElement | null): void {
         if (messageElement && messageElement.parentNode) {
             messageElement.parentNode.removeChild(messageElement);
         }
     }
+
     /**
      * Scroll chat to bottom
      */
-    function scrollToBottom() {
+    function scrollToBottom(): void {
         if (messagesContainer) {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
+
     /**
      * Format text with basic markdown-like syntax
      */
-    function formatText(text) {
+    function formatText(text: string): string {
         // Escape HTML first
         text = escapeHtml(text);
+
         // Bold: **text** or __text__
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
         // Italic: *text* or _text_
         text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
         text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+
         // Inline code: `code`
         text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+
         // Line breaks
         text = text.replace(/\n/g, '<br>');
+
         return text;
     }
+
     /**
      * Escape HTML special characters
      */
-    function escapeHtml(text) {
+    function escapeHtml(text: string): string {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
+
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
-    }
-    else {
+    } else {
         init();
     }
 })();

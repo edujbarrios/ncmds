@@ -1,0 +1,23 @@
+{
+  "name": "ncmds",
+  "version": "1.0.0",
+  "description": "NCMDS - No Code Markdown Sites",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edujbarrios/ncmds.git"
+  },
+  "keywords": [],
+  "author": "edujbarrios",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edujbarrios/ncmds/issues"
+  },
+  "homepage": "https://github.com/edujbarrios/ncmds#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

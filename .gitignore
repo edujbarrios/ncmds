@@ -47,4 +47,8 @@ Thumbs.db
 # Local config overrides
 config/config.local.yaml
 
+# Node.js / TypeScript
+node_modules/
+package-lock.json
+
 tests.txt
