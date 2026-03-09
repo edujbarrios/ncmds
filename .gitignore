@@ -46,5 +46,11 @@ Thumbs.db
 
 # Local config overrides
 config/config.local.yaml
+.env
+
+# Deployment
+.vercel
+.netlify
+*.db
 
 tests.txt

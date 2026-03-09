@@ -4,4 +4,6 @@ PyYAML==6.0.1
 Pygments==2.17.2
 weasyprint==61.2
 requests==2.31.0
+gunicorn==21.2.0
+serverless-wsgi==3.0.3
 

@@ -6,12 +6,15 @@ Deploy your NCMDS documentation site to production and make it accessible to you
 
 NCMDS is a Flask application that can be deployed to:
 
+- **Serverless platforms** (Vercel, Netlify) - **Recommended for quick deployment**
 - **Traditional servers** (VPS, dedicated hosting)
 - **Container platforms** (Docker, Kubernetes)  
 - **Platform-as-a-Service** (Heroku, Railway, Render)
 - **Cloud providers** (AWS, GCP, Azure)
 
 This guide covers the most common deployment methods.
+
+> **Note:** NCMDS is designed primarily for local development (`localhost`). Cloud deployment support is provided as an optional add-on for production use.
 
 ## 🏠 Local Development Server
 
@@ -30,7 +33,187 @@ python ncmds.py
 
 **Access:** `http://localhost:5000`
 
-## 🚀 Production Deployment Methods
+## ☁️ Quick Cloud Deployment (Recommended)
+
+The fastest way to deploy NCMDS to production is using Vercel or Netlify. Both platforms offer:
+
+- ✅ **Auto-detection** of configuration files
+- ✅ **GitHub integration** with automatic deployments
+- ✅ **Free tier** available
+- ✅ **HTTPS** included
+- ✅ **CDN** for static files
+- ✅ **Zero configuration** required
+
+### Deploy to Vercel
+
+**Step-by-Step:**
+
+1. **Push to GitHub**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/yourusername/your-repo.git
+   git push -u origin main
+   ```
+
+2. **Connect to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with GitHub
+   - Click "New Project"
+   - Import your repository
+   - Vercel auto-detects `vercel.json` configuration
+   - Click "Deploy"
+
+3. **Configure Environment Variables** (if using AI chat)
+   - In Vercel dashboard, go to Settings → Environment Variables
+   - Add your LLM7.io API key:
+     ```
+     Name: LLM7_API_KEY
+     Value: your-api-key-here
+     ```
+
+4. **Done!** Your site is live at `https://your-project.vercel.app`
+
+**Auto-Deployment:**
+- Any push to `main` branch triggers automatic redeployment
+- Preview deployments for pull requests
+
+**Configuration File:** `vercel.json`
+```json
+{
+  "version": 2,
+  "name": "ncmds",
+  "builds": [
+    {
+      "src": "wsgi.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "wsgi.py"
+    }
+  ]
+}
+```
+
+### Deploy to Netlify
+
+**Step-by-Step:**
+
+1. **Push to GitHub** (same as Vercel step 1)
+
+2. **Connect to Netlify**
+   - Go to [netlify.com](https://netlify.com)
+   - Sign in with GitHub
+   - Click "Add new site" → "Import an existing project"
+   - Select your repository
+   - Netlify auto-detects `netlify.toml` configuration
+   - Click "Deploy site"
+
+3. **Configure Environment Variables** (if using AI chat)
+   - In Netlify dashboard, go to Site settings → Environment variables
+   - Add your LLM7.io API key:
+     ```
+     LLM7_API_KEY=your-api-key-here
+     ```
+
+4. **Done!** Your site is live at `https://your-project.netlify.app`
+
+**Auto-Deployment:**
+- Any push to `main` branch triggers automatic redeployment
+- Deploy previews for pull requests
+
+**Configuration File:** `netlify.toml`
+```toml
+[build]
+  command = "pip install -r requirements.txt"
+  publish = "."
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/app/:splat"
+  status = 200
+
+[functions]
+  directory = "netlify/functions"
+```
+
+### Supporting Files
+
+Both platforms use these files (already included in NCMDS):
+
+**`wsgi.py`** - WSGI entry point:
+```python
+#!/usr/bin/env python3
+import os
+import sys
+sys.path.insert(0, os.path.dirname(__file__))
+from ncmds import app
+
+os.makedirs('docs', exist_ok=True)
+os.makedirs('static', exist_ok=True)
+os.makedirs('templates', exist_ok=True)
+
+application = app
+```
+
+**`runtime.txt`** - Python version:
+```
+python-3.11.0
+```
+
+**`requirements.txt`** - Includes production dependencies:
+```
+Flask==3.0.0
+Markdown==3.5.1
+PyYAML==6.0.1
+Pygments==2.17.2
+weasyprint==61.2
+requests==2.31.0
+gunicorn==21.2.0
+serverless-wsgi==3.0.3
+```
+
+### Custom Domain
+
+Both Vercel and Netlify support custom domains:
+
+**Vercel:**
+1. Go to Settings → Domains
+2. Add your domain
+3. Update DNS records as instructed
+
+**Netlify:**
+1. Go to Domain settings
+2. Add custom domain
+3. Update DNS records or use Netlify DNS
+
+### Limitations
+
+- **Cold starts**: Serverless functions may have initial latency
+- **Timeouts**: Function execution time limits (10s Vercel, 10s Netlify free tier)
+- **Stateless**: No persistent file storage (use external storage for uploads)
+
+## 🚀 Traditional Deployment Methods
 
 ### Method 1: Gunicorn (Recommended)
 

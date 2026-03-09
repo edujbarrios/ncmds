@@ -168,11 +168,13 @@ ui_controls:
   # Enable table of contents toggle button
   toc_toggle: true
 
-# Server configuration
+# Server configuration (for local development - default mode)
+# Access at: http://localhost:5000
+# host: 0.0.0.0 allows access from local network devices
 server:
   host: "0.0.0.0"
   port: 5000
-  debug: true
+  debug: true  # Set to false for production
 
 # Directories
 directories:

@@ -18,17 +18,23 @@
 
 NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation, AI-powered assistance, and an optimized reading experience.
 
+**Default Mode:** Runs locally on your machine. Cloud deployment is completely optional.
+
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
 ## ✨ Key Features
 
+- 🏠 **Local-First** - Runs on localhost by default, no cloud required
 - 🤖 **AI-Powered Chat** - Ask questions about documentation with built-in AI assistant and switchable models
 - 📤 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
 - 🎨 **Dark Theme** - Optimized for comfortable reading and coding
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 - 🔍 **Auto Navigation** - Automatic table of contents and page navigation
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Local Development)
+
+[!NOTE]
+> **Default Mode:** NCMDS runs locally on your machine. Cloud deployment is completely optional.
 
 ```bash
 # Clone repository
@@ -38,11 +44,13 @@ cd ncmds
 # Install dependencies
 pip install -r requirements.txt
 
-# Run
+# Run locally (default)
 python ncmds.py
 ```
 
 Open `http://localhost:5000` in your browser.
+
+**That's it!** The tool is designed to run on localhost by default. No additional configuration needed.
 
 ## 📝 Usage
 
@@ -97,7 +105,13 @@ NCMDS includes a powerful export module that allows you to export your documenta
 - Professional cover page with project branding
 - Optimized for print and digital reading
 
-## 📚 Documentation
+## 🆕 Cloud Deployment Support
+
+**NEW:** NCMDS now supports publishing your site via **Vercel** and **Netlify** with auto-detection!
+
+See the [Deployment Guide](docs/06-deployment.md) for complete instructions on deploying to production.
+
+## �📚 Documentation
 
 Full documentation available at `/docs` when running the server, or view:
 

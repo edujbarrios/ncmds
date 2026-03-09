@@ -1,0 +1,22 @@
+# This file is OPTIONAL - only needed for Netlify deployment
+# NCMDS runs locally by default with 'python ncmds.py'
+
+[build]
+  command = "pip install -r requirements.txt"
+  publish = "."
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/app/:splat"
+  status = 200
+
+[functions]
+  directory = "netlify/functions"

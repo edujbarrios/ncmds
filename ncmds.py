@@ -3,6 +3,17 @@
 NCMDS - No Code Markdown Sites
 A Simple Documentation Site Builder
 Created by: edujbarrios
+
+DEFAULT MODE: Local Development
+===============================
+This is the main file to run NCMDS on your local machine.
+
+Usage:
+    python ncmds.py
+
+This will start the server on http://localhost:5000
+
+For production deployment (optional), see wsgi.py and DEPLOYMENT.md
 """
 
 import os
