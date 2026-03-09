@@ -18,8 +18,6 @@
 
 NCMDS is a zero-configuration documentation site builder that converts Markdown files into beautiful, dark-themed documentation websites with automatic navigation, AI-powered assistance, and an optimized reading experience.
 
-**Default Mode:** Runs locally on your machine. Cloud deployment is completely optional.
-
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
 ## ✨ Key Features
@@ -33,7 +31,7 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 
 ## 🚀 Quick Start (Local Development)
 
-[!NOTE]
+> [!CAUTION]
 > **Default Mode:** NCMDS runs locally on your machine. Cloud deployment is completely optional.
 
 ```bash
