@@ -109,7 +109,7 @@ NCMDS includes a powerful export module that allows you to export your documenta
 
 See the [Deployment Guide](docs/06-deployment.md) for complete instructions on deploying to production.
 
-## �📚 Documentation
+## 📚 Documentation
 
 Full documentation available at `/docs` when running the server, or view:
 
