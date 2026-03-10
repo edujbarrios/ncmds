@@ -1,7 +1,6 @@
 import re
 import base64
 import requests
-from flask import Markup
 
 def render_math_formula(formula: str) -> str:
     """
@@ -10,7 +9,7 @@ def render_math_formula(formula: str) -> str:
     """
     # Clean formula for URL
     formula_url = formula.replace(' ', '')
-    url = f"https://latex.codecogs.com/png.image?\dpi{{110}}{formula_url}"
+    url = rf"https://latex.codecogs.com/png.image?\dpi{{110}}{formula_url}"
     return f'<img src="{url}" alt="{formula}" style="vertical-align:middle;" />'
 
 # Example usage:

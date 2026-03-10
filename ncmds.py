@@ -153,7 +153,7 @@ class DocumentationSite:
         else:
             # Try with numeric prefix first, then without
             doc_path = None
-            for md_file in self.docs_dir.glob('*.md'):
+            for md_file in self.docs_dir.rglob('*.md'):
                 if str(md_file.stem).endswith(path) or md_file.stem == path:
                     doc_path = md_file
                     break

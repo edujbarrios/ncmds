@@ -24,7 +24,7 @@ def register_export_routes(app, config_manager, site):
         for nav_item in site.navigation:
             # Find the markdown file
             doc_file = None
-            for md_file in docs_dir.glob('*.md'):
+            for md_file in docs_dir.rglob('*.md'):
                 if str(md_file.stem).endswith(nav_item['path']) or md_file.stem == nav_item['path']:
                     doc_file = md_file
                     break
