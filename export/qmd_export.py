@@ -95,7 +95,8 @@ To render to Word:
         # Add all documents with section breaks
         for i, doc_data in enumerate(documents_data):
             if i > 0:
-                qmd_content += "\n\n# " + doc_data.get('title', f'Section {i+1}') + "\n\n"
+                qmd_content += "\n\n"
+            qmd_content += "# " + doc_data.get('title', f'Section {i+1}') + "\n\n"
             
             markdown_text = doc_data.get('markdown', '')
             qmd_content += self._clean_markdown_content(markdown_text)
