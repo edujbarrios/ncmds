@@ -2,10 +2,10 @@
     /* Enhanced turquoise palette with better contrast */
     --turq-keyword: #00FFFF;        /* Bright cyan for keywords */
     --turq-string: #7FFFD4;         /* Aquamarine for strings */
-    --turq-number: #40E0D0;         /* Medium turquoise for numbers */
+    --turq-number: #00E5D0;         /* Medium turquoise for numbers */
     --turq-function: #48D1CC;       /* Medium turquoise for functions */
-    --turq-builtin: #20B2AA;        /* Light sea green for built-ins */
-    --turq-comment: #008B8B;        /* Dark cyan for comments */
+    --turq-builtin: #00D4B8;        /* Light sea green for built-ins */
+    --turq-comment: #00A8A8;        /* Dark cyan for comments */
     --turq-variable: #00CED1;       /* Dark turquoise for variables */
     --turq-type: #5FD3BC;           /* Light teal for types */
     --turq-operator: #66FFCC;       /* Bright aqua for operators */
@@ -159,7 +159,7 @@
     box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.4),
         0 1px 3px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 #40E0D011;
+        inset 0 1px 0 #00E5D011;
 }
 
 [data-theme="dark"] .markdown-body pre:hover {
@@ -313,9 +313,9 @@
 
 /* Highlighted code lines in dark mode */
 [data-theme="dark"] .highlighted-code-line {
-    background-color: rgba(64, 224, 208, 0.3);
+    background-color: rgba(0, 229, 208, 0.3);
     display: block;
     margin: 0 -1.75rem;
     padding: 0 1.75rem;
-    border-left: 3px solid #40E0D0;
+    border-left: 3px solid #00E5D0;
 }

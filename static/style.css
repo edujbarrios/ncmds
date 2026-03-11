@@ -63,9 +63,9 @@ body {
 .logo a span {
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     background-clip: text;
@@ -289,7 +289,7 @@ body {
 .hero-title {
     font-size: 5.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #006666 0%, #008B8B 50%, #20B2AA 100%);
+    background: linear-gradient(135deg, #008888 0%, #00B8B8 50%, #00D4B8 100%);
     background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -485,9 +485,9 @@ body {
 .hero-button.primary {
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     color: white;
@@ -792,9 +792,9 @@ body {
     padding: 0.5rem 1rem;
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     color: white;
@@ -845,7 +845,7 @@ body {
     margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
-    background: linear-gradient(135deg, #8CF0EB 0%, #66E6DD 50%, #40E0D0 100%);
+    background: linear-gradient(135deg, #00F0E6 0%, #00D4C8 50%, #00E5D0 100%);
     background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;

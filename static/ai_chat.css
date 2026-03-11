@@ -227,7 +227,7 @@
 }
 
 .ai-chat-messages::-webkit-scrollbar-thumb {
-    background: var(--border-color, #3a3a3c);
+    background: var(--border-color, #00D4B8);
     border-radius: 3px;
 }
 
@@ -269,7 +269,7 @@
 }
 
 .user-message .ai-chat-message-avatar {
-    background: var(--accent-color, #40E0D0);
+    background: var(--accent-color, #00D4B8);
     color: #1b1b1d;
 }
 
@@ -361,7 +361,7 @@
 /* Chat input */
 .ai-chat-input-container {
     padding: 16px 20px;
-    border-top: 1px solid var(--border-color, #3a3a3c);
+    border-top: 1px solid var(--border-color, #00D4B8);
     background: var(--background-color, #1b1b1d);
 }
 

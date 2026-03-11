@@ -13,16 +13,16 @@
 
 html {
     /* Turquoise theme variables */
-    --primary-color: #40E0D0;
-    --secondary-color: #008B8B;
-    --accent-color: #20B2AA;
-    --code-background: #0e2229;
-    --border-color: #20B2AA;
-    --surface-color: #1e1e1e;
-    --background-color: #101820;
-    --text-color: #e0f7fa;
-    --link-color: #40E0D0;
-    --link-hover: #008B8B;
+    --primary-color: #00E5D0;
+    --secondary-color: #00A8A8;
+    --accent-color: #00D4B8;
+    --code-background: #0a1c22;
+    --border-color: #00D4B8;
+    --surface-color: #181818;
+    --background-color: #0c1418;
+    --text-color: #d8f5f7;
+    --link-color: #00E5D0;
+    --link-hover: #00C8C8;
     transition: background-color 0.3s ease;
     scroll-behavior: smooth;
 }

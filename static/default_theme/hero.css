@@ -117,9 +117,9 @@
     display: inline-block;
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     background-clip: text;
@@ -275,9 +275,9 @@
 .hero-button.primary {
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     color: white;
@@ -558,9 +558,9 @@
     padding: 0.5rem 1rem;
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     color: white;
@@ -620,7 +620,7 @@
     margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
-    background: linear-gradient(135deg, #8CF0EB 0%, #66E6DD 50%, #40E0D0 100%);
+    background: linear-gradient(135deg, #00F0E6 0%, #00D4C8 50%, #00E5D0 100%);
     background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -712,26 +712,26 @@
 
 [data-theme="dark"] .hero-section {
     background: linear-gradient(135deg, 
-        #1b1b1d 0%, 
-        #242526 100%
+        #0c1418 0%, 
+        #181818 100%
     );
-    border-bottom: 1px solid #3a3a3c;
+    border-bottom: 1px solid #00D4B8;
 }
 
 [data-theme="dark"] .hero-badge {
-    background: rgba(64, 224, 208, 0.1);
-    border-color: rgba(64, 224, 208, 0.3);
+    background: rgba(0, 229, 208, 0.1);
+    border-color: rgba(0, 229, 208, 0.3);
 }
 
 [data-theme="dark"] .hero-badge:hover {
     background: linear-gradient(
         135deg,
-        rgba(64, 224, 208, 0.15),
-        rgba(102, 230, 221, 0.2),
-        rgba(64, 224, 208, 0.15)
+        rgba(0, 229, 208, 0.15),
+        rgba(0, 212, 184, 0.2),
+        rgba(0, 229, 208, 0.15)
     );
-    border-color: #40E0D0;
-    box-shadow: 0 6px 16px rgba(64, 224, 208, 0.3), 0 0 20px rgba(64, 224, 208, 0.2);
+    border-color: #00E5D0;
+    box-shadow: 0 6px 16px rgba(0, 229, 208, 0.3), 0 0 20px rgba(0, 229, 208, 0.2);
 }
 
 [data-theme="light"] .hero-section {

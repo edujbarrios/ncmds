@@ -45,9 +45,9 @@
 .logo a span {
     background: linear-gradient(
         135deg,
-        #006666 0%,
-        #008B8B 50%,
-        #20B2AA 100%
+        #008888 0%,
+        #00B8B8 50%,
+        #00D4B8 100%
     );
     background-size: 200% auto;
     background-clip: text;
