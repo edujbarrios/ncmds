@@ -72,6 +72,12 @@ def register_ai_chat_routes(app, config_manager):
         temperature = config_manager.get('ai_chat.behavior.temperature', 0.7)
         max_tokens = config_manager.get('ai_chat.behavior.max_tokens', 1000)
         
+        # Validate API URL
+        if not api_url:
+            return jsonify({
+                'error': 'API URL not configured'
+            }), 500
+
         try:
             # Initialize LLM client
             client = LLMClient(api_url, api_key, selected_model)
@@ -127,6 +133,11 @@ def register_ai_chat_routes(app, config_manager):
                 'error': 'API key not configured'
             }), 500
         
+        if not api_url:
+            return jsonify({
+                'error': 'API URL not configured'
+            }), 500
+
         try:
             # Initialize LLM client
             client = LLMClient(api_url, api_key, 'gpt-4o-mini')
