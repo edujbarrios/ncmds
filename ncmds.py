@@ -20,6 +20,7 @@ import os
 import sys
 import re
 import markdown
+from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, send_from_directory, abort, jsonify, request
 
@@ -171,6 +172,11 @@ class DocumentationSite:
         
         result = self.processor.convert(content)
         result['path'] = path
+
+        # Expose file modification time for per-document metadata in the UI.
+        modified_at = datetime.fromtimestamp(doc_path.stat().st_mtime)
+        result['last_updated_display'] = modified_at.strftime('%d/%m/%Y %H:%M')
+        result['last_updated_iso'] = modified_at.isoformat(timespec='seconds')
         
         return result
 
@@ -230,6 +236,8 @@ def document(doc_path):
         navigation=site.navigation,
         prev_doc=prev_doc,
         next_doc=next_doc,
+        doc_last_updated=doc.get('last_updated_display'),
+        doc_last_updated_iso=doc.get('last_updated_iso'),
         config=config
     )
 

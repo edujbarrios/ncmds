@@ -213,3 +213,39 @@
 .markdown-body a {
     font-weight: bold;
 }
+
+/* Document metadata */
+.doc-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+    margin-left: auto;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.doc-meta-label {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+
+.doc-meta-value {
+    color: var(--text-color);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .doc-meta {
+        margin-left: 0;
+        display: flex;
+        width: fit-content;
+        max-width: 100%;
+    }
+}
