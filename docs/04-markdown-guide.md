@@ -6,6 +6,7 @@ tags:
     - writing
 difficulty: "beginner"
 owner: "docs-team"
+writer: "edujbarrios"
 ---
 
 # Markdown Features Guide
@@ -207,6 +208,7 @@ tags:
     - security
 difficulty: "intermediate"
 owner: "backend-team"
+writer: "alice"
 ---
 
 # Document content starts here
@@ -217,6 +219,8 @@ Extended metadata behavior:
 - `tags`: renders page tags and enables search filtering (`tag:api`)
 - `difficulty`: renders a difficulty chip and supports search filtering (`difficulty:intermediate`)
 - `owner`: renders document owner and supports search filtering (`owner:backend-team`)
+- `writer`: renders writer chip and supports search filtering (`writer:alice`)
+- `writter`: alias supported for compatibility with legacy/typo metadata
 
 ## 🎨 HTML Support
 

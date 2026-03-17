@@ -1,3 +1,10 @@
+---
+tags:
+  - getting-started
+  - installation
+  - tutorial
+---
+
 # Getting Started with NCMDS
 
 This comprehensive guide will take you from installation to creating your first professional documentation site with NCMDS.

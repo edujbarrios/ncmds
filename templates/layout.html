@@ -17,7 +17,7 @@
                 </div>
                 {% endif %}
 
-                {% if doc_tags or doc_difficulty or doc_owner %}
+                {% if doc_tags or doc_difficulty or doc_owner or doc_writer %}
                 <div class="doc-taxonomy" aria-label="Document metadata tags">
                     {% if doc_difficulty %}
                     <span class="doc-taxonomy-chip doc-taxonomy-difficulty">Difficulty: {{ doc_difficulty|title }}</span>
@@ -25,6 +25,10 @@
 
                     {% if doc_owner %}
                     <span class="doc-taxonomy-chip doc-taxonomy-owner">Owner: {{ doc_owner }}</span>
+                    {% endif %}
+
+                    {% if doc_writer %}
+                    <span class="doc-taxonomy-chip doc-taxonomy-writer">Writer: {{ doc_writer }}</span>
                     {% endif %}
 
                     {% for tag in doc_tags %}

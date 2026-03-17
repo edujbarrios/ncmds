@@ -1,3 +1,10 @@
+---
+tags:
+	- overview
+	- introduction
+	- home
+---
+
 # Welcome to NCMDS
 
 **NCMDS** (No Code Markdown Documentation Sites) is a powerful yet simple documentation site builder that transforms your Markdown files into beautiful, professional documentation websites. No compilation, no complex build processes—just write Markdown and see your documentation come to life instantly.

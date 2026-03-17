@@ -1,3 +1,10 @@
+---
+tags:
+    - components
+    - templates
+    - architecture
+---
+
 # Template Components Architecture
 
 NCMDS uses a modular component-based template system that separates concerns and makes the codebase more maintainable. Components are organized by file type for better clarity.

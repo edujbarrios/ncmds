@@ -67,7 +67,8 @@
         const filters = {
             tag: '',
             difficulty: '',
-            owner: ''
+            owner: '',
+            writer: ''
         };
         const terms = [];
 
@@ -97,7 +98,7 @@
      * Check if at least one filter is active.
      */
     function hasActiveFilters(filters) {
-        return Boolean(filters.tag || filters.difficulty || filters.owner);
+        return Boolean(filters.tag || filters.difficulty || filters.owner || filters.writer);
     }
 
     /**
@@ -114,6 +115,9 @@
         }
         if (filters.owner) {
             chips.push(`<span class="search-filter-chip">owner:${escapeHtml(filters.owner)}</span>`);
+        }
+        if (filters.writer) {
+            chips.push(`<span class="search-filter-chip">writer:${escapeHtml(filters.writer)}</span>`);
         }
 
         return chips.join('');
@@ -242,6 +246,9 @@
         if (parsed.filters.owner) {
             params.set('owner', parsed.filters.owner);
         }
+        if (parsed.filters.writer) {
+            params.set('writer', parsed.filters.writer);
+        }
 
         try {
             const response = await fetch(`/api/search?${params.toString()}`);
@@ -347,6 +354,9 @@
         }
         if (result.owner) {
             metadataChips.push(`<span class="search-result-chip search-result-chip-owner">${escapeHtml(result.owner)}</span>`);
+        }
+        if (result.writer) {
+            metadataChips.push(`<span class="search-result-chip search-result-chip-writer">${escapeHtml(result.writer)}</span>`);
         }
         tags.slice(0, 2).forEach((tag) => {
             metadataChips.push(`<span class="search-result-chip search-result-chip-tag">#${escapeHtml(tag)}</span>`);

@@ -117,7 +117,7 @@ See the [Deployment Guide](docs/06-deployment.md) for complete instructions on d
 
 ## 🏷️ Extended Frontmatter Metadata
 
-**NEW:** NCMDS now supports extended YAML frontmatter fields: **tags**, **difficulty**, and **owner**.
+**NEW:** NCMDS now supports extended YAML frontmatter fields: **tags**, **difficulty**, **owner**, and **writer** (plus alias **writter**).
 
 ```yaml
 ---
@@ -127,6 +127,7 @@ tags:
   - auth
 difficulty: "intermediate"
 owner: "backend-team"
+writer: "alice"
 ---
 ```
 
@@ -141,6 +142,7 @@ Search filter examples:
 - `tag:api authentication`
 - `difficulty:beginner`
 - `owner:docs-team`
+- `writer:alice`
 
 ## 📚 Documentation
 

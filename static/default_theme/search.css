@@ -290,6 +290,12 @@
     background: rgba(99, 102, 241, 0.14);
 }
 
+.search-result-chip-writer {
+    color: #dccdff;
+    border-color: rgba(147, 51, 234, 0.45);
+    background: rgba(147, 51, 234, 0.14);
+}
+
 .search-result-chip-match {
     color: #052d2f;
     border-color: rgba(79, 224, 210, 0.55);

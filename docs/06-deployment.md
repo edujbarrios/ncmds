@@ -1,3 +1,10 @@
+---
+tags:
+  - deployment
+  - hosting
+  - production
+---
+
 # Deployment Guide
 
 Deploy your NCMDS documentation site to production and make it accessible to your users worldwide.

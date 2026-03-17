@@ -193,6 +193,32 @@ class DocumentationSite:
             return int(value)
         except (TypeError, ValueError):
             return default
+
+    def _build_doc_metadata(self, front_matter):
+        """Build normalized document taxonomy metadata with sensible defaults."""
+        default_author = self._normalize_text_value(self.config_manager.get('author', ''))
+
+        tags = self._normalize_tags(front_matter.get('tags', []))
+        if not tags:
+            tags = ['documentation']
+
+        difficulty = self._normalize_text_value(front_matter.get('difficulty')) or 'general'
+        owner = self._normalize_text_value(front_matter.get('owner')) or default_author
+
+        # Accept both writer and misspelled writter for compatibility.
+        writer_raw = (
+            front_matter.get('writer')
+            or front_matter.get('writter')
+            or front_matter.get('author')
+        )
+        writer = self._normalize_text_value(writer_raw) or default_author
+
+        return {
+            'tags': tags,
+            'difficulty': difficulty,
+            'owner': owner,
+            'writer': writer
+        }
     
     def build_navigation(self):
         """Build navigation structure from docs directory"""
@@ -218,6 +244,7 @@ class DocumentationSite:
                 title = self._extract_title_from_content(markdown_content, rel_path.stem)
 
             order = self._to_int_or_default(front_matter.get('order', 999), 999)
+            doc_metadata = self._build_doc_metadata(front_matter)
 
             # Keep filename prefix ordering for backward compatibility (e.g., 01-file.md)
             filename = md_file.stem
@@ -232,9 +259,10 @@ class DocumentationSite:
                 'path': url_path,
                 'file': str(rel_path),
                 'order': order,
-                'tags': self._normalize_tags(front_matter.get('tags', [])),
-                'difficulty': self._normalize_text_value(front_matter.get('difficulty')),
-                'owner': self._normalize_text_value(front_matter.get('owner'))
+                'tags': doc_metadata['tags'],
+                'difficulty': doc_metadata['difficulty'],
+                'owner': doc_metadata['owner'],
+                'writer': doc_metadata['writer']
             })
         
         # Sort by order, then by title
@@ -269,11 +297,13 @@ class DocumentationSite:
 
         front_matter, markdown_content = self._extract_front_matter(content)
         result = self.processor.convert(markdown_content)
+        doc_metadata = self._build_doc_metadata(front_matter)
         result['path'] = path
         result['front_matter'] = front_matter
-        result['tags'] = self._normalize_tags(front_matter.get('tags', []))
-        result['difficulty'] = self._normalize_text_value(front_matter.get('difficulty'))
-        result['owner'] = self._normalize_text_value(front_matter.get('owner'))
+        result['tags'] = doc_metadata['tags']
+        result['difficulty'] = doc_metadata['difficulty']
+        result['owner'] = doc_metadata['owner']
+        result['writer'] = doc_metadata['writer']
 
         # Frontmatter title should be available even without markdown meta extension fields.
         frontmatter_title = self._normalize_text_value(front_matter.get('title'))
@@ -353,6 +383,7 @@ def document(doc_path):
         doc_tags=doc.get('tags', []),
         doc_difficulty=doc.get('difficulty', ''),
         doc_owner=doc.get('owner', ''),
+        doc_writer=doc.get('writer', ''),
         config=config
     )
 
@@ -372,15 +403,17 @@ def search_docs():
         tag: filter by tag (optional)
         difficulty: filter by difficulty (optional)
         owner: filter by owner (optional)
+        writer: filter by writer (optional)
         limit: max results to return (default: 10)
     """
     query = request.args.get('q', '').strip()
     tag_filter = request.args.get('tag', '').strip().lower()
     difficulty_filter = request.args.get('difficulty', '').strip().lower()
     owner_filter = request.args.get('owner', '').strip().lower()
+    writer_filter = request.args.get('writer', '').strip().lower()
     limit = int(request.args.get('limit', 10))
 
-    if not query and not tag_filter and not difficulty_filter and not owner_filter:
+    if not query and not tag_filter and not difficulty_filter and not owner_filter and not writer_filter:
         return jsonify({'results': [], 'query': query})
 
     # Search through all documents
@@ -395,6 +428,7 @@ def search_docs():
         doc_tags = doc.get('tags', [])
         doc_difficulty = doc.get('difficulty', '')
         doc_owner = doc.get('owner', '')
+        doc_writer = doc.get('writer', '')
         doc_tags_lower = [tag.lower() for tag in doc_tags]
 
         if tag_filter and tag_filter not in doc_tags_lower:
@@ -404,6 +438,9 @@ def search_docs():
             continue
 
         if owner_filter and owner_filter != doc_owner.lower():
+            continue
+
+        if writer_filter and writer_filter != doc_writer.lower():
             continue
 
         # Get document title
@@ -417,13 +454,19 @@ def search_docs():
         title_match = False
         content_match = False
         tag_match = False
+        metadata_match = False
 
         if query:
             # Check if query matches title, content, or metadata tags
             title_match = query_lower in title.lower()
             content_match = query_lower in plain_text_lower
             tag_match = any(query_lower in tag.lower() for tag in doc_tags)
-            query_matches = title_match or content_match or tag_match
+            metadata_match = (
+                query_lower in doc_difficulty.lower()
+                or query_lower in doc_owner.lower()
+                or query_lower in doc_writer.lower()
+            )
+            query_matches = title_match or content_match or tag_match or metadata_match
         else:
             # Filters-only searches should return matching documents.
             query_matches = True
@@ -445,6 +488,13 @@ def search_docs():
                     context = context + '...'
             elif tag_match:
                 context = f"Matched in tags: {', '.join(doc_tags)}"
+            elif metadata_match:
+                metadata_bits = [
+                    f"difficulty: {doc_difficulty}",
+                    f"owner: {doc_owner}",
+                    f"writer: {doc_writer}"
+                ]
+                context = f"Matched in metadata ({', '.join(metadata_bits)})"
             
             results.append({
                 'title': title,
@@ -454,7 +504,8 @@ def search_docs():
                 'title_match': title_match,
                 'tags': doc_tags,
                 'difficulty': doc_difficulty,
-                'owner': doc_owner
+                'owner': doc_owner,
+                'writer': doc_writer
             })
 
             # Stop if we've reached the limit
@@ -468,7 +519,8 @@ def search_docs():
         'filters': {
             'tag': tag_filter,
             'difficulty': difficulty_filter,
-            'owner': owner_filter
+            'owner': owner_filter,
+            'writer': writer_filter
         }
     })
 

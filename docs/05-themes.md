@@ -1,3 +1,10 @@
+---
+tags:
+	- themes
+	- styling
+	- customization
+---
+
 # Theme Creation Guide
 
 NCMDS comes along a dark themed turquoise pallete inspired by the website colours of https://edujbarrios.com.

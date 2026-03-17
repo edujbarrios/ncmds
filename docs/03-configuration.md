@@ -1,3 +1,10 @@
+---
+tags:
+  - configuration
+  - settings
+  - yaml
+---
+
 # Configuration Guide
 
 NCMDS uses a YAML-based configuration system for easy customization. This guide covers all configuration options in detail.

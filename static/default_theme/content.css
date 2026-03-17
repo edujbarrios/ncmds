@@ -308,6 +308,16 @@
     background: rgba(99, 102, 241, 0.14);
 }
 
+.doc-taxonomy-writer {
+    color: #d8cbff;
+    border-color: rgba(147, 51, 234, 0.45);
+    background: rgba(147, 51, 234, 0.14);
+}
+
+.markdown-body > h1:first-child {
+    margin-top: 0.55rem;
+}
+
 @media (max-width: 768px) {
     .doc-meta {
         margin-left: 0;
