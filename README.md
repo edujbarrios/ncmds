@@ -12,7 +12,7 @@
 
 </div>
 
-<img src="images/mainpage_v3.png" alt="Main View"/>
+<img src="images/mainpage_v4.png" alt="Main View"/>
 
 ## Overview
 
