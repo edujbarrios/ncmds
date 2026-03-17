@@ -264,7 +264,7 @@
             displayResults(data.results, parsed.query, data.filters || parsed.filters);
         } catch (error) {
             console.error('Search error:', error);
-            showError('Error al buscar. Por favor, intenta de nuevo.');
+            showError('Search failed. Please try again.');
         }
     }
     
@@ -279,10 +279,10 @@
         if (results.length === 0) {
             const filtersApplied = filters && hasActiveFilters(filters);
             const emptyMessage = query
-                ? `No se encontraron resultados para "<strong>${escapeHtml(query)}</strong>"`
+                ? `No results found for "<strong>${escapeHtml(query)}</strong>"`
                 : filtersApplied
-                    ? 'No se encontraron resultados con los filtros aplicados.'
-                    : 'No se encontraron resultados.';
+                    ? 'No results found for the applied filters.'
+                    : 'No results found.';
 
             searchResultsContent.innerHTML = `
                 <div class="search-no-results">
@@ -312,12 +312,12 @@
             : '';
 
         searchInfo.innerHTML = `
-            <span>${results.length} resultado${results.length !== 1 ? 's' : ''}</span>
+            <span>${results.length} result${results.length !== 1 ? 's' : ''}</span>
             ${filterInfo}
             <div class="search-info-shortcuts">
-                <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
-                <span><kbd>Enter</kbd> abrir</span>
-                <span><kbd>Esc</kbd> cerrar</span>
+                <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                <span><kbd>Enter</kbd> open</span>
+                <span><kbd>Esc</kbd> close</span>
             </div>
         `;
         searchResultsContent.appendChild(searchInfo);
@@ -535,7 +535,7 @@
         searchResultsContent.innerHTML = `
             <div class="search-loading">
                 <div class="search-loading-spinner"></div>
-                <p>Buscando...</p>
+                <p>Searching...</p>
             </div>
         `;
         showResults();

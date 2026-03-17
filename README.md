@@ -162,8 +162,7 @@ Full documentation available at `/docs` when running the server, or view:
 - **PyYAML** - Configuration management
 - **Highlight.js** - Syntax highlighting
 - **LLM7.io** - AI chat integration with model switching
-- **WeasyPrint** - PDF generation (optional)
-- **Quarto** - QMD rendering support (optional)
+- **Quarto** - QMD rendering support in PDF format (optional)
 
 ## 🎯 Use Cases
 

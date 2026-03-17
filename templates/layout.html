@@ -11,7 +11,7 @@
         <main class="main-content">
             <div class="content-wrapper">
                 {% if doc_last_updated %}
-                <div class="doc-meta" aria-label="Metadatos del documento">
+                <div class="doc-meta" aria-label="Document metadata">
                     <span class="doc-meta-label">{{ config.ui_text.last_updated_label or 'Last updated' }}</span>
                     <time class="doc-meta-value" {% if doc_last_updated_iso %}datetime="{{ doc_last_updated_iso }}"{% endif %}>{{ doc_last_updated }}</time>
                 </div>

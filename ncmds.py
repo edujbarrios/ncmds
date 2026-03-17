@@ -25,23 +25,23 @@ from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, send_from_directory, abort, jsonify, request
 
-# Añadir directorio config al path para importar settings
+# Add config directory to the path so settings can be imported
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'config'))
 from settings import ConfigManager
 
-# Importar módulo de exportación
+# Import export module
 from export import register_export_routes
 
-# Importar módulo de AI chat
+# Import AI chat module
 from ai_chat import register_ai_chat_routes
 
 app = Flask(__name__)
 
-# Inicializar configuración modular
+# Initialize modular configuration
 config_manager = ConfigManager('config/config.yaml')
 config = config_manager.get_all()
 
-# Directorios desde configuración
+# Directories from configuration
 DOCS_DIR = config_manager.get('directories.docs', 'docs')
 STATIC_DIR = config_manager.get('directories.static', 'static')
 TEMPLATES_DIR = config_manager.get('directories.templates', 'templates')
