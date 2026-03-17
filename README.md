@@ -109,6 +109,12 @@ NCMDS includes a powerful export module that allows you to export your documenta
 
 See the [Deployment Guide](docs/06-deployment.md) for complete instructions on deploying to production.
 
+## 🔎 Internal Search
+
+**NEW:** Internal Search is now available to quickly find content across your documentation.
+
+<img src="images/search.png" alt="NCMDS Internal Search" width="400"/>
+
 ## 📚 Documentation
 
 Full documentation available at `/docs` when running the server, or view:

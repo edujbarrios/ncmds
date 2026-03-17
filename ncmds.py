@@ -18,9 +18,10 @@ For production deployment (optional), see wsgi.py and DEPLOYMENT.md
 
 import os
 import sys
+import re
 import markdown
 from pathlib import Path
-from flask import Flask, render_template, send_from_directory, abort
+from flask import Flask, render_template, send_from_directory, abort, jsonify, request
 
 # Añadir directorio config al path para importar settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'config'))
@@ -237,6 +238,76 @@ def document(doc_path):
 def static_files(filename):
     """Serve static files"""
     return send_from_directory(STATIC_DIR, filename)
+
+
+@app.route('/api/search')
+def search_docs():
+    """
+    Search through documentation
+    Query params:
+        q: search query (required)
+        limit: max results to return (default: 10)
+    """
+    query = request.args.get('q', '').strip()
+    limit = int(request.args.get('limit', 10))
+    
+    if not query:
+        return jsonify({'results': [], 'query': query})
+    
+    # Search through all documents
+    results = []
+    query_lower = query.lower()
+    
+    for nav_item in site.navigation:
+        doc = site.get_document(nav_item['path'])
+        if not doc:
+            continue
+        
+        # Get document title
+        title = nav_item.get('title', '')
+        
+        # Get plain text content (strip HTML tags)
+        content = doc['html']
+        plain_text = re.sub(r'<[^>]+>', '', content)
+        plain_text_lower = plain_text.lower()
+        
+        # Check if query matches title or content
+        title_match = query_lower in title.lower()
+        content_match = query_lower in plain_text_lower
+        
+        if title_match or content_match:
+            # Find context around the match
+            context = ''
+            if content_match:
+                # Find position of first match
+                match_pos = plain_text_lower.find(query_lower)
+                start = max(0, match_pos - 80)
+                end = min(len(plain_text), match_pos + len(query) + 80)
+                context = plain_text[start:end].strip()
+                
+                # Add ellipsis if truncated
+                if start > 0:
+                    context = '...' + context
+                if end < len(plain_text):
+                    context = context + '...'
+            
+            results.append({
+                'title': title,
+                'path': nav_item['path'],
+                'url': f"/docs/{nav_item['path']}",
+                'context': context,
+                'title_match': title_match
+            })
+            
+            # Stop if we've reached the limit
+            if len(results) >= limit:
+                break
+    
+    return jsonify({
+        'results': results,
+        'query': query,
+        'total': len(results)
+    })
 
 
 @app.errorhandler(404)

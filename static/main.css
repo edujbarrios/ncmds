@@ -30,8 +30,11 @@
 /* 8. Navigation & Footer */
 @import url('default_theme/navigation.css');
 
-/* 9. Responsive Design */
+/* 9. Search Functionality */
+@import url('default_theme/search.css');
+
+/* 10. Responsive Design */
 @import url('default_theme/responsive.css');
 
-/* 10. Utilities */
+/* 11. Utilities */
 @import url('default_theme/utilities.css');
