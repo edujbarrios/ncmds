@@ -115,6 +115,33 @@ See the [Deployment Guide](docs/06-deployment.md) for complete instructions on d
 
 <img src="images/search.png" alt="NCMDS Internal Search" width="400"/>
 
+## 🏷️ Extended Frontmatter Metadata
+
+**NEW:** NCMDS now supports extended YAML frontmatter fields: **tags**, **difficulty**, and **owner**.
+
+```yaml
+---
+title: "API Authentication"
+tags:
+  - api
+  - auth
+difficulty: "intermediate"
+owner: "backend-team"
+---
+```
+
+What this adds:
+
+- Automatic metadata chips on each documentation page
+- Search filtering by metadata directly in the search bar
+- Better content organization and ownership tracking
+
+Search filter examples:
+
+- `tag:api authentication`
+- `difficulty:beginner`
+- `owner:docs-team`
+
 ## 📚 Documentation
 
 Full documentation available at `/docs` when running the server, or view:

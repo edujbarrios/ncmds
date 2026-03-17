@@ -17,6 +17,22 @@
                 </div>
                 {% endif %}
 
+                {% if doc_tags or doc_difficulty or doc_owner %}
+                <div class="doc-taxonomy" aria-label="Document metadata tags">
+                    {% if doc_difficulty %}
+                    <span class="doc-taxonomy-chip doc-taxonomy-difficulty">Difficulty: {{ doc_difficulty|title }}</span>
+                    {% endif %}
+
+                    {% if doc_owner %}
+                    <span class="doc-taxonomy-chip doc-taxonomy-owner">Owner: {{ doc_owner }}</span>
+                    {% endif %}
+
+                    {% for tag in doc_tags %}
+                    <span class="doc-taxonomy-chip doc-taxonomy-tag">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <article class="markdown-body">
                     {{ content|safe }}
                 </article>

@@ -1,3 +1,13 @@
+---
+title: "Markdown Features Guide"
+tags:
+    - markdown
+    - reference
+    - writing
+difficulty: "beginner"
+owner: "docs-team"
+---
+
 # Markdown Features Guide
 
 NCMDS supports standard Markdown plus extended features for richer documentation.
@@ -191,10 +201,22 @@ order: 10
 title: "My Custom Title"
 author: "Your Name"
 date: "2026-02-16"
+tags:
+    - api
+    - auth
+    - security
+difficulty: "intermediate"
+owner: "backend-team"
 ---
 
 # Document content starts here
 ```
+
+Extended metadata behavior:
+
+- `tags`: renders page tags and enables search filtering (`tag:api`)
+- `difficulty`: renders a difficulty chip and supports search filtering (`difficulty:intermediate`)
+- `owner`: renders document owner and supports search filtering (`owner:backend-team`)
 
 ## 🎨 HTML Support
 

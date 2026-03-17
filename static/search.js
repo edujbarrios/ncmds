@@ -58,20 +58,81 @@
         // Keep mobile overlay state in sync when resizing
         window.addEventListener('resize', syncMobileSearchState);
     }
+
+    /**
+     * Parse search text and extract inline filters like:
+     * tag:api difficulty:beginner owner:docs-team
+     */
+    function parseSearchInput(rawInput) {
+        const filters = {
+            tag: '',
+            difficulty: '',
+            owner: ''
+        };
+        const terms = [];
+
+        rawInput.split(/\s+/).filter(Boolean).forEach((token) => {
+            const separatorIndex = token.indexOf(':');
+
+            if (separatorIndex > 0) {
+                const key = token.slice(0, separatorIndex).toLowerCase();
+                const value = token.slice(separatorIndex + 1).trim();
+
+                if (Object.prototype.hasOwnProperty.call(filters, key) && value) {
+                    filters[key] = value;
+                    return;
+                }
+            }
+
+            terms.push(token);
+        });
+
+        return {
+            query: terms.join(' ').trim(),
+            filters
+        };
+    }
+
+    /**
+     * Check if at least one filter is active.
+     */
+    function hasActiveFilters(filters) {
+        return Boolean(filters.tag || filters.difficulty || filters.owner);
+    }
+
+    /**
+     * Format active filters for the result footer.
+     */
+    function formatActiveFilters(filters) {
+        const chips = [];
+
+        if (filters.tag) {
+            chips.push(`<span class="search-filter-chip">tag:${escapeHtml(filters.tag)}</span>`);
+        }
+        if (filters.difficulty) {
+            chips.push(`<span class="search-filter-chip">difficulty:${escapeHtml(filters.difficulty)}</span>`);
+        }
+        if (filters.owner) {
+            chips.push(`<span class="search-filter-chip">owner:${escapeHtml(filters.owner)}</span>`);
+        }
+
+        return chips.join('');
+    }
     
     /**
      * Handle search input with debouncing
      */
     function handleSearchInput(e) {
-        const query = e.target.value.trim();
+        const rawInput = e.target.value.trim();
+        const parsed = parseSearchInput(rawInput);
         
         // Clear previous timeout
         if (searchTimeout) {
             clearTimeout(searchTimeout);
         }
         
-        // If query is too short, hide results
-        if (query.length < MIN_QUERY_LENGTH) {
+        // If query is too short and no filters are active, hide results
+        if (parsed.query.length < MIN_QUERY_LENGTH && !hasActiveFilters(parsed.filters)) {
             hideResults();
             return;
         }
@@ -81,7 +142,7 @@
         
         // Debounce search
         searchTimeout = setTimeout(() => {
-            performSearch(query);
+            performSearch(rawInput);
         }, SEARCH_DELAY);
     }
     
@@ -89,8 +150,8 @@
      * Handle search input focus
      */
     function handleSearchFocus() {
-        const query = searchInput.value.trim();
-        if (query.length >= MIN_QUERY_LENGTH && currentResults.length > 0) {
+        const parsed = parseSearchInput(searchInput.value.trim());
+        if ((parsed.query.length >= MIN_QUERY_LENGTH || hasActiveFilters(parsed.filters)) && currentResults.length > 0) {
             showResults();
         }
     }
@@ -165,9 +226,25 @@
     /**
      * Perform search API call
      */
-    async function performSearch(query) {
+    async function performSearch(rawInput) {
+        const parsed = parseSearchInput(rawInput);
+        const params = new URLSearchParams({
+            q: parsed.query,
+            limit: '10'
+        });
+
+        if (parsed.filters.tag) {
+            params.set('tag', parsed.filters.tag);
+        }
+        if (parsed.filters.difficulty) {
+            params.set('difficulty', parsed.filters.difficulty);
+        }
+        if (parsed.filters.owner) {
+            params.set('owner', parsed.filters.owner);
+        }
+
         try {
-            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=10`);
+            const response = await fetch(`/api/search?${params.toString()}`);
             
             if (!response.ok) {
                 throw new Error('Search request failed');
@@ -177,7 +254,7 @@
             currentResults = data.results || [];
             currentResultIndex = -1;
             
-            displayResults(data.results, query);
+            displayResults(data.results, parsed.query, data.filters || parsed.filters);
         } catch (error) {
             console.error('Search error:', error);
             showError('Error al buscar. Por favor, intenta de nuevo.');
@@ -187,19 +264,26 @@
     /**
      * Display search results
      */
-    function displayResults(results, query) {
+    function displayResults(results, query, filters) {
         if (!searchResultsContent) return;
         
         searchResultsContent.innerHTML = '';
         
         if (results.length === 0) {
+            const filtersApplied = filters && hasActiveFilters(filters);
+            const emptyMessage = query
+                ? `No se encontraron resultados para "<strong>${escapeHtml(query)}</strong>"`
+                : filtersApplied
+                    ? 'No se encontraron resultados con los filtros aplicados.'
+                    : 'No se encontraron resultados.';
+
             searchResultsContent.innerHTML = `
                 <div class="search-no-results">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"/>
                         <path d="m21 21-4.35-4.35"/>
                     </svg>
-                    <p>No se encontraron resultados para "<strong>${escapeHtml(query)}</strong>"</p>
+                    <p>${emptyMessage}</p>
                 </div>
             `;
             showResults();
@@ -215,8 +299,14 @@
         // Add search info footer
         const searchInfo = document.createElement('div');
         searchInfo.className = 'search-info';
+        const hasFilters = filters && hasActiveFilters(filters);
+        const filterInfo = hasFilters
+            ? `<div class="search-filters-active">${formatActiveFilters(filters)}</div>`
+            : '';
+
         searchInfo.innerHTML = `
             <span>${results.length} resultado${results.length !== 1 ? 's' : ''}</span>
+            ${filterInfo}
             <div class="search-info-shortcuts">
                 <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
                 <span><kbd>Enter</kbd> abrir</span>
@@ -245,6 +335,22 @@
         const highlightedContext = result.context 
             ? highlightText(result.context, query)
             : '';
+
+        const tags = Array.isArray(result.tags) ? result.tags : [];
+        const metadataChips = [];
+
+        if (result.title_match) {
+            metadataChips.push('<span class="search-result-chip search-result-chip-match">Title</span>');
+        }
+        if (result.difficulty) {
+            metadataChips.push(`<span class="search-result-chip search-result-chip-difficulty">${escapeHtml(result.difficulty)}</span>`);
+        }
+        if (result.owner) {
+            metadataChips.push(`<span class="search-result-chip search-result-chip-owner">${escapeHtml(result.owner)}</span>`);
+        }
+        tags.slice(0, 2).forEach((tag) => {
+            metadataChips.push(`<span class="search-result-chip search-result-chip-tag">#${escapeHtml(tag)}</span>`);
+        });
         
         item.innerHTML = `
             <div class="search-result-title">
@@ -257,7 +363,7 @@
             ${highlightedContext ? `<div class="search-result-context">${highlightedContext}</div>` : ''}
             <div class="search-result-meta">
                 <span class="search-result-path">${escapeHtml(result.path || '')}</span>
-                ${result.title_match ? '<span class="search-result-badge">Titulo</span>' : ''}
+                <div class="search-result-chips">${metadataChips.join('')}</div>
             </div>
         `;
         

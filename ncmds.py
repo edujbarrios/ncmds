@@ -20,6 +20,7 @@ import os
 import sys
 import re
 import markdown
+import yaml
 from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, send_from_directory, abort, jsonify, request
@@ -131,6 +132,67 @@ class DocumentationSite:
         self.processor = MarkdownProcessor()
         self.docs_dir = Path(DOCS_DIR)
         self.navigation = self.build_navigation()
+
+    def _extract_front_matter(self, content):
+        """Extract YAML frontmatter and return (metadata, markdown_content)."""
+        front_matter_match = re.match(r'^---\s*\r?\n(.*?)\r?\n---\s*\r?\n?', content, re.DOTALL)
+
+        if not front_matter_match:
+            return {}, content
+
+        try:
+            parsed = yaml.safe_load(front_matter_match.group(1)) or {}
+            if not isinstance(parsed, dict):
+                parsed = {}
+        except Exception:
+            # Keep original content if frontmatter is malformed.
+            return {}, content
+
+        markdown_content = content[front_matter_match.end():]
+        return parsed, markdown_content
+
+    def _extract_title_from_content(self, content, fallback):
+        """Extract first markdown heading from content."""
+        for line in content.splitlines():
+            stripped = line.strip()
+            if stripped.startswith('#'):
+                return stripped.lstrip('#').strip() or fallback
+        return fallback
+
+    def _normalize_tags(self, raw_tags):
+        """Normalize frontmatter tags to a clean, deduplicated list of strings."""
+        if isinstance(raw_tags, str):
+            candidates = [part.strip() for part in raw_tags.split(',')] if ',' in raw_tags else [raw_tags.strip()]
+        elif isinstance(raw_tags, list):
+            candidates = [str(item).strip() for item in raw_tags if item is not None]
+        else:
+            return []
+
+        tags = []
+        seen = set()
+        for tag in candidates:
+            if not tag:
+                continue
+            key = tag.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            tags.append(tag)
+
+        return tags
+
+    def _normalize_text_value(self, value):
+        """Normalize a metadata value to a stripped string."""
+        if value is None:
+            return ''
+        return str(value).strip()
+
+    def _to_int_or_default(self, value, default):
+        """Safely cast values to int, returning default when invalid."""
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
     
     def build_navigation(self):
         """Build navigation structure from docs directory"""
@@ -145,40 +207,34 @@ class DocumentationSite:
         for md_file in md_files:
             rel_path = md_file.relative_to(self.docs_dir)
             url_path = str(rel_path.with_suffix('')).replace('\\', '/')
-            
-            # Read title and order from file
+
+            # Read title and metadata from file
             with open(md_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                first_line = content.split('\n')[0].strip()
-                title = first_line.lstrip('#').strip() if first_line.startswith('#') else rel_path.stem
-                
-                # Check for order metadata
-                order = 999  # Default order
-                if '---' in content:
-                    # Parse front matter
-                    parts = content.split('---', 2)
-                    if len(parts) >= 3:
-                        try:
-                            import yaml
-                            metadata = yaml.safe_load(parts[1])
-                            order = metadata.get('order', 999)
-                        except:
-                            pass
-                
-                # Also check for numeric prefix in filename (e.g., 01-file.md)
-                filename = md_file.stem
-                if '-' in filename:
-                    prefix = filename.split('-')[0]
-                    if prefix.isdigit():
-                        order = int(prefix)
-                        # Remove numeric prefix from title display
-                        title = title if not title.startswith(prefix) else title[len(prefix):].lstrip('- ')
+
+            front_matter, markdown_content = self._extract_front_matter(content)
+            title = self._normalize_text_value(front_matter.get('title'))
+            if not title:
+                title = self._extract_title_from_content(markdown_content, rel_path.stem)
+
+            order = self._to_int_or_default(front_matter.get('order', 999), 999)
+
+            # Keep filename prefix ordering for backward compatibility (e.g., 01-file.md)
+            filename = md_file.stem
+            if '-' in filename:
+                prefix = filename.split('-')[0]
+                if prefix.isdigit():
+                    order = int(prefix)
+                    title = title if not title.startswith(prefix) else title[len(prefix):].lstrip('- ')
             
             nav.append({
                 'title': title,
                 'path': url_path,
                 'file': str(rel_path),
-                'order': order
+                'order': order,
+                'tags': self._normalize_tags(front_matter.get('tags', [])),
+                'difficulty': self._normalize_text_value(front_matter.get('difficulty')),
+                'owner': self._normalize_text_value(front_matter.get('owner'))
             })
         
         # Sort by order, then by title
@@ -210,9 +266,19 @@ class DocumentationSite:
         
         with open(doc_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
-        result = self.processor.convert(content)
+
+        front_matter, markdown_content = self._extract_front_matter(content)
+        result = self.processor.convert(markdown_content)
         result['path'] = path
+        result['front_matter'] = front_matter
+        result['tags'] = self._normalize_tags(front_matter.get('tags', []))
+        result['difficulty'] = self._normalize_text_value(front_matter.get('difficulty'))
+        result['owner'] = self._normalize_text_value(front_matter.get('owner'))
+
+        # Frontmatter title should be available even without markdown meta extension fields.
+        frontmatter_title = self._normalize_text_value(front_matter.get('title'))
+        if frontmatter_title and not result['metadata'].get('title'):
+            result['metadata']['title'] = [frontmatter_title]
 
         # Expose file modification time for per-document metadata in the UI.
         modified_at = datetime.fromtimestamp(doc_path.stat().st_mtime)
@@ -253,8 +319,13 @@ def document(doc_path):
     
     site_name = config_manager.get('site_name')
     title = site_name
-    if doc['metadata'].get('title'):
-        title = f"{doc['metadata']['title'][0]} - {title}"
+    metadata_title = doc['metadata'].get('title')
+    if isinstance(metadata_title, list):
+        metadata_title = metadata_title[0] if metadata_title else ''
+    metadata_title = str(metadata_title).strip() if metadata_title else ''
+
+    if metadata_title:
+        title = f"{metadata_title} - {title}"
     
     # Find previous and next documents in navigation
     prev_doc = None
@@ -279,6 +350,9 @@ def document(doc_path):
         next_doc=next_doc,
         doc_last_updated=doc.get('last_updated_display'),
         doc_last_updated_iso=doc.get('last_updated_iso'),
+        doc_tags=doc.get('tags', []),
+        doc_difficulty=doc.get('difficulty', ''),
+        doc_owner=doc.get('owner', ''),
         config=config
     )
 
@@ -294,37 +368,67 @@ def search_docs():
     """
     Search through documentation
     Query params:
-        q: search query (required)
+        q: search query (optional when using filters)
+        tag: filter by tag (optional)
+        difficulty: filter by difficulty (optional)
+        owner: filter by owner (optional)
         limit: max results to return (default: 10)
     """
     query = request.args.get('q', '').strip()
+    tag_filter = request.args.get('tag', '').strip().lower()
+    difficulty_filter = request.args.get('difficulty', '').strip().lower()
+    owner_filter = request.args.get('owner', '').strip().lower()
     limit = int(request.args.get('limit', 10))
-    
-    if not query:
+
+    if not query and not tag_filter and not difficulty_filter and not owner_filter:
         return jsonify({'results': [], 'query': query})
-    
+
     # Search through all documents
     results = []
     query_lower = query.lower()
-    
+
     for nav_item in site.navigation:
         doc = site.get_document(nav_item['path'])
         if not doc:
             continue
-        
+
+        doc_tags = doc.get('tags', [])
+        doc_difficulty = doc.get('difficulty', '')
+        doc_owner = doc.get('owner', '')
+        doc_tags_lower = [tag.lower() for tag in doc_tags]
+
+        if tag_filter and tag_filter not in doc_tags_lower:
+            continue
+
+        if difficulty_filter and difficulty_filter != doc_difficulty.lower():
+            continue
+
+        if owner_filter and owner_filter != doc_owner.lower():
+            continue
+
         # Get document title
         title = nav_item.get('title', '')
-        
+
         # Get plain text content (strip HTML tags)
         content = doc['html']
         plain_text = re.sub(r'<[^>]+>', '', content)
         plain_text_lower = plain_text.lower()
-        
-        # Check if query matches title or content
-        title_match = query_lower in title.lower()
-        content_match = query_lower in plain_text_lower
-        
-        if title_match or content_match:
+
+        title_match = False
+        content_match = False
+        tag_match = False
+
+        if query:
+            # Check if query matches title, content, or metadata tags
+            title_match = query_lower in title.lower()
+            content_match = query_lower in plain_text_lower
+            tag_match = any(query_lower in tag.lower() for tag in doc_tags)
+            query_matches = title_match or content_match or tag_match
+        else:
+            # Filters-only searches should return matching documents.
+            query_matches = True
+
+        if query_matches:
             # Find context around the match
             context = ''
             if content_match:
@@ -339,23 +443,33 @@ def search_docs():
                     context = '...' + context
                 if end < len(plain_text):
                     context = context + '...'
+            elif tag_match:
+                context = f"Matched in tags: {', '.join(doc_tags)}"
             
             results.append({
                 'title': title,
                 'path': nav_item['path'],
                 'url': f"/docs/{nav_item['path']}",
                 'context': context,
-                'title_match': title_match
+                'title_match': title_match,
+                'tags': doc_tags,
+                'difficulty': doc_difficulty,
+                'owner': doc_owner
             })
-            
+
             # Stop if we've reached the limit
             if len(results) >= limit:
                 break
-    
+
     return jsonify({
         'results': results,
         'query': query,
-        'total': len(results)
+        'total': len(results),
+        'filters': {
+            'tag': tag_filter,
+            'difficulty': difficulty_filter,
+            'owner': owner_filter
+        }
     })
 
 

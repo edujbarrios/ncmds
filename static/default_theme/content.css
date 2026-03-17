@@ -270,6 +270,44 @@
     font-weight: 600;
 }
 
+.doc-taxonomy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+}
+
+.doc-taxonomy-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.doc-taxonomy-tag {
+    color: #b0fff9;
+    border-color: rgba(79, 224, 210, 0.45);
+    background: rgba(79, 224, 210, 0.14);
+}
+
+.doc-taxonomy-difficulty {
+    color: #ffdda6;
+    border-color: rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.14);
+}
+
+.doc-taxonomy-owner {
+    color: #c8d6ff;
+    border-color: rgba(99, 102, 241, 0.45);
+    background: rgba(99, 102, 241, 0.14);
+}
+
 @media (max-width: 768px) {
     .doc-meta {
         margin-left: 0;

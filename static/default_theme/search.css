@@ -239,6 +239,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -250,6 +251,49 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.search-result-chips {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.search-result-chip {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 2px 7px;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary, #9aa5a8);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.search-result-chip-tag {
+    color: #b0fff9;
+    border-color: rgba(79, 224, 210, 0.45);
+    background: rgba(79, 224, 210, 0.12);
+}
+
+.search-result-chip-difficulty {
+    color: #ffdda6;
+    border-color: rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.14);
+}
+
+.search-result-chip-owner {
+    color: #c8d6ff;
+    border-color: rgba(99, 102, 241, 0.45);
+    background: rgba(99, 102, 241, 0.14);
+}
+
+.search-result-chip-match {
+    color: #052d2f;
+    border-color: rgba(79, 224, 210, 0.55);
+    background: linear-gradient(120deg, #4fe0d2, #97efe9);
 }
 
 .search-result-badge {
@@ -323,14 +367,36 @@
     font-size: 11px;
     color: var(--text-secondary, #9aa5a8);
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
+}
+
+.search-filters-active {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.search-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 2px 8px;
 }
 
 .search-info-shortcuts {
     display: flex;
     gap: 12px;
     align-items: center;
+    margin-left: auto;
 }
 
 .search-info-shortcuts kbd {
