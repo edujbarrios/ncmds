@@ -16,6 +16,9 @@ tags:
 ![Flask](https://img.shields.io/badge/Flask-Documentation%20Engine-000000?style=flat-square&logo=flask&logoColor=white)
 ![Export](https://img.shields.io/badge/Export-QMD-0D8B8B?style=flat-square)
 
+> [!NOTE]
+> NCMDS is local-first. You can run it instantly with `python ncmds.py` and start writing docs right away.
+
 ## 🎯 What is NCMDS?
 
 NCMDS is a Flask-based documentation system that:

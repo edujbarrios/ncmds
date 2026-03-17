@@ -72,6 +72,7 @@ class MarkdownProcessor:
     def convert(self, content):
         """Convert markdown to HTML"""
         self.md.reset()
+        content = self._convert_github_alerts_to_admonitions(content)
         html = self.md.convert(content)
         html = self._enhance_shields_badges(html)
         metadata = getattr(self.md, 'Meta', {})
@@ -82,6 +83,68 @@ class MarkdownProcessor:
             'metadata': metadata,
             'toc': toc
         }
+
+    def _convert_github_alerts_to_admonitions(self, content):
+        """Convert GitHub-style alert blocks to Python-Markdown admonition syntax.
+
+        Supported syntax:
+            > [!NOTE]
+            > Message text
+        """
+        alert_types = {
+            'NOTE': 'note',
+            'TIP': 'tip',
+            'IMPORTANT': 'important',
+            'WARNING': 'warning',
+            'CAUTION': 'caution'
+        }
+
+        lines = content.splitlines()
+        converted_lines = []
+        i = 0
+
+        while i < len(lines):
+            line = lines[i]
+            alert_match = re.match(r'^\s*>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$', line, re.IGNORECASE)
+
+            if not alert_match:
+                converted_lines.append(line)
+                i += 1
+                continue
+
+            alert_type = alert_types[alert_match.group(1).upper()]
+            i += 1
+
+            blockquote_lines = []
+            while i < len(lines):
+                quoted_line_match = re.match(r'^\s*>\s?(.*)$', lines[i])
+                if quoted_line_match:
+                    blockquote_lines.append(quoted_line_match.group(1))
+                    i += 1
+                    continue
+                break
+
+            while blockquote_lines and not blockquote_lines[0].strip():
+                blockquote_lines.pop(0)
+            while blockquote_lines and not blockquote_lines[-1].strip():
+                blockquote_lines.pop()
+
+            converted_lines.append(f'!!! {alert_type}')
+            if blockquote_lines:
+                for block_line in blockquote_lines:
+                    converted_lines.append(f'    {block_line}' if block_line else '    ')
+            else:
+                converted_lines.append('    ')
+
+            converted_lines.append('')
+
+            while i < len(lines) and not lines[i].strip():
+                i += 1
+
+        converted_content = '\n'.join(converted_lines)
+        if content.endswith('\n'):
+            converted_content += '\n'
+        return converted_content
 
     def _add_css_class(self, tag_html, class_name):
         """Append a CSS class to an HTML tag string without removing existing classes."""

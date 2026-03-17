@@ -192,6 +192,11 @@ NCMDS supports admonitions for highlighting important information:
     This is a tip admonition
 ```
 
+GitHub-style alert syntax is also supported:
+
+> [!IMPORTANT]
+> Use Python 3.10+ and install dependencies in a virtual environment for the best experience.
+
 ## 📋 Document Metadata
 
 Add metadata at the beginning of your document:

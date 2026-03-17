@@ -184,42 +184,69 @@
 
 /* Admonitions/Callouts */
 .markdown-body .admonition {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
     margin: 1.5rem 0;
-    border-radius: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(64, 224, 208, 0.25);
     border-left: 4px solid var(--primary-color);
-    background-color: rgba(64, 224, 208, 0.1);
+    background: linear-gradient(135deg, rgba(64, 224, 208, 0.12), rgba(64, 224, 208, 0.04));
+}
+
+.markdown-body .admonition .admonition-title {
+    margin: 0 0 0.45rem 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.markdown-body .admonition > p:last-child {
+    margin-bottom: 0;
 }
 
 .markdown-body .admonition.note {
-    border-left-color: var(--primary-color);
-    background-color: rgba(0, 229, 208, 0.1);
-}
-
-[data-theme="dark"] .markdown-body .admonition.note {
-    border-left-color: #00E5D0;
-    background-color: rgba(0, 229, 208, 0.1);
-}
-
-[data-theme="light"] .markdown-body .admonition.note {
-    border-left-color: #541087;
-    background-color: rgba(84, 16, 135, 0.1);
+    border-left-color: #40E0D0;
+    border-color: rgba(64, 224, 208, 0.35);
+    background: linear-gradient(135deg, rgba(64, 224, 208, 0.12), rgba(64, 224, 208, 0.05));
 }
 
 .markdown-body .admonition.warning {
-    border-left-color: #f59e0b;
-    background-color: rgba(245, 158, 11, 0.1);
+    border-left-color: #00D4B8;
+    border-color: rgba(0, 212, 184, 0.35);
+    background: linear-gradient(135deg, rgba(0, 212, 184, 0.14), rgba(0, 212, 184, 0.05));
 }
 
 .markdown-body .admonition.danger {
-    border-left-color: #ef4444;
-    background-color: rgba(239, 68, 68, 0.1);
+    border-left-color: #008888;
+    border-color: rgba(0, 136, 136, 0.4);
+    background: linear-gradient(135deg, rgba(0, 136, 136, 0.16), rgba(0, 136, 136, 0.07));
 }
 
 .markdown-body .admonition.tip {
-    border-left-color: #10b981;
-    background-color: rgba(16, 185, 129, 0.1);
+    border-left-color: #66E6DD;
+    border-color: rgba(102, 230, 221, 0.35);
+    background: linear-gradient(135deg, rgba(102, 230, 221, 0.13), rgba(102, 230, 221, 0.05));
 }
+
+.markdown-body .admonition.important {
+    border-left-color: #8CF0EB;
+    border-color: rgba(140, 240, 235, 0.4);
+    background: linear-gradient(135deg, rgba(140, 240, 235, 0.16), rgba(140, 240, 235, 0.06));
+}
+
+.markdown-body .admonition.caution {
+    border-left-color: #00B8B8;
+    border-color: rgba(0, 184, 184, 0.36);
+    background: linear-gradient(135deg, rgba(0, 184, 184, 0.16), rgba(0, 184, 184, 0.06));
+}
+
+.markdown-body .admonition.note .admonition-title { color: #40E0D0; }
+.markdown-body .admonition.tip .admonition-title { color: #66E6DD; }
+.markdown-body .admonition.important .admonition-title { color: #8CF0EB; }
+.markdown-body .admonition.warning .admonition-title { color: #00D4B8; }
+.markdown-body .admonition.caution .admonition-title,
+.markdown-body .admonition.danger .admonition-title { color: #00B8B8; }
 
 /* Bold and Italic Text in Dark Mode (Docusaurus style) */
 [data-theme="dark"] .markdown-body strong {
