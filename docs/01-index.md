@@ -32,7 +32,7 @@ NCMDS is a Flask-based documentation system that:
 - Code blocks with syntax highlighting (Python, JavaScript, YAML, etc.)
 - Tables, lists, images, links—everything you expect
 
-### 🎨 Beautiful Themes
+### 🎨 Beautiful Theme
 - **Seven pre-built themes**: Ocean, Forest, Sunset, Purple Dream, Cyberpunk, Monochrome, and Turquoise
 - **Custom theme creation**: Define your own color palette
 - **Dark mode optimized** for comfortable reading
@@ -112,7 +112,7 @@ Now that you've seen the basics, explore these guides:
 - **[Deployment →](06-deployment.md)** - Deploy to production (Docker, Heroku, Railway)
 - **[Export Documentation →](03-configuration.md#export-settings)** - Generate PDFs and QMD files
 
-## 🎨 Available Themes
+## 🎨 Available Themes (placeholder to show table creation)
 
 Choose from seven beautiful themes or create your own:
 
