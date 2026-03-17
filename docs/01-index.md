@@ -95,10 +95,7 @@ This is my documentation!
 - Beautiful output
 - No configuration needed
 
-
-```python
-def hello_ncmds():
-    print("Hello from NCMDS!")
+Create `code  content as well`
 ```
 
 ### 3. View Your Site

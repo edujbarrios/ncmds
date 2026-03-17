@@ -17,6 +17,10 @@
     let searchTimeout = null;
     let currentResultIndex = -1;
     let currentResults = [];
+    let searchContainer = null;
+    let mobileSearchTrigger = null;
+    let mobileSearchClose = null;
+    let searchBackdrop = null;
     
     /**
      * Initialize search functionality
@@ -25,6 +29,10 @@
         searchInput = document.getElementById('searchInput');
         searchResults = document.getElementById('searchResults');
         searchResultsContent = searchResults?.querySelector('.search-results-content');
+        searchContainer = document.querySelector('.search-container');
+        mobileSearchTrigger = document.getElementById('searchMobileTrigger');
+        mobileSearchClose = document.getElementById('searchMobileClose');
+        searchBackdrop = document.getElementById('searchBackdrop');
         
         if (!searchInput || !searchResults) {
             console.warn('Search elements not found');
@@ -41,6 +49,14 @@
         
         // Keyboard shortcuts
         document.addEventListener('keydown', handleGlobalKeydown);
+
+        // Mobile search controls
+        mobileSearchTrigger?.addEventListener('click', openMobileSearch);
+        mobileSearchClose?.addEventListener('click', closeMobileSearch);
+        searchBackdrop?.addEventListener('click', closeMobileSearch);
+
+        // Keep mobile overlay state in sync when resizing
+        window.addEventListener('resize', syncMobileSearchState);
     }
     
     /**
@@ -115,6 +131,9 @@
         // Ctrl+K or Cmd+K to focus search
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
+            if (isMobileView()) {
+                openMobileSearch();
+            }
             searchInput?.focus();
             searchInput?.select();
         }
@@ -130,9 +149,16 @@
      * Handle clicks outside search
      */
     function handleClickOutside(e) {
-        const searchContainer = document.querySelector('.search-container');
+        if (mobileSearchTrigger && mobileSearchTrigger.contains(e.target)) {
+            return;
+        }
+
         if (searchContainer && !searchContainer.contains(e.target)) {
             hideResults();
+
+            if (isMobileView()) {
+                closeMobileSearch();
+            }
         }
     }
     
@@ -210,6 +236,7 @@
         item.className = 'search-result-item';
         item.href = result.url;
         item.dataset.index = index;
+        item.dataset.titleMatch = result.title_match ? 'true' : 'false';
         
         // Highlight query in title
         const highlightedTitle = highlightText(result.title, query);
@@ -228,6 +255,10 @@
                 <span>${highlightedTitle}</span>
             </div>
             ${highlightedContext ? `<div class="search-result-context">${highlightedContext}</div>` : ''}
+            <div class="search-result-meta">
+                <span class="search-result-path">${escapeHtml(result.path || '')}</span>
+                ${result.title_match ? '<span class="search-result-badge">Titulo</span>' : ''}
+            </div>
         `;
         
         // Click handler
@@ -317,8 +348,66 @@
      */
     function navigateToResult(url) {
         hideResults();
+        closeMobileSearch();
         searchInput.blur();
         window.location.href = url;
+    }
+
+    /**
+     * Returns true when viewport is mobile size
+     */
+    function isMobileView() {
+        return window.innerWidth <= 768;
+    }
+
+    /**
+     * Open search panel in mobile viewport
+     */
+    function openMobileSearch() {
+        if (!isMobileView()) {
+            return;
+        }
+
+        searchContainer?.classList.add('mobile-open');
+
+        if (searchBackdrop) {
+            searchBackdrop.hidden = false;
+            searchBackdrop.classList.add('active');
+        }
+
+        searchInput?.focus();
+    }
+
+    /**
+     * Close search panel in mobile viewport
+     */
+    function closeMobileSearch() {
+        if (!isMobileView()) {
+            return;
+        }
+
+        searchContainer?.classList.remove('mobile-open');
+
+        if (searchBackdrop) {
+            searchBackdrop.classList.remove('active');
+            searchBackdrop.hidden = true;
+        }
+
+        hideResults();
+        searchInput?.blur();
+    }
+
+    /**
+     * Cleanup overlay state after viewport changes
+     */
+    function syncMobileSearchState() {
+        if (!isMobileView()) {
+            searchContainer?.classList.remove('mobile-open');
+            if (searchBackdrop) {
+                searchBackdrop.classList.remove('active');
+                searchBackdrop.hidden = true;
+            }
+        }
     }
     
     /**
