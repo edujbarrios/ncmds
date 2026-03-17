@@ -72,6 +72,7 @@ class MarkdownProcessor:
         """Convert markdown to HTML"""
         self.md.reset()
         html = self.md.convert(content)
+        html = self._enhance_shields_badges(html)
         metadata = getattr(self.md, 'Meta', {})
         toc = getattr(self.md, 'toc', '')
         
@@ -80,6 +81,46 @@ class MarkdownProcessor:
             'metadata': metadata,
             'toc': toc
         }
+
+    def _add_css_class(self, tag_html, class_name):
+        """Append a CSS class to an HTML tag string without removing existing classes."""
+        class_match = re.search(r'\bclass="([^"]*)"', tag_html)
+
+        if class_match:
+            existing_classes = class_match.group(1).split()
+            if class_name not in existing_classes:
+                new_classes = f"{class_match.group(1)} {class_name}".strip()
+                tag_html = (
+                    tag_html[:class_match.start(1)]
+                    + new_classes
+                    + tag_html[class_match.end(1):]
+                )
+            return tag_html
+
+        return re.sub(
+            r'\s*/?>$',
+            lambda match: f' class="{class_name}"{match.group(0)}',
+            tag_html
+        )
+
+    def _enhance_shields_badges(self, html):
+        """Detect shields.io images and style them as native badges in rendered docs."""
+        html = re.sub(
+            r'<img\b[^>]*\bsrc="[^"]*(?:img\.)?shields\.io[^"]*"[^>]*>',
+            lambda match: self._add_css_class(match.group(0), 'ncmds-shield-badge'),
+            html,
+            flags=re.IGNORECASE
+        )
+
+        # Convert paragraphs containing only shields badges into a horizontal badge row.
+        html = re.sub(
+            r'<p>(\s*(?:<a\b[^>]*>\s*<img\b[^>]*\bncmds-shield-badge\b[^>]*>\s*</a>|<img\b[^>]*\bncmds-shield-badge\b[^>]*>)\s*)+</p>',
+            lambda match: match.group(0).replace('<p>', '<p class="ncmds-shield-row">', 1),
+            html,
+            flags=re.IGNORECASE
+        )
+
+        return html
 
 
 class DocumentationSite:

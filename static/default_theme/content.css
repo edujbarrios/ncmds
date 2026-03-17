@@ -146,6 +146,35 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.markdown-body img.ncmds-shield-badge {
+    max-width: none;
+    width: auto;
+    height: 20px;
+    border-radius: 4px;
+    margin: 0;
+    box-shadow: none;
+    vertical-align: middle;
+}
+
+.markdown-body p.ncmds-shield-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0.8rem 0 1.25rem;
+}
+
+.markdown-body p.ncmds-shield-row a {
+    display: inline-flex;
+    line-height: 0;
+    border-bottom: none;
+}
+
+.markdown-body p.ncmds-shield-row a:hover {
+    border-bottom: none;
+    filter: brightness(1.05);
+}
+
 /* Horizontal Rule */
 .markdown-body hr {
     border: none;

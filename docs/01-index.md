@@ -4,6 +4,11 @@
 
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
+![Status](https://img.shields.io/badge/Status-Active%20Development-0D8B8B?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-Documentation%20Engine-000000?style=flat-square&logo=flask&logoColor=white)
+![Export](https://img.shields.io/badge/Export-QMD-0D8B8B?style=flat-square)
+
 ## 🎯 What is NCMDS?
 
 NCMDS is a Flask-based documentation system that:
