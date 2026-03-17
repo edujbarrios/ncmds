@@ -1,2 +1,4 @@
 *.css linguist-generated=true
 *.html linguist-generated=true
+*.md linguist-detectable=true
+*.md linguist-documentation=false
