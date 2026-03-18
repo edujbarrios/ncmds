@@ -6,6 +6,7 @@ Created by: edujbarrios
 
 from flask import send_file, abort, jsonify
 from pathlib import Path
+import re
 from .qmd_export import QMDExporter
 
 
@@ -25,7 +26,9 @@ def register_export_routes(app, config_manager, site):
             # Find the markdown file
             doc_file = None
             for md_file in docs_dir.rglob('*.md'):
-                if str(md_file.stem).endswith(nav_item['path']) or md_file.stem == nav_item['path']:
+                stem = md_file.stem
+                # Match exact stem or stem with a numeric prefix (e.g. "01-guide" for path "guide")
+                if stem == nav_item['path'] or re.sub(r'^\d+-', '', stem) == nav_item['path']:
                     doc_file = md_file
                     break
             

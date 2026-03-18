@@ -3,6 +3,7 @@ LLM Client for interacting with LLM7.io API
 """
 
 import requests
+from urllib.parse import urlparse
 from typing import Dict, Any, List, Optional
 
 
@@ -73,7 +74,7 @@ class LLMClient:
             try:
                 error_detail = e.response.json()
                 error_msg += f" - {error_detail}"
-            except:
+            except (ValueError, KeyError):
                 error_msg += f" - {e.response.text[:200]}"
             
             # Add helpful hints based on status code
@@ -144,8 +145,16 @@ class LLMClient:
         Returns:
             List of model dictionaries with 'id' and 'name'
         """
-        # Try to fetch models from API
-        models_url = self.api_url.replace('/chat/completions', '/models')
+        # Build models URL by deriving it from the chat/completions API URL.
+        # For OpenAI-compatible APIs the models endpoint lives at the same
+        # path level as the chat endpoint (e.g. /v1/models alongside /v1/chat/completions).
+        parsed = urlparse(self.api_url)
+        if '/chat/completions' in parsed.path:
+            models_path = parsed.path.replace('/chat/completions', '/models')
+        else:
+            # Fall back: replace the last path segment with 'models'
+            models_path = parsed.path.rstrip('/').rsplit('/', 1)[0] + '/models'
+        models_url = parsed._replace(path=models_path, query='', fragment='').geturl()
         
         headers = {
             "Authorization": f"Bearer {self.api_key}"
