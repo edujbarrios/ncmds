@@ -335,6 +335,10 @@ class DocumentationSite:
     
     def get_document(self, path):
         """Get and process a document"""
+        # Reject paths containing traversal sequences
+        if path and ('..' in path or path.startswith('/')):
+            return None
+
         # Handle root and index paths
         if path == '' or path == 'index':
             doc_path = self.docs_dir / '01-index.md'
@@ -474,7 +478,10 @@ def search_docs():
     difficulty_filter = request.args.get('difficulty', '').strip().lower()
     owner_filter = request.args.get('owner', '').strip().lower()
     writer_filter = request.args.get('writer', '').strip().lower()
-    limit = int(request.args.get('limit', 10))
+    try:
+        limit = int(request.args.get('limit', 10))
+    except (ValueError, TypeError):
+        limit = 10
 
     if not query and not tag_filter and not difficulty_filter and not owner_filter and not writer_filter:
         return jsonify({'results': [], 'query': query})

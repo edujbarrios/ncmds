@@ -2,8 +2,11 @@
 Flask routes for AI Chat functionality
 """
 
+import logging
 from flask import request, jsonify
 from .llm_client import LLMClient
+
+logger = logging.getLogger(__name__)
 
 
 def register_ai_chat_routes(app, config_manager):
@@ -42,7 +45,7 @@ def register_ai_chat_routes(app, config_manager):
         model = config_manager.get('ai_chat.model', 'gpt-4o-mini')
         
         # Validate API key
-        if not api_key:
+        if not api_key or api_key == 'Unused':
             return jsonify({
                 'error': 'API key not configured'
             }), 500
@@ -106,7 +109,8 @@ def register_ai_chat_routes(app, config_manager):
     def ai_chat_status():
         """Check if AI chat is enabled and configured"""
         enabled = config_manager.get('ai_chat.enabled', False)
-        api_key_configured = bool(config_manager.get('ai_chat.api_key'))
+        api_key = config_manager.get('ai_chat.api_key')
+        api_key_configured = bool(api_key) and api_key != 'Unused'
         default_model = config_manager.get('ai_chat.model', 'gpt-4o-mini')
         
         return jsonify({
@@ -128,7 +132,7 @@ def register_ai_chat_routes(app, config_manager):
         api_url = config_manager.get('ai_chat.api_url')
         api_key = config_manager.get('ai_chat.api_key')
         
-        if not api_key:
+        if not api_key or api_key == 'Unused':
             return jsonify({
                 'error': 'API key not configured'
             }), 500
@@ -151,7 +155,8 @@ def register_ai_chat_routes(app, config_manager):
             })
         
         except Exception as e:
-            # Return a default list if API call fails
+            # Log the error and return a default list if API call fails
+            logger.warning("Failed to fetch models from LLM API: %s", e)
             return jsonify({
                 'models': [
                     {'id': 'gpt-4o-mini', 'name': 'GPT-4o Mini'},
