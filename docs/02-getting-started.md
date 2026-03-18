@@ -19,10 +19,8 @@ This comprehensive guide will take you from installation to creating your first 
 - 100 MB free disk space
 - Any modern web browser
 
-**For PDF Export (optional):**
-- WeasyPrint dependencies (automatically installed)
-- On Windows: GTK+ libraries (usually included)
-- On Linux: `libpango`, `libcairo2` (install via package manager)
+**For QMD Export (optional):**
+- Quarto CLI installed if you want to render QMD files locally
 
 ### Step-by-Step Installation
 
@@ -207,39 +205,20 @@ docs/
 
 ## 📤 Exporting Documentation
 
-NCMDS can export your documentation to PDF or QMD (Quarto Markdown) formats.
+NCMDS can export your documentation to QMD (Quarto Markdown) format.
 
 ### Quick Export
 
-**To export any page:**
+**To export all docs:**
 
-1. Navigate to the page you want to export
-2. Look for the floating action buttons in the bottom-right corner
-3. Click one of these buttons:
-   - **📄 Export to PDF** - Download current page as PDF
-   - **📑 All Docs (PDF)** - Download entire site as single PDF
-   - **📋 Export to QMD** - Download current page as Quarto Markdown
-   - **📚 All Docs (QMD)** - Download all pages as QMD files (ZIP)
-
-### PDF Export Features
-
-**What you get:**
-- Professional cover page with your project name
-- Automatic table of contents
-- Syntax-highlighted code blocks
-- Optimized for printing and digital reading
-- Page numbers and headers/footers
-
-**Example uses:**
-- Offline reading
-- Sharing with non-technical stakeholders
-- Archiving documentation versions
-- Printing user manuals
+1. Navigate to any documentation page
+2. Click the **Export Documentation** button in the sidebar
+3. The entire site downloads as a single `.qmd` file
 
 ### QMD Export Features
 
 **What you get:**
-- Quarto Markdown files with YAML frontmatter
+- Quarto Markdown file with YAML frontmatter
 - Ready to render with Quarto CLI
 - Preserves all Markdown formatting
 - Configurable output formats (PDF, HTML, DOCX)
@@ -266,14 +245,8 @@ Edit `config/config.yaml`:
 
 ```yaml
 export:
-  show_on_all_pages: true  # Show export buttons on all pages
-  
-  pdf:
-    enabled: true
-    project_name: "My Project"  # Appears on cover page
-    paper_size: "A4"  # Or "Letter"
-    margins: "2cm"
-  
+  show_on_all_pages: true  # Show export button on all pages
+
   qmd:
     enabled: true
     project_name: "My Project"
@@ -396,16 +369,12 @@ ncmds/
 │   └── default_theme/     # Theme CSS files
 │
 ├── export/                 # Export functionality
-│   ├── pdf_export.py      # PDF generation
 │   ├── qmd_export.py      # QMD generation
 │   └── export_routes.py   # Export API routes
 │
-├── ai_chat/                # AI chat functionality
-│   ├── llm_client.py      # LLM API client
-│   └── routes.py          # Chat API routes
-│
-└── utils/                  # Utility modules
-    └── math_render.py      # Math rendering
+└── ai_chat/                # AI chat functionality
+    ├── llm_client.py      # LLM API client
+    └── routes.py          # Chat API routes
 ```
 
 ### What You Should Edit
@@ -457,72 +426,7 @@ pip install -r requirements.txt
 - Refresh browser (Ctrl+R or F5)
 - Check terminal for errors
 
-**Export buttons don't appear:**
+**Export button doesn't appear:**
 - Check `export.show_on_all_pages: true` in config
-- Ensure WeasyPrint is installed for PDF export
+- Check `export.qmd.enabled: true` in config
 - Check browser console for JavaScript errors
-├── docs/                      # Documentation source files
-│   ├── 01-index.md
-│   ├── 02-getting-started.md
-│   ├── 03-configuration.md
-│   ├── 04-markdown-guide.md
-│   ├── 05-themes.md
-│   └── 06-deployment.md
-├── templates/
-│   ├── home.html             # Hero landing page
-│   ├── layout.html           # Main layout (modular)
-│   └── components/           # Template components (organized by type)
-│       ├── html/             # HTML template components
-│       │   ├── head.html     # Meta tags, CSS, theme variables
-│       │   ├── header.html   # Site header with logo and toggles
-│       │   ├── sidebar.html  # Navigation sidebar
-│       │   ├── toc.html      # Table of contents
-│       │   ├── doc_navigation.html  # Prev/Next buttons
-│       │   └── footer.html   # Site footer
-│       └── scripts/          # JavaScript components
-│           └── scripts.html  # All JavaScript functionality
-├── static/
-│   ├── main.css              # Main CSS entry point
-│   ├── style.css             # Legacy stylesheet (backup)
-│   ├── default_theme/        # Modular CSS files for default theme
-│   │   ├── base.css          # Reset & typography
-│   │   ├── header.css        # Header component styles
-│   │   ├── hero.css          # Hero section styles
-│   │   ├── sidebar.css       # Sidebar styles
-│   │   ├── toc.css           # Table of contents styles
-│   │   ├── content.css       # Main content & markdown
-│   │   ├── code.css          # Code blocks & syntax highlighting
-│   │   ├── navigation.css    # Navigation & footer
-│   │   ├── responsive.css    # Media queries
-│   │   └── utilities.css     # Utility classes
-│   └── images/               # Static images
-├── images/                    # Project images
-├── ncmds.py                   # Main application
-├── requirements.txt          # Python dependencies
-├── config.yaml               # Alternative config location
-└── tests.txt                 # Testing documentation
-```
-
-### Template Components
-
-The layout system is now modular and organized by file type. Components in `templates/components/` are separated into:
-
-**HTML Components (`html/`):**
-- **head.html**: Document head with meta tags, CSS links, and theme CSS variables
-- **header.html**: Site header with logo, theme toggle, sidebar/TOC toggles
-- **sidebar.html**: Documentation navigation with auto-generated links
-- **toc.html**: Table of contents for the current document
-- **doc_navigation.html**: Previous/Next navigation buttons
-- **footer.html**: Site footer with author information
-
-**JavaScript Components (`scripts/`):**
-- **scripts.html**: All JavaScript functionality (theme switching, toggles, copy buttons, etc.)
-
-## 🔧 Next Steps
-
-- Learn about [Configuration](03-configuration.md)
-- Explore [Markdown Features](04-markdown-guide.md)
-- Customize [Themes](05-themes.md)
-- Understand [Template Components](07-components.md)
-- Learn about [Deployment](06-deployment.md)
-- Learn about [Deployment](06-deployment.md)

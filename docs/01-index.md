@@ -55,15 +55,12 @@ NCMDS is a Flask-based documentation system that:
 
 ### 🤖 AI Chat Assistant
 - **Ask questions** about your documentation in natural language
-- **Switch between AI models** (GPT-4, Claude, etc.) on the fly
+- **Switch between AI models** in the chat UI on the fly
 - **Context-aware**: The AI reads your current page for relevant answers
-- **Fullscreen mode** for extended conversations
 
 ### 📤 Export Anywhere
-- **PDF Export**: Generate professional PDFs with cover pages and TOC
 - **QMD Export**: Export to Quarto Markdown for advanced rendering
-- **Single page or entire site**: Export what you need
-- **One-click download**: Floating buttons on every page
+- **One-click download**: Export button in the sidebar on every page
 
 ### 🚀 Zero Build Process
 - No compilation step required
@@ -127,24 +124,23 @@ Now that you've seen the basics, explore these guides:
 - **[Deployment →](06-deployment.md)** - Deploy to production (Docker, Heroku, Railway)
 - **[Export Documentation →](03-configuration.md#export-settings)** - Generate PDFs and QMD files
 
-## 🎨 Available Themes (placeholder to show table creation)
+## 🎨 Available Themes
 
-Choose from seven beautiful themes or create your own:
-
-| Theme | Description | Preview Color |
-|-------|-------------|---------------|
-| **Turquoise** | Professional cyan/turquoise with vibrant accents (default) | `#40E0D0` |
-| **Ocean** | Calm blue oceanic tones | `#2563eb` |
-| **Forest** | Natural green woodland colors | `#10b981` |
-| **Sunset** | Warm orange and red hues | `#f59e0b` |
-| **Purple Dream** | Deep violet mystic tones | `#7c3aed` |
-| **Cyberpunk** | Futuristic neon colors | `#ec4899` |
-| **Monochrome** | Classic black and white | `#ffffff` |
-
-Change themes in `config/config.yaml`:
+NCMDS uses a dark theme by default with a turquoise colour palette. You can customise the colours by editing the `theme.dark` and `theme.light` sections in `config/config.yaml`:
 
 ```yaml
-theme_name: "turquoise"  # or ocean, forest, sunset, purple, cyberpunk, monochrome
+theme:
+  default: "dark"
+
+  dark:
+    primary_color: "#40E0D0"
+    background_color: "#1b1b1d"
+    # ... other colours
+
+  light:
+    primary_color: "#2563eb"
+    background_color: "#ffffff"
+    # ... other colours
 ```
 
 ## How NCMDS Works
@@ -172,7 +168,7 @@ Understanding the system will help you use it effectively:
 - Changes to `.md` files appear on page refresh (no restart needed)
 
 ### 5. Export & AI
-- Export buttons generate PDFs (via WeasyPrint) or QMD files on-demand
+- Export button generates QMD files on-demand
 - AI chat sends your question + current page content to the LLM API
 - Responses stream back in real-time
 
@@ -185,8 +181,7 @@ Built with modern, reliable technologies:
 - **Templating**: Jinja2
 - **Styling**: CSS with variables for theming
 - **Syntax Highlighting**: Highlight.js
-- **PDF Generation**: WeasyPrint
-- **AI Integration**: LLM7.io API (supports multiple providers)
+- **AI Integration**: LLM7.io API
 - **Configuration**: YAML
 
 ## 📄 License

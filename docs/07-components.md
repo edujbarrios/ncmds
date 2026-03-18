@@ -177,23 +177,27 @@ templates/components/html/header.html
 
 Some components depend on:
 - **Config variables**: Passed from `ncmds.py` via Jinja2 context
-- **CSS classes**: Defined in `static/style.css`
+- **CSS classes**: Defined in `static/main.css` and `static/default_theme/`
 - **JavaScript**: Often in `scripts.html` for interactive components
 
 ## 🎨 Styling Components
 
-All component styles are in `static/style.css`. Each component typically has its own CSS section:
+Component styles are split across `static/main.css` (entry point) and modular files in `static/default_theme/`:
 
-```css
-/* Header Component */
-.site-header { ... }
-.header-container { ... }
-.logo { ... }
-
-/* Sidebar Component */
-.sidebar { ... }
-.sidebar-nav { ... }
-.nav-list { ... }
+```
+static/
+├── main.css              # Main CSS entry point
+├── ai_chat.css           # AI chat widget styles
+└── default_theme/
+    ├── base.css          # Reset & typography
+    ├── header.css        # Header component styles
+    ├── sidebar.css       # Sidebar styles
+    ├── toc.css           # Table of contents styles
+    ├── content.css       # Main content & markdown
+    ├── code.css          # Code blocks & syntax highlighting
+    ├── navigation.css    # Navigation & footer
+    ├── responsive.css    # Media queries
+    └── utilities.css     # Utility classes
 ```
 
 ## 📚 Related Documentation

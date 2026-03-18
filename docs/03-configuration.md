@@ -26,14 +26,12 @@ Basic information about your documentation site:
 site_name: "NCMDS Documentation"
 author: "edujbarrios"
 description: "Easy documentation site builder with Markdown - no code required"
-version: "1.0.0"  # Optional: your project version
 ```
 
 **Options:**
-- `site_name`: Appears in page titles and navigation header
+- `site_name`: Appears in page titles and the navigation header
 - `author`: Creator name (appears in footer and meta tags)
 - `description`: Site description for SEO
-- `version`: Optional version number displayed in UI
 
 ### Hero Section Configuration
 
@@ -43,81 +41,91 @@ The hero section is the large banner on your homepage:
 hero:
   enabled: true
   project_name: "NCMDS"
-  company: "edujbarrios"
   tagline: "No Code Markdown Documentation Sites"
   description: "Create beautiful documentation sites with just Markdown - no coding required"
-  show_buttons: true
+
+  # Badge shown above the title
+  badge:
+    enabled: true
+    text: "edujbarrios"
+    show_icon: true
+
+  # Call to action buttons
   buttons:
-    - text: "Get Started"
-      url: "02-getting-started.md"
-      primary: true
-    - text: "View on GitHub"
-      url: "https://github.com/edujbarrios/ncmds"
-      primary: false
+    - text: "View Documentation"
+      url: "/docs/01-index"
+      icon: "book"    # book, github, download, etc.
+      style: "primary"  # primary, secondary, outline
+
+  # Feature highlights (4 items max for best display)
+  features:
+    - icon: "zap"
+      text: "Zero Config"
+    - icon: "code"
+      text: "Markdown"
+
+  # Info cards (optional)
+  cards:
+    enabled: true
+    title: "Why Choose NCMDS?"
+    list:
+      - title: "Fast Setup"
+        description: "Get your documentation site running in under 5 minutes"
+        icon: "rocket"
+        highlight: "5 min"
 ```
 
 **Hero Options:**
-- `enabled`: `true` or `false` - Show/hide entire hero section
-- `project_name`: Large title displayed in hero
-- `company`: Company badge/label
+- `enabled`: `true` or `false` – show/hide the entire hero section
+- `project_name`: Large title displayed in the hero
 - `tagline`: Subtitle under project name
 - `description`: Paragraph text below tagline
-- `show_buttons`: Enable action buttons in hero
-- `buttons`: List of button objects (text, url, primary style)
+- `buttons`: List of call-to-action buttons (text, url, icon, style)
+- `features`: Short feature chips shown in the hero
+- `cards`: Highlighted benefit cards below the hero
 
 **To disable hero:** Set `enabled: false` and the page shows normal documentation immediately.
 
 ### Theme Configuration
 
-Choose from seven predefined themes or create your own custom color scheme:
+NCMDS uses an inline dark/light theme configuration. By default it ships with a dark turquoise palette:
 
 ```yaml
-# Theme selection
-theme_name: "turquoise"  
-# Options: turquoise, ocean, forest, sunset, purple, cyberpunk, monochrome
+theme:
+  default: "dark"         # Start in dark or light mode
+  toggle_enabled: false   # Show theme toggle button
+
+  dark:
+    primary_color: "#40E0D0"
+    secondary_color: "#66E6DD"
+    background_color: "#1b1b1d"
+    surface_color: "#242526"
+    text_color: "#e3e3e3"
+    text_secondary: "#b4b4b4"
+    accent_color: "#40E0D0"
+    border_color: "#3a3a3c"
+    code_background: "#1e1e1e"
+    link_color: "#66E6DD"
+    link_hover: "#8CF0EB"
+
+  light:
+    primary_color: "#2563eb"
+    secondary_color: "#7c3aed"
+    background_color: "#ffffff"
+    surface_color: "#f8fafc"
+    text_color: "#0f172a"
+    text_secondary: "#475569"
+    accent_color: "#0891b2"
+    border_color: "#e2e8f0"
+    code_background: "#f1f5f9"
+    link_color: "#2563eb"
+    link_hover: "#1e40af"
 ```
 
-**Available Themes:**
-
-| Theme | Primary Color | Best For |
-|-------|--------------|----------|
-| `turquoise` | #40E0D0 | Professional tech docs (default) |
-| `ocean` | #2563eb | Calm, corporate documentation |
-| `forest` | #10b981 | Natural, environmental projects |
-| `sunset` | #f59e0b | Creative, warm tone docs |
-| `purple` | #7c3aed | Modern, sleek documentation |
-| `cyberpunk` | #ec4899 | Futuristic, gaming projects |
-| `monochrome` | #ffffff | Classic, timeless look |
-
-### Custom Theme Colors
-
-Create your own color scheme by setting `theme_name: "custom"`:
-
-```yaml
-theme_name: "custom"
-
-custom_theme:
-  # Primary brand colors
-  primary_color: "#2563eb"      # Main accent color
-  secondary_color: "#7c3aed"    # Secondary accent
-  accent_color: "#22d3ee"       # Highlights and CTAs
-  
-  # Background colors
-  background_color: "#0f172a"   # Page background
-  surface_color: "#1e293b"      # Cards, modals, panels
-  
-  # Text colors
-  text_color: "#e2e8f0"         # Primary text
-  text_secondary: "#94a3b8"     # Secondary text
-  
-  # UI element colors
-  border_color: "#334155"       # Borders and dividers
-  code_background: "#1e293b"    # Code block background
-  
-  # Link colors
-  link_color: "#60a5fa"         # Unvisited links
-  link_hover: "#93c5fd"         # Link hover state
-```
+**Theme Options:**
+- `default`: Starting theme – `"dark"` or `"light"`
+- `toggle_enabled`: Show/hide the dark-mode toggle button in the header
+- `dark` / `light`: Colour sets for each mode – all values are hex codes
 
 **Color Tips:**
 - Use hex color codes (`#RRGGBB`)
@@ -132,49 +140,41 @@ Enable AI-powered documentation assistance using LLM7.io or compatible APIs:
 ```yaml
 ai_chat:
   enabled: true
-  provider: "LLM7.io"
   api_url: "https://api.llm7.io/v1/chat/completions"
   api_key: "your-api-key-here"  # Get from LLM7.io
-  default_model: "gpt-4o-mini"
-  
-  # UI Configuration
-  position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
-  greeting: "Hi! I can help you understand this documentation. Ask me anything!"
-  
-  # Available models (user can switch between these)
-  available_models:
-    - id: "gpt-4o-mini"
-      name: "GPT-4o Mini"
-      provider: "OpenAI"
-    - id: "gpt-4o"
-      name: "GPT-4o"
-      provider: "OpenAI"
-    - id: "claude-3-5-sonnet-20241022"
-      name: "Claude 3.5 Sonnet"
-      provider: "Anthropic"
-    - id: "claude-3-5-haiku-20241022"
-      name: "Claude 3.5 Haiku"
-      provider: "Anthropic"
-  
-  # Advanced options
-  max_tokens: 2000
-  temperature: 0.7
-  context_size: 8000  # How much page content to send
+  model: "gpt-4o-mini"          # Default model
+  provider: "LLM7.io"           # Name shown in chat UI
+
+  # UI settings
+  ui:
+    button_text: "Ask AI"
+    window_title: "Explain with AI"
+    placeholder: "Ask a question about this page..."
+    position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
+    welcome_message: "Hi! I can help you understand this page. Ask me anything about the content."
+
+  # Behaviour settings
+  behavior:
+    max_tokens: 1000
+    temperature: 0.7
+    context_max_length: 8000   # Max characters of page content sent with each question
+    system_prompt: "You are a helpful documentation assistant. Answer questions based on the provided documentation content. Be concise and accurate."
 ```
 
 **AI Chat Options Explained:**
 
 - `enabled`: Turn AI chat on/off without removing configuration
-- `provider`: Display name for the AI service
-- `api_url`: API endpoint URL (LLM7.io uses OpenAI-compatible format)
+- `api_url`: API endpoint URL (LLM7.io uses an OpenAI-compatible format)
 - `api_key`: **Important!** Get your API key from [LLM7.io](https://llm7.io)
-- `default_model`: Model used on first load (user can switch)
-- `position`: Where chat widget appears on screen
-- `greeting`: Initial message shown to users
-- `available_models`: List of models users can switch between
-- `max_tokens`: Maximum response length
-- `temperature`: Creativity (0.0 = factual, 1.0 = creative)
-- `context_size`: Characters of page content sent with each question
+- `model`: Model to use for responses
+- `provider`: Display name for the AI service shown in the chat UI
+- `ui.position`: Where the chat widget appears on screen
+- `ui.welcome_message`: Initial message shown to users
+- `behavior.max_tokens`: Maximum response length
+- `behavior.temperature`: Creativity level (0.0 = factual, 1.0 = creative)
+- `behavior.context_max_length`: Characters of page content sent with each question
+
+**Note:** The chat UI lets users switch between models available from the LLM7.io API at runtime.
 
 **Getting an API Key:**
 
@@ -192,63 +192,27 @@ api_key: "${NCMDS_AI_API_KEY}"  # Reads from environment variable
 
 ### Export Settings
 
-Configure PDF and QMD export functionality:
+Configure QMD export functionality:
 
 ```yaml
 export:
-  # Global export settings
-  show_on_all_pages: true  # Show export buttons on every page
-  
-  # PDF Export Configuration
-  pdf:
-    enabled: true
-    button_text: "Export to PDF"
-    project_name: ""  # Leave empty to use site_name
-    show_all_option: true  # Enable "Export All Docs" button
-    
-    # PDF styling
-    paper_size: "A4"  # Options: A4, Letter, Legal
-    margins: "2cm"    # CSS margin value
-    
-    # Cover page
-    cover_enabled: true
-    cover_background: "#1e293b"
-    cover_text_color: "#e2e8f0"
-    
-    # Headers and footers
-    header_enabled: true
-    footer_enabled: true
-    show_page_numbers: true
-  
+  show_on_all_pages: true  # Show export button on every page
+
   # QMD Export Configuration
   qmd:
     enabled: true
-    button_text: "Export to QMD"
-    project_name: ""  # Leave empty to use site_name
-    show_all_option: true  # Enable "Export All Docs" button
-    
-    # Quarto render settings
+    button_text: "Export Documentation"
+    project_name: ""     # Leave empty to use site_name
     default_format: "pdf"  # Options: pdf, html, docx
-    number_sections: true
-    highlight_style: "pygments"
-    toc_enabled: true
-    toc_depth: 3
 ```
 
 **Export Options Explained:**
 
-**PDF Settings:**
-- `paper_size`: Standard paper sizes for printing
-- `margins`: Space around content (use CSS units: cm, in, px)
-- `cover_enabled`: Add a professional cover page
-- `show_page_numbers`: Add page numbers to footer
-
-**QMD Settings:**
-- `default_format`: What Quarto renders to by default
-- `number_sections`: Auto-number headings (1.1, 1.2, etc.)
-- `highlight_style`: Code syntax highlighting theme
-- `toc_enabled`: Include table of contents in render
-- `toc_depth`: How many heading levels in TOC (1-6)
+- `show_on_all_pages`: Show the export button in the sidebar on every documentation page
+- `qmd.enabled`: Enable/disable the QMD export button
+- `qmd.button_text`: Label shown on the export button
+- `qmd.project_name`: Override the project name used in the exported file (defaults to `site_name`)
+- `qmd.default_format`: Quarto output format hint written into the QMD frontmatter
 
 ### Server Configuration
 
@@ -298,17 +262,15 @@ features:
   table_of_contents: true      # Right sidebar TOC
   syntax_highlighting: true    # Code block highlighting
   auto_reload: true            # Auto-reload in development
-  search: false                # Full-text search (coming soon)
-  mobile_optimization: true    # Mobile-responsive design
+  search: false                # Set to true to enable full-text search
 ```
 
 **Feature Details:**
 
-- `table_of_contents`: Shows clickable TOC for current page (H2, H3 headings)
+- `table_of_contents`: Shows a clickable TOC for the current page (H1–H2 headings)
 - `syntax_highlighting`: Uses Highlight.js for code blocks
-- `auto_reload`: Browser auto-refreshes when files change (dev only)
-- `search`: Coming in future version
-- `mobile_optimization`: Responsive nav, touch-friendly UI
+- `auto_reload`: Browser auto-refreshes when files change (development only)
+- `search`: Enables the full-text search bar in the header
 
 ### UI Text Customization
 
@@ -316,26 +278,35 @@ Customize user-facing text for internationalization or branding:
 
 ```yaml
 ui_text:
-  # Navigation
-  home: "Home"
-  previous: "Previous"
-  next: "Next"
-  
-  # Export buttons
+  # Header
+  logo_text: "MD"
+
+  # Sidebar
+  sidebar_title: "Documentation"
+  no_documents_message: "No documents yet. Add .md files to the docs/ folder."
+
+  # Navigation buttons
+  nav_previous: "Previous"
+  nav_next: "Next"
+
+  # Table of Contents
+  toc_title: "On This Page"
+
+  # Footer
+  footer_text: "This site was built using <strong>NCMDS</strong> a tool by"
+
+  # Code blocks
   copy_button: "Copy"
   copy_button_copied: "Copied!"
-  export_pdf: "Export to PDF"
-  export_qmd: "Export to QMD"
-  export_all: "All Docs"
-  
-  # AI Chat
-  ai_chat_title: "AI Assistant"
-  ai_chat_placeholder: "Ask a question about this page..."
-  ai_chat_send: "Send"
-  
-  # Errors
-  page_not_found: "Page not found"
-  error_occurred: "An error occurred"
+
+  # Theme toggle
+  theme_toggle_dark: "Switch to light mode"
+  theme_toggle_light: "Switch to dark mode"
+
+  # Error pages
+  error_404_title: "404 - Page Not Found"
+  error_404_heading: "404 - Page Not Found"
+  error_404_message: "The page you are looking for does not exist."
 ```
 
 **Use cases:**
@@ -352,7 +323,6 @@ For simple documentation with defaults:
 ```yaml
 site_name: "My Docs"
 author: "Your Name"
-theme_name: "ocean"
 
 server:
   port: 5000
@@ -372,70 +342,62 @@ With AI chat, export, and custom theme:
 site_name: "TechCorp Documentation"
 author: "TechCorp Engineering"
 description: "Complete technical documentation for TechCorp products"
-version: "2.1.0"
 
 # Hero Section
 hero:
   enabled: true
   project_name: "TechCorp Platform"
-  company: "TechCorp"
   tagline: "Enterprise Documentation Portal"
   description: "Comprehensive guides, tutorials, and API references"
-  show_buttons: true
   buttons:
     - text: "Quick Start Guide"
-      url: "02-quickstart.md"
-      primary: true
-    - text: "API Reference"
-      url: "10-api-reference.md"
-      primary: false
+      url: "/docs/02-quickstart"
+      style: "primary"
 
-# Theme
-theme_name: "custom"
-custom_theme:
-  primary_color: "#0066cc"
-  secondary_color: "#0052a3"
-  background_color: "#0a0e27"
-  surface_color: "#151935"
-  text_color: "#e6e9f0"
-  text_secondary: "#9ca3af"
-  accent_color: "#00d4ff"
-  border_color: "#2d3748"
-  code_background: "#1a1f3a"
-  link_color: "#00b8d4"
-  link_hover: "#00e5ff"
+# Theme (dark turquoise)
+theme:
+  default: "dark"
+  toggle_enabled: true
+  dark:
+    primary_color: "#0066cc"
+    background_color: "#0a0e27"
+    surface_color: "#151935"
+    text_color: "#e6e9f0"
+    text_secondary: "#9ca3af"
+    accent_color: "#00d4ff"
+    border_color: "#2d3748"
+    code_background: "#1a1f3a"
+    link_color: "#00b8d4"
+    link_hover: "#00e5ff"
+  light:
+    primary_color: "#0066cc"
+    background_color: "#ffffff"
+    surface_color: "#f8fafc"
+    text_color: "#0f172a"
+    text_secondary: "#475569"
+    accent_color: "#0052a3"
+    border_color: "#e2e8f0"
+    code_background: "#f1f5f9"
+    link_color: "#0066cc"
+    link_hover: "#003d99"
 
 # AI Chat
 ai_chat:
   enabled: true
-  provider: "LLM7.io"
   api_url: "https://api.llm7.io/v1/chat/completions"
   api_key: "${TECHCORP_AI_KEY}"
-  default_model: "claude-3-5-sonnet-20241022"
-  position: "bottom-right"
-  greeting: "Hello! I'm your TechCorp documentation assistant. How can I help?"
-  available_models:
-    - id: "claude-3-5-sonnet-20241022"
-      name: "Claude 3.5 Sonnet"
-      provider: "Anthropic"
-    - id: "gpt-4o"
-      name: "GPT-4o"
-      provider: "OpenAI"
+  model: "gpt-4o-mini"
+  provider: "LLM7.io"
+  ui:
+    welcome_message: "Hello! I'm your TechCorp documentation assistant. How can I help?"
 
 # Export
 export:
   show_on_all_pages: true
-  pdf:
-    enabled: true
-    project_name: "TechCorp Platform Documentation"
-    paper_size: "Letter"
-    margins: "1in"
-    cover_enabled: true
   qmd:
     enabled: true
     project_name: "TechCorp Platform Documentation"
     default_format: "pdf"
-    number_sections: true
 
 # Server
 server:
@@ -454,7 +416,7 @@ features:
   table_of_contents: true
   syntax_highlighting: true
   auto_reload: false
-  mobile_optimization: true
+  search: true
 ```
 
 ## 🔄 Applying Configuration Changes
@@ -540,8 +502,10 @@ cp config/config.yaml config/config.yaml.backup
 
 Add comments explaining your choices:
 ```yaml
-# Using forest theme to match brand colors
-theme_name: "forest"
+# Customize theme to match brand colors
+theme:
+  dark:
+    primary_color: "#0066cc"
 
 # Port 8080 because 5000 conflicts with MacOS AirPlay
 server:
@@ -564,48 +528,16 @@ server:
 
 **Export buttons missing:**
 - Confirm `export.show_on_all_pages: true`
-- Check `export.pdf.enabled` and/or `export.qmd.enabled`
-- Verify WeasyPrint installed for PDF export
+- Check `export.qmd.enabled: true`
 - Clear browser cache
 
 **Theme not applying:**
-- Ensure `theme_name` matches available theme
-- For custom theme, verify all colors are hex codes
-- Check for typos in color keys
+- Ensure colour values use hex codes (`#RRGGBB`)
+- Check for indentation errors in `theme.dark` / `theme.light` sections
 - Refresh browser with hard reload (Ctrl+Shift+R)
 
 ## 📚 Next Steps
 
 - **[Markdown Guide](04-markdown-guide.md)** - Learn all Markdown features
-- **[Theme Creation](05-themes.md)** - Design custom themes in depth
+- **[Theme Creation](05-themes.md)** - Customise the colour palette
 - **[Deployment](06-deployment.md)** - Deploy with your configuration
-
-- Use descriptive site names
-- Keep debug mode off in production
-- Test theme changes with different content
-- Backup your config before major changes
-- Use environment variables for sensitive data
-
-## 🔧 Advanced Configuration
-
-### Environment Variables
-
-You can override config values with environment variables:
-
-```bash
-export NCMDS_PORT=8000
-export NCMDS_DEBUG=false
-```
-
-### Dynamic Configuration
-
-The configuration is loaded through `ConfigManager` which supports:
-- Hot reloading (in development mode)
-- Theme switching without restart
-- Validation of configuration values
-
-## 📚 Next Steps
-
-- Customize your [Theme](05-themes.md)
-- Explore [Markdown Features](04-markdown-guide.md)
-- Learn about [Deployment](06-deployment.md)

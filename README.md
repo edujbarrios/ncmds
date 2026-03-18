@@ -23,8 +23,8 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 ## ✨ Key Features
 
 - 🏠 **Local-First** - Runs on localhost by default, no cloud required
-- 🤖 **AI-Powered Chat** - Ask questions about documentation with built-in AI assistant and switchable models
-- 📤 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
+- 🤖 **AI-Powered Chat** - Ask questions about documentation with built-in AI assistant
+- 📤 **Export Functionality** - Export documentation to QMD (Quarto Markdown) format
 - 🎨 **Dark Theme** - Optimized for comfortable reading and coding
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 - 🔍 **Auto Navigation** - Automatic table of contents and page navigation
@@ -69,7 +69,6 @@ description: "Your site description"
 hero:
   enabled: true
   project_name: "My Project"
-  company: "Your Company"
   tagline: "Your tagline here"
   description: "Your project description"
 
@@ -78,30 +77,26 @@ ai_chat:
   enabled: true
   api_url: "https://api.llm7.io/v1/chat/completions"
   api_key: "your-api-key"  # Get your key from LLM7.io
-  model: "gpt-4o-mini"  # Default model (switchable in chat UI)
+  model: "gpt-4o-mini"
   provider: "LLM7.io"
 ```
 <img src="images/image.png" alt="NCMDS AI chat" width="400"/>
 
 **AI Features:**
-- Model selector dropdown to switch between available models in real-time
 - Context-aware responses based on current documentation page
-- Fullscreen mode for better reading experience
+- Model selector to switch between available models in the chat UI
 
 ## 📤 Export Documentation
 
-NCMDS includes a powerful export module that allows you to export your documentation to different formats:
+NCMDS includes an export module that allows you to export your documentation to QMD (Quarto Markdown) format:
 
-- **PDF Export** - Generate professional PDFs with WeasyPrint
 - **QMD Export** - Export to Quarto Markdown format for rendering with Quarto
-- **Customizable Settings** - Configure project name, paper size, and more
-- **Easy to Use** - Click floating export buttons on any documentation page
+- **One-click download** - Click the export button in the sidebar on any documentation page
 
 ### Export Options
 
 - Automatic table of contents generation
-- Professional cover page with project branding
-- Optimized for print and digital reading
+- Ready to render with Quarto CLI (`quarto render doc.qmd`)
 
 ## 🆕 Cloud Deployment Support
 
@@ -161,8 +156,8 @@ Full documentation available at `/docs` when running the server, or view:
 - **Python-Markdown** - Markdown processing with extensions
 - **PyYAML** - Configuration management
 - **Highlight.js** - Syntax highlighting
-- **LLM7.io** - AI chat integration with model switching
-- **Quarto** - QMD rendering support in PDF format (optional)
+- **LLM7.io** - AI chat integration
+- **Quarto** - QMD rendering support (optional)
 
 ## 🎯 Use Cases
 
