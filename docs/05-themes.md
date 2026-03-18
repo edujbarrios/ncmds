@@ -7,9 +7,9 @@ tags:
 
 # Theme Guide
 
-NCMDS ships with a dark turquoise palette inspired by [edujbarrios.com](https://edujbarrios.com). Both dark and light colour sets are defined in `config/config.yaml` under the `theme` key.
+NCMDS ships with a dark turquoise palette inspired by [edujbarrios.com](https://edujbarrios.com). Both dark and light color sets are defined in `config/config.yaml` under the `theme` key.
 
-## Customising Colours
+## Customising Colors
 
 Edit the `theme.dark` and `theme.light` sections in `config/config.yaml`:
 
@@ -45,7 +45,7 @@ theme:
     link_hover: "#1e40af"
 ```
 
-All colour values are standard hex codes (`#RRGGBB`). After saving the file, restart the server (or use the browser refresh in debug mode) to see your changes.
+All color values are standard hex codes (`#RRGGBB`). After saving the file, restart the server (or use the browser refresh in debug mode) to see your changes.
 
 ## Syntax Highlighting Theme
 

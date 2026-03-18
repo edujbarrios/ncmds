@@ -153,7 +153,7 @@ ai_chat:
     position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
     welcome_message: "Hi! I can help you understand this page. Ask me anything about the content."
 
-  # Behaviour settings
+  # Behavior settings
   behavior:
     max_tokens: 1000
     temperature: 0.7
@@ -506,6 +506,12 @@ Add comments explaining your choices:
 theme:
   dark:
     primary_color: "#0066cc"
+    background_color: "#0a0e27"
+    # ... other dark colors
+  light:
+    primary_color: "#0066cc"
+    background_color: "#ffffff"
+    # ... other light colors
 
 # Port 8080 because 5000 conflicts with MacOS AirPlay
 server:
