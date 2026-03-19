@@ -50,7 +50,40 @@ Open `http://localhost:5000` in your browser.
 
 **That's it!** The tool is designed to run on localhost by default. No additional configuration needed.
 
-## 📝 Usage
+## � Development Mode (Package Installation)
+
+If you want to use NCMDS as a reusable module in development:
+
+```bash
+# Install in editable mode (one time only)
+pip install -e .
+```
+
+This allows you to:
+- Run `ncmds` command from anywhere
+- Import NCMDS in other Python projects
+- Use changes immediately without reinstalling
+
+```bash
+# Run via CLI command
+ncmds
+
+# Or with custom port
+PORT=8000 ncmds
+
+# Or still use the traditional way
+python ncmds.py
+```
+
+### Import in Other Projects
+
+```python
+from ncmds import app, DocumentationSite, config_manager
+from ai_chat import register_ai_chat_routes
+from export import register_export_routes
+```
+
+## �📝 Usage
 
 1. Add `.md` files to the `docs/` folder
 2. Use numeric prefixes for ordering: `01-index.md`, `02-guide.md`

@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ncmds-docs"
+version = "4.0.0"
+description = "No Code Markdown Documentation Site Builder - Create beautiful documentation sites with just Markdown"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Eduardo J. Barrios", email = "edujbarrios@example.com"}
+]
+keywords = ["documentation", "markdown", "static-site-generator", "flask", "ai"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+dependencies = [
+    "Flask==3.0.0",
+    "Markdown==3.5.1",
+    "PyYAML==6.0.1",
+    "Pygments==2.17.2",
+    "weasyprint==61.2",
+    "requests==2.31.0",
+    "gunicorn==21.2.0",
+    "serverless-wsgi==3.0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+    "flake8>=4.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/edujbarrios/ncmds"
+Repository = "https://github.com/edujbarrios/ncmds.git"
+Issues = "https://github.com/edujbarrios/ncmds/issues"
+
+[project.scripts]
+ncmds = "ncmds:cli"
+
+[tool.setuptools]
+packages = ["ai_chat", "config", "export", "utils"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.yml"]
+templates = ["*.html"]
+static = [
+    "*.css",
+    "*.js",
+    "images/*",
+    "default_theme/*.css",
+    "themes/**/*",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']

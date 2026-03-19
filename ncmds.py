@@ -562,6 +562,40 @@ def search_docs():
             results.append({
                 'title': title,
                 'path': nav_item['path'],
+                'context': context
+            })
+
+            if len(results) >= limit:
+                break
+
+    return jsonify({'results': results, 'query': query})
+
+
+def cli():
+    """CLI entry point for running NCMDS"""
+    import sys
+    from pathlib import Path
+    
+    # Get the port from command line args or environment
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Check if running in production or development
+    is_production = os.environ.get('FLASK_ENV') == 'production'
+    
+    if is_production:
+        print(f"🚀 NCMDS running on production on port {port}")
+        app.run(host='0.0.0.0', port=port, debug=False)
+    else:
+        print(f"🚀 NCMDS running locally on http://localhost:{port}")
+        app.run(host='localhost', port=port, debug=True)
+
+
+if __name__ == '__main__':
+    cli()
+            
+            results.append({
+                'title': title,
+                'path': nav_item['path'],
                 'url': f"/docs/{nav_item['path']}",
                 'context': context,
                 'title_match': title_match,
