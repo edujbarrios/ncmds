@@ -108,14 +108,17 @@ hero:
         description: "Get your documentation site running in under 5 minutes"
         icon: "rocket"  # rocket, star, heart, shield, sparkles, trending
         highlight: "5 min"
+        url: "/docs/02-getting-started"
       - title: "Easy to Use"
         description: "Built for developers and non-developers. Just write Markdown and deploy"
         icon: "sparkles"
         highlight: "Simple"
+        url: "/docs/04-markdown-guide"
       - title: "Dark Mode"
         description: "Optimized dark theme designed for comfortable reading and coding"
         icon: "palette"
         highlight: "Beautiful"
+        url: "/docs/05-themes"
   
   # Visual effects
   effects:

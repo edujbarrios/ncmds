@@ -403,6 +403,13 @@
                     {% endif %}
                     <div class="hero-cards">
                         {% for card in config.hero.cards.list %}
+                        {% set card_url = card.url if card.url else (
+                            '/docs/02-getting-started' if loop.index0 == 0 else
+                            '/docs/04-markdown-guide' if loop.index0 == 1 else
+                            '/docs/05-themes' if loop.index0 == 2 else
+                            '/docs/01-index'
+                        ) %}
+                        <a class="info-card-link" href="{{ card_url }}" aria-label="Open {{ card.title }} documentation section">
                         <div class="info-card">
                             <div class="card-icon">
                                 {% if card.icon == 'rocket' %}
@@ -446,7 +453,14 @@
                             {% endif %}
                             <h3 class="card-title">{{ card.title }}</h3>
                             <p class="card-description">{{ card.description }}</p>
+                            <span class="card-link-hint">
+                                Open Section
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </span>
                         </div>
+                        </a>
                         {% endfor %}
                     </div>
                 </div>

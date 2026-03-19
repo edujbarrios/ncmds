@@ -710,6 +710,30 @@ body {
     margin: 0 auto;
 }
 
+.info-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+.info-card-link:visited {
+    color: inherit;
+}
+
+.info-card-link:focus-visible {
+    outline: none;
+}
+
+.info-card-link:focus-visible .info-card {
+    border-color: var(--accent-color);
+    box-shadow:
+        0 0 0 3px var(--accent-color)40,
+        0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+}
+
 .info-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid var(--border-color);
@@ -887,6 +911,36 @@ body {
 
 .info-card:hover .card-description {
     color: #c5d3e8;
+}
+
+.card-link-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    opacity: 0.92;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+}
+
+.card-link-hint svg {
+    transition: transform 0.25s ease;
+}
+
+.info-card-link:hover .card-link-hint,
+.info-card-link:focus-visible .card-link-hint {
+    color: #9cf9ef;
+    opacity: 1;
+    transform: translateX(2px);
+}
+
+.info-card-link:hover .card-link-hint svg,
+.info-card-link:focus-visible .card-link-hint svg {
+    transform: translateX(3px);
 }
 
 .hero-decoration {
