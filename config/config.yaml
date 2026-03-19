@@ -130,7 +130,7 @@ theme:
   default: "dark"
   
   # Enable theme toggle button
-  toggle_enabled: true
+  toggle_enabled: false
   
   # Dark theme colors (Docusaurus-style turquoise with gray backgrounds)
   dark:
