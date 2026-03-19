@@ -573,9 +573,6 @@ def search_docs():
 
 def cli():
     """CLI entry point for running NCMDS"""
-    import sys
-    from pathlib import Path
-    
     # Get the port from command line args or environment
     port = int(os.environ.get('PORT', 5000))
     
@@ -584,103 +581,12 @@ def cli():
     
     if is_production:
         print(f"🚀 NCMDS running on production on port {port}")
-        app.run(host='0.0.0.0', port=port, debug=False)
+        app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
     else:
         print(f"🚀 NCMDS running locally on http://localhost:{port}")
-        app.run(host='localhost', port=port, debug=True)
+        # Disable reloader on Windows to avoid threading issues
+        app.run(host='localhost', port=port, debug=True, use_reloader=False)
 
 
 if __name__ == '__main__':
     cli()
-            
-            results.append({
-                'title': title,
-                'path': nav_item['path'],
-                'url': f"/docs/{nav_item['path']}",
-                'context': context,
-                'title_match': title_match,
-                'tags': doc_tags,
-                'difficulty': doc_difficulty,
-                'owner': doc_owner,
-                'writer': doc_writer
-            })
-
-            # Stop if we've reached the limit
-            if len(results) >= limit:
-                break
-
-    return jsonify({
-        'results': results,
-        'query': query,
-        'total': len(results),
-        'filters': {
-            'tag': tag_filter,
-            'difficulty': difficulty_filter,
-            'owner': owner_filter,
-            'writer': writer_filter
-        }
-    })
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    """404 error handler"""
-    error_title = config_manager.get('ui_text.error_404_title', '404 - Page Not Found')
-    error_heading = config_manager.get('ui_text.error_404_heading', '404 - Page Not Found')
-    error_message = config_manager.get('ui_text.error_404_message', 'The page you are looking for does not exist.')
-    
-    return render_template(
-        'layout.html',
-        content=f'<h1>{error_heading}</h1><p>{error_message}</p>',
-        title=error_title,
-        toc='',
-        navigation=site.navigation,
-        config=config
-    ), 404
-
-
-@app.context_processor
-def inject_config():
-    """Inject configuration into all templates"""
-    return {'site_config': config}
-
-
-if __name__ == '__main__':
-    # Create necessary directories
-    os.makedirs(DOCS_DIR, exist_ok=True)
-    os.makedirs(STATIC_DIR, exist_ok=True)
-    os.makedirs(config_manager.get('directories.templates', 'templates'), exist_ok=True)
-    
-    # Reload navigation on startup
-    site.navigation = site.build_navigation()
-    
-    # Get active theme information
-    active_theme = config_manager.get('active_theme_name', 'ncmds_default')
-    
-    # Server configuration
-    server_host = config_manager.get('server.host', '0.0.0.0')
-    server_port = config_manager.get('server.port', 5000)
-    server_debug = config_manager.get('server.debug', True)
-    
-    print(f"""
-╔═══════════════════════════════════════════════════╗
-║      NCMDS - No Code Markdown Sites Builder       ║
-║           Created by edujbarrios                  ║
-╚═══════════════════════════════════════════════════╝
-
-Server starting...
-Docs directory: {DOCS_DIR}
-Theme: {active_theme}
-Documents: {len(site.navigation)} found
-URL: http://localhost:{server_port}
-
- Tips:
-   - Add .md files to docs/ folder
-   - Edit config/config.yaml to customize
-   - Optimized dark theme for comfortable reading
-
-Press Ctrl+C to stop
-""")
-    
-    # Note: use_reloader disabled due to Python 3.13+ compatibility issues with watchdog
-    app.run(debug=server_debug, host=server_host, port=server_port, use_reloader=False)
