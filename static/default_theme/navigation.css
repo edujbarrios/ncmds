@@ -138,3 +138,22 @@
     font-size: 0.85rem;
     opacity: 0.8;
 }
+
+[data-theme="light"] .nav-button {
+    border-color: rgba(15, 118, 110, 0.24);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.1);
+}
+
+[data-theme="light"] .nav-button:hover {
+    background: linear-gradient(135deg, #ecf8f7 0%, #e3f4f3 100%);
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.15);
+}
+
+[data-theme="light"] .nav-button:hover .nav-button-title {
+    color: #0f766e;
+}
+
+[data-theme="light"] .nav-button:hover .nav-button-label {
+    color: #42606a;
+}

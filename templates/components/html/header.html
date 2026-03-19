@@ -70,7 +70,7 @@
                 </svg>
             </button>
             {% if config.theme.toggle_enabled %}
-            <button class="theme-toggle" id="themeToggle" aria-label="{{ config.ui_text.theme_toggle_dark }}">
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="{{ config.ui_text.theme_toggle_dark }}" aria-pressed="false" title="{{ config.ui_text.theme_toggle_dark }}">
                 <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5"/>
                     <line x1="12" y1="1" x2="12" y2="3"/>

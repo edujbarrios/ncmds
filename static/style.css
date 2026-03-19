@@ -117,8 +117,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    touch-action: manipulation;
     transition: all 0.3s ease;
     margin-right: 1rem;
 }
@@ -127,6 +130,11 @@ body {
     border-color: var(--accent-color);
     background: var(--surface-color);
     transform: scale(1.05);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 .theme-toggle svg {
@@ -1767,4 +1775,124 @@ button:focus {
         align-items: flex-start;
         text-align: left;
     }
+}
+
+/* ========================================
+   LIGHT MODE POLISH
+   Home page and legacy stylesheet refinements
+   ======================================== */
+
+[data-theme="light"] .site-header {
+    box-shadow: 0 8px 20px rgba(15, 118, 110, 0.1);
+}
+
+[data-theme="light"] .hero-section,
+[data-theme="light"] .home-hero {
+    background:
+        radial-gradient(circle at 14% 22%, rgba(15, 118, 110, 0.14), transparent 48%),
+        radial-gradient(circle at 84% 8%, rgba(8, 145, 178, 0.12), transparent 42%),
+        linear-gradient(160deg, #f8fdfd 0%, #f1fbfa 45%, #edf9f8 100%);
+    border-bottom-color: rgba(15, 118, 110, 0.2);
+}
+
+[data-theme="light"] .hero-title {
+    background: linear-gradient(135deg, #0f766e 0%, #0f9b8e 48%, #0891b2 100%);
+    filter: drop-shadow(0 8px 24px rgba(15, 118, 110, 0.25));
+}
+
+[data-theme="light"] .hero-tagline {
+    color: #183844;
+    text-shadow: none;
+}
+
+[data-theme="light"] .hero-description {
+    color: #41606a;
+}
+
+[data-theme="light"] .hero-badge,
+[data-theme="light"] .feature-item,
+[data-theme="light"] .info-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(15, 118, 110, 0.24);
+    box-shadow: 0 10px 24px rgba(15, 118, 110, 0.11);
+}
+
+[data-theme="light"] .feature-item:hover,
+[data-theme="light"] .info-card:hover {
+    box-shadow: 0 14px 30px rgba(15, 118, 110, 0.16);
+}
+
+[data-theme="light"] .cards-title {
+    color: #173742;
+    text-shadow: none;
+}
+
+[data-theme="light"] .card-title {
+    background: linear-gradient(135deg, #0f766e 0%, #119e90 50%, #0891b2 100%);
+    filter: none;
+}
+
+[data-theme="light"] .card-description {
+    color: #4a6772;
+}
+
+[data-theme="light"] .hero-button.primary {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 55%, #0891b2 100%);
+    box-shadow:
+        0 8px 24px rgba(15, 118, 110, 0.25),
+        0 2px 8px rgba(8, 145, 178, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    filter: none;
+    text-shadow: none;
+}
+
+[data-theme="light"] .hero-button.secondary,
+[data-theme="light"] .hero-button.outline {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(15, 118, 110, 0.24);
+    box-shadow: 0 8px 20px rgba(15, 118, 110, 0.12);
+}
+
+[data-theme="light"] .markdown-body code {
+    background: #e8f5f4;
+    color: #0f766e;
+    border-color: rgba(15, 118, 110, 0.25);
+    box-shadow: 0 1px 3px rgba(15, 118, 110, 0.08);
+}
+
+[data-theme="light"] .markdown-body pre {
+    background: #f8fcfc;
+    border-color: rgba(15, 118, 110, 0.24);
+    box-shadow:
+        0 8px 18px rgba(15, 118, 110, 0.1),
+        0 2px 6px rgba(8, 145, 178, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .markdown-body pre code {
+    color: #1f2f35;
+}
+
+[data-theme="light"] .copy-code-button {
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.14) 0%, rgba(8, 145, 178, 0.13) 100%);
+    border-color: rgba(15, 118, 110, 0.22);
+}
+
+[data-theme="light"] .nav-button {
+    border-color: rgba(15, 118, 110, 0.24);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.1);
+}
+
+[data-theme="light"] .nav-button:hover {
+    background: linear-gradient(135deg, #ecf8f7 0%, #e3f4f3 100%);
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.15);
+}
+
+[data-theme="light"] .nav-button:hover .nav-button-title {
+    color: #0f766e;
+}
+
+[data-theme="light"] .nav-button:hover .nav-button-label {
+    color: #42606a;
 }

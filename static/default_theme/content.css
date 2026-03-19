@@ -265,6 +265,42 @@
     font-weight: 700;
 }
 
+[data-theme="light"] .markdown-body blockquote {
+    background: #eef8f7;
+    color: #31535c;
+    border-left-color: rgba(15, 118, 110, 0.75);
+}
+
+[data-theme="light"] .markdown-body th {
+    background-color: rgba(15, 118, 110, 0.09);
+}
+
+[data-theme="light"] .markdown-body img {
+    box-shadow: 0 8px 22px rgba(15, 118, 110, 0.16);
+}
+
+[data-theme="light"] .markdown-body .admonition {
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(15, 118, 110, 0.03));
+    border-color: rgba(15, 118, 110, 0.26);
+}
+
+[data-theme="light"] .markdown-body .admonition.note {
+    border-left-color: #0f766e;
+    border-color: rgba(15, 118, 110, 0.3);
+}
+
+[data-theme="light"] .markdown-body .admonition.warning {
+    border-left-color: #0d9488;
+    border-color: rgba(13, 148, 136, 0.34);
+    background: linear-gradient(135deg, rgba(13, 148, 136, 0.14), rgba(13, 148, 136, 0.05));
+}
+
+[data-theme="light"] .markdown-body .admonition.danger {
+    border-left-color: #0f5d58;
+    border-color: rgba(15, 93, 88, 0.36);
+    background: linear-gradient(135deg, rgba(15, 93, 88, 0.14), rgba(15, 93, 88, 0.06));
+}
+
 /* Links bold in all themes */
 .markdown-body a {
     font-weight: bold;
@@ -281,6 +317,12 @@
     border: 1px solid var(--border-color);
     border-radius: 999px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+[data-theme="light"] .doc-meta {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(236, 249, 248, 0.95));
+    border-color: rgba(15, 118, 110, 0.25);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.1);
 }
 
 .doc-meta-label {
@@ -317,10 +359,21 @@
     background: rgba(255, 255, 255, 0.03);
 }
 
+[data-theme="light"] .doc-taxonomy-chip {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(15, 118, 110, 0.22);
+}
+
 .doc-taxonomy-tag {
     color: #b0fff9;
     border-color: rgba(79, 224, 210, 0.45);
     background: rgba(79, 224, 210, 0.14);
+}
+
+[data-theme="light"] .doc-taxonomy-tag {
+    color: #0f5f63;
+    border-color: rgba(15, 118, 110, 0.35);
+    background: rgba(15, 118, 110, 0.12);
 }
 
 .doc-taxonomy-difficulty {
@@ -329,16 +382,34 @@
     background: rgba(245, 158, 11, 0.14);
 }
 
+[data-theme="light"] .doc-taxonomy-difficulty {
+    color: #7a4d00;
+    border-color: rgba(217, 119, 6, 0.35);
+    background: rgba(217, 119, 6, 0.14);
+}
+
 .doc-taxonomy-owner {
     color: #c8d6ff;
     border-color: rgba(99, 102, 241, 0.45);
     background: rgba(99, 102, 241, 0.14);
 }
 
+[data-theme="light"] .doc-taxonomy-owner {
+    color: #285983;
+    border-color: rgba(14, 116, 144, 0.34);
+    background: rgba(14, 116, 144, 0.12);
+}
+
 .doc-taxonomy-writer {
     color: #d8cbff;
     border-color: rgba(147, 51, 234, 0.45);
     background: rgba(147, 51, 234, 0.14);
+}
+
+[data-theme="light"] .doc-taxonomy-writer {
+    color: #2e4f87;
+    border-color: rgba(37, 99, 235, 0.34);
+    background: rgba(37, 99, 235, 0.12);
 }
 
 .markdown-body > h1:first-child {

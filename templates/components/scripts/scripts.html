@@ -5,7 +5,9 @@
     // UI Text from config
     const uiText = {
         copyButton: "{{ config.ui_text.copy_button }}",
-        copyButtonCopied: "{{ config.ui_text.copy_button_copied }}"
+        copyButtonCopied: "{{ config.ui_text.copy_button_copied }}",
+        themeToggleDark: "{{ config.ui_text.theme_toggle_dark }}",
+        themeToggleLight: "{{ config.ui_text.theme_toggle_light }}"
     };
 
     // Get DOM elements
@@ -14,6 +16,7 @@
     const mainContent = document.querySelector('.main-content');
     const sidebarToggle = document.getElementById('sidebarToggle');
     const tocToggle = document.getElementById('tocToggle');
+    const themeToggle = document.getElementById('themeToggle');
     const tocSidebar = document.querySelector('.toc-sidebar');
 
     // Mobile menu toggle
@@ -71,6 +74,83 @@
             
             const isHidden = tocSidebar.classList.contains('hidden');
             localStorage.setItem('tocVisible', !isHidden);
+        });
+    }
+
+    // Theme toggle functionality (dark remains the default)
+    const htmlElement = document.documentElement;
+    const darkThemeStylesheet = document.getElementById('hljs-theme-dark');
+    const lightThemeStylesheet = document.getElementById('hljs-theme-light');
+    const defaultTheme = "{{ config.theme.default | lower }}" === "light" ? "light" : "dark";
+
+    function updateThemeToggleState(theme) {
+        if (!themeToggle) {
+            return;
+        }
+
+        const isLightTheme = theme === 'light';
+        const sunIcon = themeToggle.querySelector('.sun-icon');
+        const moonIcon = themeToggle.querySelector('.moon-icon');
+        const toggleLabel = isLightTheme ? uiText.themeToggleLight : uiText.themeToggleDark;
+
+        themeToggle.setAttribute('aria-label', toggleLabel);
+        themeToggle.setAttribute('title', toggleLabel);
+        themeToggle.setAttribute('aria-pressed', String(isLightTheme));
+
+        if (sunIcon) {
+            sunIcon.style.display = isLightTheme ? 'none' : 'block';
+        }
+
+        if (moonIcon) {
+            moonIcon.style.display = isLightTheme ? 'block' : 'none';
+        }
+    }
+
+    function applyTheme(theme, persistPreference = false) {
+        const normalizedTheme = theme === 'light' ? 'light' : 'dark';
+        const isLightTheme = normalizedTheme === 'light';
+
+        htmlElement.setAttribute('data-theme', normalizedTheme);
+        updateThemeToggleState(normalizedTheme);
+
+        if (darkThemeStylesheet && lightThemeStylesheet) {
+            darkThemeStylesheet.disabled = isLightTheme;
+            lightThemeStylesheet.disabled = !isLightTheme;
+        }
+
+        if (persistPreference) {
+            try {
+                localStorage.setItem('themePreference', normalizedTheme);
+            } catch (error) {
+                // Ignore storage errors (private browsing, blocked storage).
+            }
+        }
+    }
+
+    function getInitialTheme() {
+        if (!themeToggle) {
+            return defaultTheme;
+        }
+
+        try {
+            const savedTheme = localStorage.getItem('themePreference');
+            if (savedTheme === 'light') {
+                return 'light';
+            }
+        } catch (error) {
+            return defaultTheme;
+        }
+
+        return defaultTheme;
+    }
+
+    applyTheme(getInitialTheme());
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(nextTheme, true);
         });
     }
 
@@ -151,9 +231,6 @@
         }
     });
 
-    // Set dark theme permanently
-    const htmlElement = document.documentElement;
-    htmlElement.setAttribute('data-theme', 'dark');
 </script>
 
 <!-- AI Chat Widget Script -->

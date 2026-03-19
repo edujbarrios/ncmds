@@ -224,3 +224,26 @@
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+[data-theme="light"] .nav-link:hover {
+    background-color: rgba(15, 118, 110, 0.1);
+    color: #0f766e;
+    border-left-color: #0f766e;
+}
+
+[data-theme="light"] .nav-link.active {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.2);
+}
+
+[data-theme="light"] .sidebar-export-btn {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+    border-color: rgba(15, 118, 110, 0.42);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.2);
+}
+
+[data-theme="light"] .sidebar-export-btn:hover {
+    background: linear-gradient(135deg, #0d655f 0%, #0ea597 100%);
+    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.25);
+}

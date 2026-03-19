@@ -130,7 +130,7 @@ theme:
   default: "dark"
   
   # Enable theme toggle button
-  toggle_enabled: false
+  toggle_enabled: true
   
   # Dark theme colors (Docusaurus-style turquoise with gray backgrounds)
   dark:
@@ -148,17 +148,17 @@ theme:
   
   # Light theme colors
   light:
-    primary_color: "#2563eb"
-    secondary_color: "#7c3aed"
-    background_color: "#ffffff"
-    surface_color: "#f8fafc"
-    text_color: "#0f172a"
-    text_secondary: "#475569"
+    primary_color: "#0f766e"
+    secondary_color: "#14b8a6"
+    background_color: "#f6fbfb"
+    surface_color: "#ffffff"
+    text_color: "#0f2329"
+    text_secondary: "#43616a"
     accent_color: "#0891b2"
-    border_color: "#e2e8f0"
-    code_background: "#f1f5f9"
-    link_color: "#2563eb"
-    link_hover: "#1e40af"
+    border_color: "#cfe4e2"
+    code_background: "#ecf7f6"
+    link_color: "#0f766e"
+    link_hover: "#0b5f59"
 
 # UI Controls Configuration
 ui_controls:

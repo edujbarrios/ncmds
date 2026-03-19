@@ -6,7 +6,8 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/static/main.css">
     <link rel="stylesheet" href="/static/ai_chat.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_dark }}.min.css">
+    <link rel="stylesheet" id="hljs-theme-dark" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_dark }}.min.css">
+    <link rel="stylesheet" id="hljs-theme-light" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_light }}.min.css" disabled>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/highlight.min.js"></script>
     <style>
         :root {
@@ -39,4 +40,33 @@
             --link-hover: {{ config.theme.light.link_hover }};
         }
     </style>
+    <script>
+        (function () {
+            const themeToggleEnabled = "{{ config.theme.toggle_enabled | lower }}" === "true";
+            const defaultTheme = "{{ config.theme.default | lower }}" === "light" ? "light" : "dark";
+            let initialTheme = defaultTheme;
+
+            if (themeToggleEnabled) {
+                try {
+                    const savedTheme = localStorage.getItem('themePreference');
+                    if (savedTheme === 'light') {
+                        initialTheme = 'light';
+                    }
+                } catch (error) {
+                    initialTheme = defaultTheme;
+                }
+            }
+
+            document.documentElement.setAttribute('data-theme', initialTheme);
+
+            const darkHighlightTheme = document.getElementById('hljs-theme-dark');
+            const lightHighlightTheme = document.getElementById('hljs-theme-light');
+
+            if (darkHighlightTheme && lightHighlightTheme) {
+                const isLightTheme = initialTheme === 'light';
+                darkHighlightTheme.disabled = isLightTheme;
+                lightHighlightTheme.disabled = !isLightTheme;
+            }
+        })();
+    </script>
 </head>

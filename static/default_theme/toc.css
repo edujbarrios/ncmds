@@ -55,3 +55,16 @@
 .toc-content a:hover {
     color: var(--accent-color);
 }
+
+[data-theme="light"] .toc-sidebar {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 252, 251, 0.96));
+}
+
+[data-theme="light"] .toc-content a:hover {
+    color: #0f766e;
+}
+
+[data-theme="light"] .toc-content a.active {
+    color: #0f766e;
+    font-weight: 600;
+}

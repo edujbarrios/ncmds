@@ -735,8 +735,154 @@
 }
 
 [data-theme="light"] .hero-section {
-    background: linear-gradient(135deg, 
-        rgba(84, 16, 135, 0.1) 0%, 
-        rgba(124, 58, 237, 0.05) 100%
-    );
+    background:
+        radial-gradient(circle at 14% 22%, rgba(15, 118, 110, 0.14), transparent 48%),
+        radial-gradient(circle at 84% 8%, rgba(8, 145, 178, 0.12), transparent 42%),
+        linear-gradient(160deg, #f8fdfd 0%, #f1fbfa 45%, #edf9f8 100%);
+    border-bottom: 1px solid rgba(15, 118, 110, 0.2);
+}
+
+[data-theme="light"] .hero-badge {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(15, 118, 110, 0.24);
+    color: #3d5e66;
+    box-shadow: 0 10px 24px rgba(15, 118, 110, 0.12);
+}
+
+[data-theme="light"] .hero-badge:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(232, 248, 246, 0.92));
+    border-color: rgba(15, 118, 110, 0.4);
+    box-shadow: 0 14px 30px rgba(15, 118, 110, 0.16);
+}
+
+[data-theme="light"] .hero-icon {
+    filter: drop-shadow(0 0 5px rgba(20, 184, 166, 0.35));
+}
+
+[data-theme="light"] .hero-title {
+    background: linear-gradient(135deg, #0f766e 0%, #0f9b8e 48%, #0891b2 100%);
+    background-size: 200% auto;
+    filter: drop-shadow(0 8px 24px rgba(15, 118, 110, 0.25));
+}
+
+[data-theme="light"] .hero-title::after {
+    opacity: 0.5;
+    box-shadow: 0 0 8px rgba(8, 145, 178, 0.28);
+}
+
+[data-theme="light"] .hero-tagline {
+    color: #183844;
+    text-shadow: none;
+}
+
+[data-theme="light"] .hero-description {
+    color: #41606a;
+}
+
+[data-theme="light"] .hero-description::before {
+    opacity: 0.75;
+}
+
+[data-theme="light"] .hero-button.primary {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 55%, #0891b2 100%);
+    box-shadow:
+        0 8px 24px rgba(15, 118, 110, 0.25),
+        0 2px 8px rgba(8, 145, 178, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    filter: none;
+    text-shadow: none;
+}
+
+[data-theme="light"] .hero-button.primary:hover {
+    box-shadow:
+        0 12px 34px rgba(15, 118, 110, 0.3),
+        0 6px 14px rgba(8, 145, 178, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+[data-theme="light"] .hero-button.secondary {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(15, 118, 110, 0.25);
+    box-shadow: 0 8px 20px rgba(15, 118, 110, 0.12);
+}
+
+[data-theme="light"] .hero-button.secondary:hover {
+    background: rgba(15, 118, 110, 0.09);
+    box-shadow: 0 12px 28px rgba(15, 118, 110, 0.16);
+}
+
+[data-theme="light"] .hero-button.outline {
+    color: #0f766e;
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow: 0 8px 20px rgba(15, 118, 110, 0.1);
+}
+
+[data-theme="light"] .hero-button.outline:hover {
+    background: #0f766e;
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 118, 110, 0.24);
+}
+
+[data-theme="light"] .feature-item {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(15, 118, 110, 0.22);
+    box-shadow: 0 6px 18px rgba(15, 118, 110, 0.08);
+}
+
+[data-theme="light"] .feature-item:hover {
+    background: rgba(241, 251, 250, 0.95);
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow:
+        0 12px 30px rgba(15, 118, 110, 0.14),
+        0 3px 10px rgba(8, 145, 178, 0.16);
+}
+
+[data-theme="light"] .cards-title {
+    color: #173742;
+    text-shadow: none;
+}
+
+[data-theme="light"] .info-card {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(243, 252, 251, 0.96));
+    border-color: rgba(15, 118, 110, 0.2);
+    box-shadow: 0 10px 28px rgba(15, 118, 110, 0.1);
+}
+
+[data-theme="light"] .info-card:hover {
+    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow:
+        0 16px 36px rgba(15, 118, 110, 0.15),
+        0 5px 16px rgba(8, 145, 178, 0.15);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 1), rgba(236, 249, 248, 1));
+}
+
+[data-theme="light"] .card-icon {
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(8, 145, 178, 0.11));
+}
+
+[data-theme="light"] .card-highlight {
+    filter: none;
+    box-shadow: 0 8px 16px rgba(15, 118, 110, 0.22);
+}
+
+[data-theme="light"] .card-title {
+    background: linear-gradient(135deg, #0f766e 0%, #119e90 50%, #0891b2 100%);
+    background-size: 200% 200%;
+    filter: none;
+}
+
+[data-theme="light"] .info-card:hover .card-title {
+    filter: drop-shadow(0 4px 12px rgba(15, 118, 110, 0.2));
+}
+
+[data-theme="light"] .card-description {
+    color: #4a6772;
+}
+
+[data-theme="light"] .info-card:hover .card-description {
+    color: #35535d;
+}
+
+[data-theme="light"] .hero-glow {
+    opacity: 0.12;
 }
