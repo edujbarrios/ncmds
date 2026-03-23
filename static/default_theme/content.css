@@ -79,15 +79,16 @@
 }
 
 .markdown-body a {
-    color: var(--link-color);
+    color: #00b8b8;
     text-decoration: none;
     border-bottom: 1px solid transparent;
+    font-weight: 700;
     transition: all 0.2s;
 }
 
 .markdown-body a:hover {
-    color: var(--link-hover);
-    border-bottom-color: var(--link-hover);
+    color: #40e0d0;
+    border-bottom-color: #40e0d0;
 }
 
 .markdown-body ul,
@@ -299,11 +300,6 @@
     border-left-color: #0f5d58;
     border-color: rgba(15, 93, 88, 0.36);
     background: linear-gradient(135deg, rgba(15, 93, 88, 0.14), rgba(15, 93, 88, 0.06));
-}
-
-/* Links bold in all themes */
-.markdown-body a {
-    font-weight: bold;
 }
 
 /* Document metadata */

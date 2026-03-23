@@ -49,6 +49,8 @@ TEMPLATES_DIR = config_manager.get('directories.templates', 'templates')
 
 class MarkdownProcessor:
     """Process Markdown files with extensions"""
+
+    _bare_url_pattern = re.compile(r'(?<!\]\()(?<!")\bhttps?://[^\s<>)\]}]+', re.IGNORECASE)
     
     def __init__(self):
         self.md = markdown.Markdown(
@@ -73,6 +75,7 @@ class MarkdownProcessor:
         """Convert markdown to HTML"""
         self.md.reset()
         content = self._convert_github_alerts_to_admonitions(content)
+        content = self._autolink_plain_urls(content)
         html = self.md.convert(content)
         html = self._enhance_shields_badges(html)
         metadata = getattr(self.md, 'Meta', {})
@@ -145,6 +148,56 @@ class MarkdownProcessor:
         if content.endswith('\n'):
             converted_content += '\n'
         return converted_content
+
+    def _autolink_plain_urls(self, content):
+        """Convert bare URLs in Markdown text to clickable links.
+
+        This keeps fenced code blocks and inline code untouched so examples remain literal.
+        """
+        lines = content.splitlines()
+        converted_lines = []
+        in_fenced_code = False
+
+        for line in lines:
+            stripped = line.lstrip()
+            if stripped.startswith('```') or stripped.startswith('~~~'):
+                in_fenced_code = not in_fenced_code
+                converted_lines.append(line)
+                continue
+
+            if in_fenced_code:
+                converted_lines.append(line)
+                continue
+
+            inline_code_parts = re.split(r'(`[^`]*`)', line)
+            for i, part in enumerate(inline_code_parts):
+                # Only transform non-inline-code segments.
+                if i % 2 == 0:
+                    inline_code_parts[i] = self._bare_url_pattern.sub(
+                        self._linkify_url_match,
+                        part
+                    )
+
+            converted_lines.append(''.join(inline_code_parts))
+
+        converted_content = '\n'.join(converted_lines)
+        if content.endswith('\n'):
+            converted_content += '\n'
+        return converted_content
+
+    def _linkify_url_match(self, match):
+        """Build markdown link while keeping trailing punctuation outside the URL."""
+        url = match.group(0)
+        trailing = ''
+
+        while url and url[-1] in '.,;:!?':
+            trailing = url[-1] + trailing
+            url = url[:-1]
+
+        if not url:
+            return match.group(0)
+
+        return f'[{url}]({url}){trailing}'
 
     def _add_css_class(self, tag_html, class_name):
         """Append a CSS class to an HTML tag string without removing existing classes."""
