@@ -48,7 +48,7 @@ def register_ai_chat_routes(app, config_manager):
             }), 500
         
         # Get request data
-        data = request.get_json()
+        data = request.get_json(silent=True)
         
         if not data or 'question' not in data or 'page_content' not in data:
             return jsonify({
@@ -57,6 +57,18 @@ def register_ai_chat_routes(app, config_manager):
         
         question = data['question']
         page_content = data['page_content']
+
+        if not isinstance(question, str) or not question.strip():
+            return jsonify({
+                'error': 'Field "question" must be a non-empty string'
+            }), 400
+
+        if not isinstance(page_content, str):
+            return jsonify({
+                'error': 'Field "page_content" must be a string'
+            }), 400
+
+        question = question.strip()
         selected_model = data.get('model', model)  # Use selected model or default
         
         # Limit page content length

@@ -474,7 +474,14 @@ def search_docs():
     difficulty_filter = request.args.get('difficulty', '').strip().lower()
     owner_filter = request.args.get('owner', '').strip().lower()
     writer_filter = request.args.get('writer', '').strip().lower()
-    limit = int(request.args.get('limit', 10))
+    limit_raw = request.args.get('limit', 10)
+    try:
+        limit = int(limit_raw)
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid limit parameter. It must be an integer.'}), 400
+
+    # Keep result window bounded to avoid abuse and inconsistent behavior.
+    limit = max(1, min(limit, 100))
 
     if not query and not tag_filter and not difficulty_filter and not owner_filter and not writer_filter:
         return jsonify({'results': [], 'query': query})
