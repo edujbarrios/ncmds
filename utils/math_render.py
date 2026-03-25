@@ -1,7 +1,3 @@
-import re
-import base64
-import requests
-
 def render_math_formula(formula: str) -> str:
     """
     Render a LaTeX math formula as an image using an online service.

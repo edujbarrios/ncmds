@@ -73,7 +73,7 @@ class LLMClient:
             try:
                 error_detail = e.response.json()
                 error_msg += f" - {error_detail}"
-            except:
+            except Exception:
                 error_msg += f" - {e.response.text[:200]}"
             
             # Add helpful hints based on status code
@@ -133,9 +133,11 @@ class LLMClient:
         
         # Extract the response text
         if "choices" in response and len(response["choices"]) > 0:
-            return response["choices"][0]["message"]["content"]
-        else:
-            raise Exception("Invalid response format from LLM API")
+            choice = response["choices"][0]
+            message = choice.get("message") if isinstance(choice, dict) else None
+            if isinstance(message, dict) and "content" in message:
+                return message["content"]
+        raise Exception("Invalid response format from LLM API")
     
     def get_available_models(self) -> List[Dict[str, str]]:
         """

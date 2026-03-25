@@ -388,6 +388,8 @@ class DocumentationSite:
     
     def get_document(self, path):
         """Get and process a document"""
+        docs_dir_resolved = self.docs_dir.resolve()
+
         # Handle root and index paths
         if path == '' or path == 'index':
             doc_path = self.docs_dir / '01-index.md'
@@ -397,14 +399,27 @@ class DocumentationSite:
             # Try with numeric prefix first, then without
             doc_path = None
             for md_file in self.docs_dir.rglob('*.md'):
-                if str(md_file.stem).endswith(path) or md_file.stem == path:
+                stem = md_file.stem
+                # Match exact stem or a numeric-prefixed variant (e.g. "01-getting-started"
+                # matches path "getting-started" but not a partial suffix like "started").
+                if stem == path or (
+                    path and
+                    stem.endswith(f'-{path}')
+                    and stem[:-(len(path) + 1)].replace('-', '').isdigit()
+                ):
                     doc_path = md_file
                     break
-            
+
             # Fallback to direct path
             if not doc_path:
                 doc_path = self.docs_dir / f"{path}.md"
-        
+
+        # Prevent path traversal: ensure the resolved path stays inside docs_dir.
+        try:
+            doc_path.resolve().relative_to(docs_dir_resolved)
+        except ValueError:
+            return None
+
         if not doc_path.exists():
             return None
         
@@ -479,7 +494,12 @@ def document(doc_path):
     
     for i, nav_item in enumerate(site.navigation):
         # Check if this is the current document
-        if nav_item['path'] == doc_path or nav_item['path'].endswith(doc_path):
+        nav_path = nav_item['path']
+        if nav_path == doc_path or (
+            doc_path and
+            nav_path.endswith(f'-{doc_path}')
+            and nav_path[:-(len(doc_path) + 1)].replace('-', '').isdigit()
+        ):
             if i > 0:
                 prev_doc = site.navigation[i - 1]
             if i < len(site.navigation) - 1:
