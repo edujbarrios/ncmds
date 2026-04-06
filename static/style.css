@@ -1501,7 +1501,7 @@ body {
     background-color: rgba(16, 185, 129, 0.1);
 }
 
-/* Footer */
+/* Footer - margin-top: 0 because home page footer follows directly after the hero section */
 .site-footer {
     background-color: var(--surface-color);
     border-top: 1px solid var(--border-color);
