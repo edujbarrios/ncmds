@@ -47,6 +47,12 @@ STATIC_DIR = config_manager.get('directories.static', 'static')
 TEMPLATES_DIR = config_manager.get('directories.templates', 'templates')
 
 
+@app.context_processor
+def inject_globals():
+    """Inject global variables into all templates."""
+    return {'now_year': str(datetime.now().year)}
+
+
 class MarkdownProcessor:
     """Process Markdown files with extensions"""
 

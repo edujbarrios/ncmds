@@ -40,6 +40,7 @@ ui_text:
   
   # Footer
   footer_text: "This site was built using <strong>NCMDS</strong> a tool by"
+  footer_copyright: "&copy; {{ year }} {{ author }}. All rights reserved."
   
   # Code blocks
   copy_button: "Copy"
@@ -126,6 +127,32 @@ hero:
     grid_animation: true
     glow_effect: true
     scroll_indicator: true
+
+# Footer Configuration
+footer:
+  # Navigation links shown in the footer (array of link groups)
+  links:
+    - title: "Documentation"
+      items:
+        - text: "Getting Started"
+          url: "/docs/02-getting-started"
+        - text: "Configuration"
+          url: "/docs/03-configuration"
+        - text: "Markdown Guide"
+          url: "/docs/04-markdown-guide"
+    - title: "Resources"
+      items:
+        - text: "Themes"
+          url: "/docs/05-themes"
+        - text: "Deployment"
+          url: "/docs/06-deployment"
+        - text: "Components"
+          url: "/docs/07-components"
+    - title: "Community"
+      items:
+        - text: "GitHub"
+          url: "https://github.com/edujbarrios/ncmds"
+          external: true
 
 # Theme Configuration
 theme:
