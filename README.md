@@ -10,6 +10,8 @@
 ![Unstable Versions](https://img.shields.io/badge/Versions-Unstable-0D8B8B?style=for-the-badge&logo=exclamation&logoColor=white)
 ![AI Integration](https://img.shields.io/badge/AI%20Integration-LLM7.io-0D8B8B?style=for-the-badge&logo=openai&logoColor=white)
 
+[![See it Live](https://img.shields.io/badge/🌐_See_it_Live-ncmds.vercel.app-0D8B8B?style=for-the-badge&logo=vercel&logoColor=white)](https://ncmds.vercel.app)
+
 </div>
 
 <img src="images/mainpage_v4.png" alt="Main View"/>
