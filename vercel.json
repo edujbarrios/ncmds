@@ -1,31 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "_comment": "This file is OPTIONAL - only needed for Vercel deployment. NCMDS runs locally by default with 'python ncmds.py'",
-  "version": 2,
-  "name": "ncmds",
-  "builds": [
-    {
-      "src": "wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "wsgi.py"
-    }
-  ],
   "functions": {
-    "wsgi.py": {
-      "memory": 256,
-      "maxDuration": 10
+    "api/index.py": {
+      "runtime": "python3.11"
     }
   }
 }
