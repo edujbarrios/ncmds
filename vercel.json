@@ -6,11 +6,10 @@
   "builds": [
     {
       "src": "wsgi.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "static/**",
-      "use": "@vercel/static"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
@@ -25,5 +24,11 @@
   ],
   "env": {
     "FLASK_ENV": "production"
+  },
+  "functions": {
+    "wsgi.py": {
+      "memory": 256,
+      "maxDuration": 10
+    }
   }
 }

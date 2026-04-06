@@ -140,6 +140,14 @@ NCMDS includes a powerful export module that allows you to export your documenta
 
 **NEW:** NCMDS now supports publishing your site via **Vercel** and **Netlify** with auto-detection!
 
+### Deploy to Vercel (One-Click)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fedujbarrios%2Fncmds&project-name=my-ncmds-docs&repository-name=my-ncmds-docs)
+
+### Deploy to Netlify (One-Click)
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/edujbarrios/ncmds)
+
 See the [Deployment Guide](docs/06-deployment.md) for complete instructions on deploying to production.
 
 ## 🔎 Internal Search
