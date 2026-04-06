@@ -53,6 +53,10 @@ The fastest way to deploy NCMDS to production is using Vercel or Netlify. Both p
 
 ### Deploy to Vercel
 
+**One-Click Deploy:**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fedujbarrios%2Fncmds&project-name=my-ncmds-docs&repository-name=my-ncmds-docs)
+
 **Step-by-Step:**
 
 1. **Push to GitHub**
@@ -94,11 +98,10 @@ The fastest way to deploy NCMDS to production is using Vercel or Netlify. Both p
   "builds": [
     {
       "src": "wsgi.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "static/**",
-      "use": "@vercel/static"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
@@ -110,11 +113,21 @@ The fastest way to deploy NCMDS to production is using Vercel or Netlify. Both p
       "src": "/(.*)",
       "dest": "wsgi.py"
     }
-  ]
+  ],
+  "functions": {
+    "wsgi.py": {
+      "memory": 256,
+      "maxDuration": 10
+    }
+  }
 }
 ```
 
 ### Deploy to Netlify
+
+**One-Click Deploy:**
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/edujbarrios/ncmds)
 
 **Step-by-Step:**
 
