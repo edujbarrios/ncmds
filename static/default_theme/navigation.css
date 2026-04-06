@@ -107,7 +107,7 @@
 .site-footer {
     background-color: var(--surface-color);
     border-top: 1px solid var(--border-color);
-    padding: 2rem;
+    padding: 3rem 2rem 1.5rem;
     text-align: center;
     margin-top: 4rem;
 }
@@ -117,21 +117,84 @@
     margin: 0 auto;
 }
 
-.footer-content p {
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    text-align: left;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.footer-link-group {
+    min-width: 140px;
+}
+
+.footer-link-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+}
+
+.footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link-list li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-link-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.footer-link-list a:hover {
+    color: var(--link-color);
+}
+
+.footer-link-list a svg {
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+}
+
+.footer-branding {
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
 }
 
-.footer-content p a {
+.footer-branding a {
     color: var(--link-color);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease;
 }
 
-.footer-content p a:hover {
+.footer-branding a:hover {
     color: var(--link-hover);
+}
+
+.footer-copyright {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 0;
 }
 
 .footer-meta {

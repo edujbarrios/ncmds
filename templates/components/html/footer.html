@@ -1,6 +1,27 @@
 <!-- Footer -->
 <footer class="site-footer">
     <div class="footer-content">
-        <p>{{ config.ui_text.footer_text|safe }} <a href="https://github.com/{{ config.author }}" target="_blank" rel="noopener noreferrer">{{ config.author }}</a></p>
+        {% if config.footer is defined and config.footer.links is defined %}
+        <div class="footer-links">
+            {% for group in config.footer.links %}
+            <div class="footer-link-group">
+                <h4 class="footer-link-title">{{ group.title }}</h4>
+                <ul class="footer-link-list">
+                    {% for item in group['items'] %}
+                    <li>
+                        <a href="{{ item.url }}"{% if item.external is defined and item.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                            {{ item.text }}{% if item.external is defined and item.external %} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>{% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="footer-bottom">
+            <p class="footer-branding">{{ config.ui_text.footer_text|safe }} <a href="https://github.com/{{ config.author }}" target="_blank" rel="noopener noreferrer">{{ config.author }}</a></p>
+            <p class="footer-copyright">{{ config.ui_text.footer_copyright | replace('{{ year }}', now_year | default('2026')) | replace('{{ author }}', config.author) | safe }}</p>
+        </div>
     </div>
 </footer>
