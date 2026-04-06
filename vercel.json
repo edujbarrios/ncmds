@@ -22,9 +22,6 @@
       "dest": "wsgi.py"
     }
   ],
-  "env": {
-    "FLASK_ENV": "production"
-  },
   "functions": {
     "wsgi.py": {
       "memory": 256,
