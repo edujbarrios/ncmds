@@ -6,7 +6,7 @@
     <meta name="description" content="{{ config.description }}">
     <meta name="author" content="{{ config.author }}">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/main.css">
     <style>
         :root {
             /* Dark theme (default) */
@@ -219,10 +219,10 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="site-header" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background-color: var(--surface-color); border-bottom: 1px solid var(--border-color); z-index: 1000; box-shadow: var(--header-shadow);">
-        <div class="header-container" style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;">
+    <header class="site-header">
+        <div class="header-container">
             <div class="logo">
-                <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text-color); font-size: 1.25rem; font-weight: 600;">
+                <a href="/">
                     {% if config.logo and config.logo.type == 'image' %}
                     <img src="{{ config.logo.image_path }}" alt="{{ config.logo.image_alt }}" width="{{ config.logo.width }}" height="{{ config.logo.height }}" style="border-radius: 6px; object-fit: contain;">
                     {% else %}
@@ -241,9 +241,9 @@
                     <span>{{ config.site_name }}</span>
                 </a>
             </div>
-            <nav class="header-nav" style="display: flex; align-items: center; gap: 0.5rem;">
+            <nav class="header-nav">
                 {% if config.theme.toggle_enabled %}
-                <button class="theme-toggle" id="themeToggle" type="button" aria-label="{{ config.ui_text.theme_toggle_dark }}" aria-pressed="false" title="{{ config.ui_text.theme_toggle_dark }}" style="background: none; border: 2px solid var(--border-color); color: var(--text-color); cursor: pointer; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; touch-action: manipulation; transition: all 0.3s ease;">
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="{{ config.ui_text.theme_toggle_dark }}" aria-pressed="false" title="{{ config.ui_text.theme_toggle_dark }}">
                     <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="5"/>
                         <line x1="12" y1="1" x2="12" y2="3"/>

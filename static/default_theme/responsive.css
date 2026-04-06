@@ -52,6 +52,12 @@
         transform: translateX(-100%);
         left: 0;
     }
+
+    /* Ensure .active always overrides .hidden on mobile */
+    .sidebar.hidden.active {
+        transform: translateX(0);
+        left: 0;
+    }
     
     /* Main Content */
     .main-content {
@@ -77,6 +83,13 @@
     
     .markdown-body h3 {
         font-size: 1.35rem;
+    }
+
+    /* Table overflow handling */
+    .markdown-body table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     /* Hero Responsive */
