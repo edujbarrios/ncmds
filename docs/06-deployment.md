@@ -91,13 +91,21 @@ The fastest way to deploy NCMDS to production is using Vercel. The platform offe
 - Preview deployments for pull requests
 
 **Configuration File:** `vercel.json`
+
+NCMDS uses Vercel's zero-configuration deployment with the `api/` folder structure. The `vercel.json` file can be empty `{}` or customized:
+
+```json
+{}
+```
+
+For custom configuration, you can specify:
 ```json
 {
   "version": 2,
   "name": "ncmds",
   "builds": [
     {
-      "src": "wsgi.py",
+      "src": "api/index.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb"
@@ -111,11 +119,11 @@ The fastest way to deploy NCMDS to production is using Vercel. The platform offe
     },
     {
       "src": "/(.*)",
-      "dest": "wsgi.py"
+      "dest": "api/index.py"
     }
   ],
   "functions": {
-    "wsgi.py": {
+    "api/index.py": {
       "memory": 256,
       "maxDuration": 10
     }
@@ -127,19 +135,24 @@ The fastest way to deploy NCMDS to production is using Vercel. The platform offe
 
 Vercel uses these files (already included in NCMDS):
 
-**`wsgi.py`** - WSGI entry point:
+**`api/index.py`** - Entry point for Vercel:
 ```python
 #!/usr/bin/env python3
 import os
 import sys
-sys.path.insert(0, os.path.dirname(__file__))
+
+# Add project root to path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+# Import Flask app
 from ncmds import app
 
-os.makedirs('docs', exist_ok=True)
-os.makedirs('static', exist_ok=True)
-os.makedirs('templates', exist_ok=True)
-
+# Export for Vercel + WSGI
 application = app
+
+if __name__ == "__main__":
+    app.run()
 ```
 
 **`runtime.txt`** - Python version:

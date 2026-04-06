@@ -127,25 +127,28 @@ Now that you've seen the basics, explore these guides:
 - **[Deployment →](06-deployment.md)** - Deploy to production (Docker, Heroku, Railway)
 - **[Export Documentation →](03-configuration.md#export-settings)** - Generate PDFs and QMD files
 
-## 🎨 Available Themes (placeholder to show table creation)
+## 🎨 Theme Customization
 
-Choose from seven beautiful themes or create your own:
+NCMDS features a dark/light theme system with full color customization:
 
-| Theme | Description | Preview Color |
-|-------|-------------|---------------|
-| **Turquoise** | Professional cyan/turquoise with vibrant accents (default) | `#40E0D0` |
-| **Ocean** | Calm blue oceanic tones | `#2563eb` |
-| **Forest** | Natural green woodland colors | `#10b981` |
-| **Sunset** | Warm orange and red hues | `#f59e0b` |
-| **Purple Dream** | Deep violet mystic tones | `#7c3aed` |
-| **Cyberpunk** | Futuristic neon colors | `#ec4899` |
-| **Monochrome** | Classic black and white | `#ffffff` |
+| Mode | Description | Default Primary Color |
+|------|-------------|----------------------|
+| **Dark** | Professional dark theme optimized for comfortable reading | `#40E0D0` (Turquoise) |
+| **Light** | Clean light theme for bright environments | `#0f766e` (Teal) |
 
-Change themes in `config/config.yaml`:
+Customize colors in `config/config.yaml`:
 
 ```yaml
-theme_name: "turquoise"  # or ocean, forest, sunset, purple, cyberpunk, monochrome
+theme:
+  default: "dark"
+  toggle_enabled: true
+  dark:
+    primary_color: "#40E0D0"
+    background_color: "#1b1b1d"
+    # ... more color options
 ```
+
+See the [Theme Guide](05-themes.md) for full customization options.
 
 ## How NCMDS Works
 

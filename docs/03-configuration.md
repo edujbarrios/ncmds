@@ -69,60 +69,70 @@ hero:
 
 ### Theme Configuration
 
-Choose from seven predefined themes or create your own custom color scheme:
+NCMDS supports both dark and light themes with full color customization:
 
 ```yaml
-# Theme selection
-theme_name: "turquoise"  
-# Options: turquoise, ocean, forest, sunset, purple, cyberpunk, monochrome
+theme:
+  # Default theme on load (dark or light)
+  default: "dark"
+  
+  # Enable theme toggle button in header
+  toggle_enabled: true
+  
+  # Dark theme colors
+  dark:
+    primary_color: "#40E0D0"
+    secondary_color: "#66E6DD"
+    background_color: "#1b1b1d"
+    surface_color: "#242526"
+    text_color: "#e3e3e3"
+    text_secondary: "#b4b4b4"
+    accent_color: "#40E0D0"
+    border_color: "#3a3a3c"
+    code_background: "#1e1e1e"
+    link_color: "#66E6DD"
+    link_hover: "#8CF0EB"
+  
+  # Light theme colors
+  light:
+    primary_color: "#0f766e"
+    secondary_color: "#14b8a6"
+    background_color: "#f6fbfb"
+    surface_color: "#ffffff"
+    text_color: "#0f2329"
+    text_secondary: "#43616a"
+    accent_color: "#0891b2"
+    border_color: "#cfe4e2"
+    code_background: "#ecf7f6"
+    link_color: "#0f766e"
+    link_hover: "#0b5f59"
 ```
 
-**Available Themes:**
+**Theme Options:**
+- `default`: Initial theme shown to users (`"dark"` or `"light"`)
+- `toggle_enabled`: Show/hide the theme toggle button in the header
+- `dark` / `light`: Color definitions for each theme mode
 
-| Theme | Primary Color | Best For |
-|-------|--------------|----------|
-| `turquoise` | #40E0D0 | Professional tech docs (default) |
-| `ocean` | #2563eb | Calm, corporate documentation |
-| `forest` | #10b981 | Natural, environmental projects |
-| `sunset` | #f59e0b | Creative, warm tone docs |
-| `purple` | #7c3aed | Modern, sleek documentation |
-| `cyberpunk` | #ec4899 | Futuristic, gaming projects |
-| `monochrome` | #ffffff | Classic, timeless look |
+**Color Properties:**
 
-### Custom Theme Colors
-
-Create your own color scheme by setting `theme_name: "custom"`:
-
-```yaml
-theme_name: "custom"
-
-custom_theme:
-  # Primary brand colors
-  primary_color: "#2563eb"      # Main accent color
-  secondary_color: "#7c3aed"    # Secondary accent
-  accent_color: "#22d3ee"       # Highlights and CTAs
-  
-  # Background colors
-  background_color: "#0f172a"   # Page background
-  surface_color: "#1e293b"      # Cards, modals, panels
-  
-  # Text colors
-  text_color: "#e2e8f0"         # Primary text
-  text_secondary: "#94a3b8"     # Secondary text
-  
-  # UI element colors
-  border_color: "#334155"       # Borders and dividers
-  code_background: "#1e293b"    # Code block background
-  
-  # Link colors
-  link_color: "#60a5fa"         # Unvisited links
-  link_hover: "#93c5fd"         # Link hover state
-```
+| Property | Description |
+|----------|-------------|
+| `primary_color` | Main brand/accent color |
+| `secondary_color` | Secondary accent for hover states |
+| `background_color` | Main page background |
+| `surface_color` | Cards, sidebar, elevated surfaces |
+| `text_color` | Primary text color |
+| `text_secondary` | Muted text for descriptions |
+| `accent_color` | Additional accent for UI elements |
+| `border_color` | Borders and dividers |
+| `code_background` | Background for code blocks |
+| `link_color` | Hyperlink color |
+| `link_hover` | Hyperlink hover color |
 
 **Color Tips:**
 - Use hex color codes (`#RRGGBB`)
 - Keep good contrast ratios (text vs background)
-- Test your theme in different lighting conditions
+- Test your theme in both dark and light modes
 - Use online tools like [Coolors](https://coolors.co) for palette generation
 
 ### AI Chat Assistant
@@ -131,50 +141,51 @@ Enable AI-powered documentation assistance using LLM7.io or compatible APIs:
 
 ```yaml
 ai_chat:
+  # Enable/disable the AI chat feature
   enabled: true
-  provider: "LLM7.io"
+  
+  # LLM7.io API Configuration
   api_url: "https://api.llm7.io/v1/chat/completions"
-  api_key: "your-api-key-here"  # Get from LLM7.io
-  default_model: "gpt-4o-mini"
+  api_key: "Unused"  # Add your LLM7.io API key (use "Unused" for free tier)
+  model: "gpt-4o-mini"  # Model to use
+  provider: "LLM7.io"  # Provider name to display in chat
   
   # UI Configuration
-  position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
-  greeting: "Hi! I can help you understand this documentation. Ask me anything!"
-  
-  # Available models (user can switch between these)
-  available_models:
-    - id: "gpt-4o-mini"
-      name: "GPT-4o Mini"
-      provider: "OpenAI"
-    - id: "gpt-4o"
-      name: "GPT-4o"
-      provider: "OpenAI"
-    - id: "claude-3-5-sonnet-20241022"
-      name: "Claude 3.5 Sonnet"
-      provider: "Anthropic"
-    - id: "claude-3-5-haiku-20241022"
-      name: "Claude 3.5 Haiku"
-      provider: "Anthropic"
-  
-  # Advanced options
-  max_tokens: 2000
-  temperature: 0.7
-  context_size: 8000  # How much page content to send
+  ui:
+    button_text: "Ask AI"
+    window_title: "Explain with AI"
+    placeholder: "Ask a question about this page..."
+    position: "bottom-right"  # bottom-right, bottom-left, top-right, top-left
+    welcome_message: "Hi! I can help you understand this page. Ask me anything about the content."
+    
+  # Behavior Configuration
+  behavior:
+    max_tokens: 1000
+    temperature: 0.7
+    context_max_length: 8000  # Maximum characters from page content to send as context
+    system_prompt: "You are a helpful documentation assistant. Answer questions based on the provided documentation content."
 ```
 
 **AI Chat Options Explained:**
 
 - `enabled`: Turn AI chat on/off without removing configuration
-- `provider`: Display name for the AI service
 - `api_url`: API endpoint URL (LLM7.io uses OpenAI-compatible format)
-- `api_key`: **Important!** Get your API key from [LLM7.io](https://llm7.io)
-- `default_model`: Model used on first load (user can switch)
-- `position`: Where chat widget appears on screen
-- `greeting`: Initial message shown to users
-- `available_models`: List of models users can switch between
+- `api_key`: Your LLM7.io API key (use "Unused" for free tier access)
+- `model`: The AI model to use (e.g., "gpt-4o-mini")
+- `provider`: Display name for the AI service shown in the chat UI
+
+**UI Options:**
+- `button_text`: Text shown on the AI chat button
+- `window_title`: Title of the chat window
+- `placeholder`: Placeholder text in the input field
+- `position`: Where chat widget appears (`bottom-right`, `bottom-left`, `top-right`, `top-left`)
+- `welcome_message`: Initial greeting shown to users
+
+**Behavior Options:**
 - `max_tokens`: Maximum response length
-- `temperature`: Creativity (0.0 = factual, 1.0 = creative)
-- `context_size`: Characters of page content sent with each question
+- `temperature`: Creativity level (0.0 = factual, 1.0 = creative)
+- `context_max_length`: Characters of page content sent with each question
+- `system_prompt`: Instructions for the AI assistant
 
 **Getting an API Key:**
 
@@ -184,6 +195,8 @@ ai_chat:
 4. Generate a new key
 5. Copy and paste into `config.yaml`
 
+**Note:** LLM7.io offers a free tier - use `api_key: "Unused"` to access it.
+
 **Security Note:** Never commit your API key to public repositories! Use environment variables for production:
 
 ```yaml
@@ -192,63 +205,39 @@ api_key: "${NCMDS_AI_API_KEY}"  # Reads from environment variable
 
 ### Export Settings
 
-Configure PDF and QMD export functionality:
+Configure QMD (Quarto Markdown) export functionality:
 
 ```yaml
 export:
-  # Global export settings
-  show_on_all_pages: true  # Show export buttons on every page
+  # Show export button on all documentation pages
+  show_on_all_pages: true
   
-  # PDF Export Configuration
-  pdf:
-    enabled: true
-    button_text: "Export to PDF"
-    project_name: ""  # Leave empty to use site_name
-    show_all_option: true  # Enable "Export All Docs" button
-    
-    # PDF styling
-    paper_size: "A4"  # Options: A4, Letter, Legal
-    margins: "2cm"    # CSS margin value
-    
-    # Cover page
-    cover_enabled: true
-    cover_background: "#1e293b"
-    cover_text_color: "#e2e8f0"
-    
-    # Headers and footers
-    header_enabled: true
-    footer_enabled: true
-    show_page_numbers: true
-  
-  # QMD Export Configuration
+  # QMD (Quarto Markdown) Export Settings
   qmd:
     enabled: true
-    button_text: "Export to QMD"
+    button_text: "Export Documentation"
+    # Override project name for QMD exports (optional - uses site_name if not set)
     project_name: ""  # Leave empty to use site_name
-    show_all_option: true  # Enable "Export All Docs" button
-    
-    # Quarto render settings
+    # Quarto output format
     default_format: "pdf"  # Options: pdf, html, docx
-    number_sections: true
-    highlight_style: "pygments"
-    toc_enabled: true
-    toc_depth: 3
 ```
 
 **Export Options Explained:**
 
-**PDF Settings:**
-- `paper_size`: Standard paper sizes for printing
-- `margins`: Space around content (use CSS units: cm, in, px)
-- `cover_enabled`: Add a professional cover page
-- `show_page_numbers`: Add page numbers to footer
+- `show_on_all_pages`: Show export buttons on every documentation page
+- `qmd.enabled`: Enable/disable the QMD export feature
+- `qmd.button_text`: Text displayed on the export button
+- `qmd.project_name`: Custom project name for exports (falls back to `site_name`)
+- `qmd.default_format`: Default Quarto render format (`pdf`, `html`, or `docx`)
 
-**QMD Settings:**
-- `default_format`: What Quarto renders to by default
-- `number_sections`: Auto-number headings (1.1, 1.2, etc.)
-- `highlight_style`: Code syntax highlighting theme
-- `toc_enabled`: Include table of contents in render
-- `toc_depth`: How many heading levels in TOC (1-6)
+**Using Exported QMD Files:**
+
+After exporting, render with Quarto:
+```bash
+quarto render document.qmd --to pdf
+quarto render document.qmd --to html
+quarto render document.qmd --to docx
+```
 
 ### Server Configuration
 
@@ -352,7 +341,9 @@ For simple documentation with defaults:
 ```yaml
 site_name: "My Docs"
 author: "Your Name"
-theme_name: "ocean"
+
+theme:
+  default: "dark"
 
 server:
   port: 5000
@@ -372,70 +363,81 @@ With AI chat, export, and custom theme:
 site_name: "TechCorp Documentation"
 author: "TechCorp Engineering"
 description: "Complete technical documentation for TechCorp products"
-version: "2.1.0"
 
 # Hero Section
 hero:
   enabled: true
   project_name: "TechCorp Platform"
-  company: "TechCorp"
+  badge:
+    enabled: true
+    text: "TechCorp"
+    show_icon: true
   tagline: "Enterprise Documentation Portal"
   description: "Comprehensive guides, tutorials, and API references"
-  show_buttons: true
   buttons:
     - text: "Quick Start Guide"
-      url: "02-quickstart.md"
-      primary: true
+      url: "/docs/02-quickstart"
+      icon: "book"
+      style: "primary"
     - text: "API Reference"
-      url: "10-api-reference.md"
-      primary: false
+      url: "/docs/10-api-reference"
+      icon: "code"
+      style: "secondary"
 
 # Theme
-theme_name: "custom"
-custom_theme:
-  primary_color: "#0066cc"
-  secondary_color: "#0052a3"
-  background_color: "#0a0e27"
-  surface_color: "#151935"
-  text_color: "#e6e9f0"
-  text_secondary: "#9ca3af"
-  accent_color: "#00d4ff"
-  border_color: "#2d3748"
-  code_background: "#1a1f3a"
-  link_color: "#00b8d4"
-  link_hover: "#00e5ff"
+theme:
+  default: "dark"
+  toggle_enabled: true
+  dark:
+    primary_color: "#0066cc"
+    secondary_color: "#0052a3"
+    background_color: "#0a0e27"
+    surface_color: "#151935"
+    text_color: "#e6e9f0"
+    text_secondary: "#9ca3af"
+    accent_color: "#00d4ff"
+    border_color: "#2d3748"
+    code_background: "#1a1f3a"
+    link_color: "#00b8d4"
+    link_hover: "#00e5ff"
+  light:
+    primary_color: "#0066cc"
+    secondary_color: "#0052a3"
+    background_color: "#f8fafc"
+    surface_color: "#ffffff"
+    text_color: "#1a202c"
+    text_secondary: "#4a5568"
+    accent_color: "#00b8d4"
+    border_color: "#e2e8f0"
+    code_background: "#f1f5f9"
+    link_color: "#0066cc"
+    link_hover: "#004499"
 
 # AI Chat
 ai_chat:
   enabled: true
-  provider: "LLM7.io"
   api_url: "https://api.llm7.io/v1/chat/completions"
   api_key: "${TECHCORP_AI_KEY}"
-  default_model: "claude-3-5-sonnet-20241022"
-  position: "bottom-right"
-  greeting: "Hello! I'm your TechCorp documentation assistant. How can I help?"
-  available_models:
-    - id: "claude-3-5-sonnet-20241022"
-      name: "Claude 3.5 Sonnet"
-      provider: "Anthropic"
-    - id: "gpt-4o"
-      name: "GPT-4o"
-      provider: "OpenAI"
+  model: "gpt-4o-mini"
+  provider: "LLM7.io"
+  ui:
+    button_text: "Ask AI"
+    window_title: "Documentation Assistant"
+    placeholder: "Ask a question about this page..."
+    position: "bottom-right"
+    welcome_message: "Hello! I'm your TechCorp documentation assistant. How can I help?"
+  behavior:
+    max_tokens: 1000
+    temperature: 0.7
+    context_max_length: 8000
 
 # Export
 export:
   show_on_all_pages: true
-  pdf:
-    enabled: true
-    project_name: "TechCorp Platform Documentation"
-    paper_size: "Letter"
-    margins: "1in"
-    cover_enabled: true
   qmd:
     enabled: true
     project_name: "TechCorp Platform Documentation"
     default_format: "pdf"
-    number_sections: true
 
 # Server
 server:
@@ -454,7 +456,6 @@ features:
   table_of_contents: true
   syntax_highlighting: true
   auto_reload: false
-  mobile_optimization: true
 ```
 
 ## 🔄 Applying Configuration Changes
