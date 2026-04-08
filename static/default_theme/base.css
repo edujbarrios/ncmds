@@ -21,6 +21,7 @@ html {
     --surface-color: #181818;
     --background-color: #0c1418;
     --text-color: #d8f5f7;
+    --text-secondary: #9aa5a8;
     --link-color: #00E5D0;
     --link-hover: #00C8C8;
     transition: background-color 0.3s ease;

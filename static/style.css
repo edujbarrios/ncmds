@@ -264,28 +264,28 @@ body {
     background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.08),
-        var(--primary-color)10,
+        color-mix(in srgb, var(--primary-color) 10%, transparent),
         rgba(255, 255, 255, 0.08)
     );
     border-color: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-color)30;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 20px color-mix(in srgb, var(--primary-color) 30%, transparent);
 }
 
 .hero-icon {
     color: var(--primary-color);
     position: relative;
     z-index: 1;
-    filter: drop-shadow(0 0 8px var(--primary-color)50);
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-color) 50%, transparent));
     animation: iconGlow 2s ease-in-out infinite alternate;
 }
 
 @keyframes iconGlow {
     0% {
-        filter: drop-shadow(0 0 8px var(--primary-color)50);
+        filter: drop-shadow(0 0 8px color-mix(in srgb, var(--primary-color) 50%, transparent));
     }
     100% {
-        filter: drop-shadow(0 0 12px var(--accent-color)70);
+        filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent-color) 70%, transparent));
     }
 }
 
@@ -354,10 +354,10 @@ body {
 
 @keyframes titleGlow {
     0% {
-        filter: brightness(1.2) contrast(1.15) drop-shadow(0 0 20px var(--primary-color)60);
+        filter: brightness(1.2) contrast(1.15) drop-shadow(0 0 20px color-mix(in srgb, var(--primary-color) 60%, transparent));
     }
     100% {
-        filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 40px var(--primary-color)80);
+        filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 40px color-mix(in srgb, var(--primary-color) 80%, transparent));
     }
 }
 
@@ -371,15 +371,15 @@ body {
     height: 4px;
     background: linear-gradient(90deg, 
         transparent, 
-        var(--accent-color)40, 
+        color-mix(in srgb, var(--accent-color) 40%, transparent), 
         var(--primary-color), 
-        var(--accent-color)40, 
+        color-mix(in srgb, var(--accent-color) 40%, transparent), 
         transparent);
     background-size: 200% 100%;
     border-radius: 2px;
     opacity: 0.6;
     animation: lineShine 3s linear infinite;
-    box-shadow: 0 0 10px var(--primary-color)80;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--primary-color) 80%, transparent);
 }
 
 @keyframes lineShine {
@@ -432,8 +432,8 @@ body {
     height: 150%;
     background: radial-gradient(
         ellipse at center,
-        var(--primary-color)08 0%,
-        var(--accent-color)05 40%,
+        color-mix(in srgb, var(--primary-color) 8%, transparent) 0%,
+        color-mix(in srgb, var(--accent-color) 5%, transparent) 40%,
         transparent 70%
     );
     z-index: -1;
@@ -646,7 +646,7 @@ body {
     transform: translateY(-6px) scale(1.02);
     box-shadow: 
         0 10px 30px rgba(0, 0, 0, 0.3),
-        0 0 20px var(--primary-color)20;
+        0 0 20px color-mix(in srgb, var(--primary-color) 20%, transparent);
 }
 
 .feature-item svg {
@@ -654,7 +654,7 @@ body {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 1;
-    filter: drop-shadow(0 0 8px var(--accent-color)40);
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-color) 40%, transparent));
 }
 
 .feature-item:hover svg {
@@ -729,7 +729,7 @@ body {
 .info-card-link:focus-visible .info-card {
     border-color: var(--accent-color);
     box-shadow:
-        0 0 0 3px var(--accent-color)40,
+        0 0 0 3px color-mix(in srgb, var(--accent-color) 40%, transparent),
         0 12px 40px rgba(0, 0, 0, 0.3);
     transform: translateY(-4px);
 }
@@ -786,7 +786,7 @@ body {
     border-color: var(--primary-color);
     box-shadow: 
         0 12px 40px rgba(0, 0, 0, 0.3),
-        0 0 30px var(--primary-color)30;
+        0 0 30px color-mix(in srgb, var(--primary-color) 30%, transparent);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
 }
 
@@ -796,7 +796,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--primary-color)20, var(--accent-color)20);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 20%, transparent), color-mix(in srgb, var(--accent-color) 20%, transparent));
     border-radius: 12px;
     margin-bottom: 1.5rem;
     position: relative;
@@ -805,7 +805,7 @@ body {
 }
 
 .info-card:hover .card-icon {
-    background: linear-gradient(135deg, var(--primary-color)40, var(--accent-color)40);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 40%, transparent), color-mix(in srgb, var(--accent-color) 40%, transparent));
     transform: scale(1.1) rotate(-5deg);
 }
 
