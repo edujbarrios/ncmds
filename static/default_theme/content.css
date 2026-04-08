@@ -106,7 +106,6 @@
 /* Blockquotes */
 .markdown-body blockquote {
     border-left: 4px solid var(--primary-color);
-    padding-left: 1.5rem;
     margin: 1.5rem 0;
     color: var(--text-secondary);
     font-style: italic;
