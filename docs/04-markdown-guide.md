@@ -194,8 +194,25 @@ NCMDS supports admonitions for highlighting important information:
 
 GitHub-style alert syntax is also supported:
 
+```markdown
+> [!NOTE]
+> This is a note.
+
+> [!TIP]
+> Helpful advice.
+
 > [!IMPORTANT]
-> Use Python 3.10+ and install dependencies in a virtual environment for the best experience.
+> Critical information.
+
+> [!WARNING]
+> Be careful about this.
+
+> [!CAUTION]
+> Potential negative consequences.
+```
+
+> [!IMPORTANT]
+> Use Python 3.8+ and install dependencies in a virtual environment for the best experience.
 
 ## 📋 Document Metadata
 
@@ -226,6 +243,21 @@ Extended metadata behavior:
 - `owner`: renders document owner and supports search filtering (`owner:backend-team`)
 - `writer`: renders writer chip and supports search filtering (`writer:alice`)
 - `writter`: alias supported for compatibility with legacy/typo metadata
+
+**Note:** Each document also automatically displays its file modification date ("Last updated") in the page header.
+
+## 🛡️ Shields.io Badges
+
+NCMDS automatically detects shields.io badge images and styles them as a horizontal badge row:
+
+```markdown
+![Status](https://img.shields.io/badge/Status-Active-green)
+![Version](https://img.shields.io/badge/Version-4.0-blue)
+```
+
+## 🔗 Auto-Linked URLs
+
+Plain URLs in your Markdown text are automatically converted to clickable links. URLs inside code blocks and inline code are left untouched.
 
 ## 🎨 HTML Support
 

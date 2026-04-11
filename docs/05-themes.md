@@ -5,9 +5,9 @@ tags:
   - customization
 ---
 
-# Theme Creation Guide
+# Theme Configuration Guide
 
-NCMDS features a carefully crafted dark/light theme system inspired by the color palette of https://edujbarrios.com. The default theme uses a professional turquoise accent color optimized for comfortable reading and coding.
+NCMDS features a dark/light theme system with full color customization. The default theme uses a professional turquoise accent color optimized for comfortable reading and coding. All colors are defined inline in `config/config.yaml` — no separate theme files needed.
 
 ## 🎨 Theme Configuration
 
@@ -88,3 +88,21 @@ theme:
 
 - [Configuration Guide](03-configuration.md) - Full configuration reference
 - [Template Components](07-components.md) - Customize HTML/CSS structure
+
+## 🎨 CSS Architecture
+
+Theme colors are applied as CSS custom properties (variables) in the document head. The CSS is organized in a modular architecture under `static/default_theme/`:
+
+- `base.css` - Reset & typography
+- `header.css` - Header component styles
+- `hero.css` - Hero section styles
+- `sidebar.css` - Sidebar styles
+- `toc.css` - Table of contents styles
+- `content.css` - Main content & markdown
+- `code.css` - Code blocks & syntax highlighting
+- `navigation.css` - Navigation & footer
+- `search.css` - Search functionality styles
+- `responsive.css` - Media queries for mobile
+- `utilities.css` - Utility classes
+
+All modules are imported via `static/main.css`. To customize styles, edit the relevant module file.

@@ -386,7 +386,7 @@ web: gunicorn ncmds:app --bind 0.0.0.0:$PORT --workers 4
 **2. Create `runtime.txt`:**
 
 ```
-python-3.11.7
+python-3.11.0
 ```
 
 **3. Update `requirements.txt`:**
@@ -396,8 +396,11 @@ Ensure gunicorn is listed:
 Flask==3.0.0
 Markdown==3.5.1
 PyYAML==6.0.1
-weasyprint==60.1
+Pygments==2.17.2
+weasyprint==61.2
+requests==2.31.0
 gunicorn==21.2.0
+serverless-wsgi==3.0.3
 ```
 
 #### Deploy

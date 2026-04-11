@@ -26,14 +26,50 @@ Basic information about your documentation site:
 site_name: "NCMDS Documentation"
 author: "edujbarrios"
 description: "Easy documentation site builder with Markdown - no code required"
-version: "1.0.0"  # Optional: your project version
 ```
 
 **Options:**
 - `site_name`: Appears in page titles and navigation header
 - `author`: Creator name (appears in footer and meta tags)
 - `description`: Site description for SEO
-- `version`: Optional version number displayed in UI
+
+### HTML & Meta Configuration
+
+Configure HTML document attributes:
+
+```yaml
+html:
+  language: "en"       # HTML lang attribute
+  charset: "UTF-8"
+  viewport: "width=device-width, initial-scale=1.0"
+```
+
+### Syntax Highlighting Configuration
+
+Configure the syntax highlighting themes for dark and light modes:
+
+```yaml
+highlighting:
+  theme_dark: "atom-one-dark"     # Highlight.js theme for dark mode
+  theme_light: "atom-one-light"   # Highlight.js theme for light mode
+  cdn_version: "11.9.0"           # Highlight.js CDN version
+```
+
+See [cdnjs.com/libraries/highlight.js](https://cdnjs.com/libraries/highlight.js) for available themes.
+
+### Logo Configuration
+
+Customize the site logo displayed in the header:
+
+```yaml
+logo:
+  type: "image"                          # "text" (SVG with text) or "image" (custom image)
+  text: "MD"                             # Text for SVG logo (used when type is "text")
+  image_path: "/static/images/logo.png"  # Path to logo image (used when type is "image")
+  image_alt: "NCMDS Logo"               # Alt text for image logo
+  width: 32                              # Logo width in pixels
+  height: 32                             # Logo height in pixels
+```
 
 ### Hero Section Configuration
 
@@ -43,27 +79,63 @@ The hero section is the large banner on your homepage:
 hero:
   enabled: true
   project_name: "NCMDS"
-  company: "edujbarrios"
+  
+  # Badge configuration (appears above title)
+  badge:
+    enabled: true
+    text: "edujbarrios"
+    show_icon: true
+  
   tagline: "No Code Markdown Documentation Sites"
   description: "Create beautiful documentation sites with just Markdown - no coding required"
-  show_buttons: true
+  
+  # Call to action buttons
   buttons:
-    - text: "Get Started"
-      url: "02-getting-started.md"
-      primary: true
-    - text: "View on GitHub"
-      url: "https://github.com/edujbarrios/ncmds"
-      primary: false
+    - text: "View Documentation"
+      url: "/docs/01-index"
+      icon: "book"       # book, github, download, etc.
+      style: "primary"   # primary, secondary, outline
+  
+  # Feature highlights (4 items max for best display)
+  features:
+    - icon: "zap"        # zap, layers, file, grid, code, check, palette, monitor
+      text: "Zero Config"
+    - icon: "code"
+      text: "Markdown"
+    - icon: "grid"
+      text: "Responsive"
+    - icon: "palette"
+      text: "Dark Mode"
+  
+  # Info Cards (optional)
+  cards:
+    enabled: true
+    title: "Why Choose NCMDS?"
+    list:
+      - title: "Fast Setup"
+        description: "Get your documentation site running in under 5 minutes"
+        icon: "rocket"    # rocket, star, heart, shield, sparkles, trending
+        highlight: "5 min"
+        url: "/docs/02-getting-started"
+  
+  # Visual effects
+  effects:
+    particles: true
+    grid_animation: true
+    glow_effect: true
+    scroll_indicator: true
 ```
 
 **Hero Options:**
 - `enabled`: `true` or `false` - Show/hide entire hero section
 - `project_name`: Large title displayed in hero
-- `company`: Company badge/label
+- `badge`: Company/author badge above the title
 - `tagline`: Subtitle under project name
 - `description`: Paragraph text below tagline
-- `show_buttons`: Enable action buttons in hero
-- `buttons`: List of button objects (text, url, primary style)
+- `buttons`: List of CTA buttons (text, url, icon, style)
+- `features`: Feature highlight chips displayed below description
+- `cards`: Optional info cards showcasing key benefits
+- `effects`: Visual effects (particles, grid animation, glow, scroll indicator)
 
 **To disable hero:** Set `enabled: false` and the page shows normal documentation immediately.
 
@@ -134,6 +206,36 @@ theme:
 - Keep good contrast ratios (text vs background)
 - Test your theme in both dark and light modes
 - Use online tools like [Coolors](https://coolors.co) for palette generation
+
+### UI Controls Configuration
+
+Control the visibility of sidebar and TOC toggle buttons:
+
+```yaml
+ui_controls:
+  sidebar_toggle: true   # Enable sidebar toggle button
+  toc_toggle: true       # Enable table of contents toggle button
+```
+
+### Footer Configuration
+
+Customize footer navigation links:
+
+```yaml
+footer:
+  links:
+    - title: "Documentation"
+      items:
+        - text: "Getting Started"
+          url: "/docs/02-getting-started"
+        - text: "Configuration"
+          url: "/docs/03-configuration"
+    - title: "Community"
+      items:
+        - text: "GitHub"
+          url: "https://github.com/edujbarrios/ncmds"
+          external: true
+```
 
 ### AI Chat Assistant
 
@@ -239,6 +341,35 @@ quarto render document.qmd --to html
 quarto render document.qmd --to docx
 ```
 
+### Text-to-Speech Configuration
+
+NCMDS includes a built-in Text-to-Speech feature that uses the browser's Web Speech API — no external services required:
+
+```yaml
+text_to_speech:
+  enabled: true
+  
+  ui:
+    button_text: "Listen"
+    button_text_stop: "Stop"
+    button_aria_label: "Read page content aloud"
+    position: "bottom-left"  # bottom-right, bottom-left
+  
+  speech:
+    rate: 1.0       # Speech rate: 0.1 (slowest) to 10 (fastest)
+    pitch: 1.0      # Speech pitch: 0 (lowest) to 2 (highest)
+    language: "en-US"  # BCP 47 language tag
+```
+
+**Text-to-Speech Options:**
+- `enabled`: Enable/disable the read-aloud feature
+- `ui.button_text`: Text on the listen button
+- `ui.button_text_stop`: Text shown while speaking
+- `ui.position`: Button placement (`bottom-left` or `bottom-right`)
+- `speech.rate`: Speech speed (1.0 is normal)
+- `speech.pitch`: Voice pitch (1.0 is normal)
+- `speech.language`: Voice language (BCP 47 tag, e.g., `en-US`, `es-ES`)
+
 ### Server Configuration
 
 Configure how NCMDS runs:
@@ -287,17 +418,15 @@ features:
   table_of_contents: true      # Right sidebar TOC
   syntax_highlighting: true    # Code block highlighting
   auto_reload: true            # Auto-reload in development
-  search: false                # Full-text search (coming soon)
-  mobile_optimization: true    # Mobile-responsive design
+  search: false                # Full-text search (experimental)
 ```
 
 **Feature Details:**
 
-- `table_of_contents`: Shows clickable TOC for current page (H2, H3 headings)
-- `syntax_highlighting`: Uses Highlight.js for code blocks
+- `table_of_contents`: Shows clickable TOC for current page (H1, H2 headings)
+- `syntax_highlighting`: Uses Pygments (server-side) and Highlight.js (client-side) for code blocks
 - `auto_reload`: Browser auto-refreshes when files change (dev only)
-- `search`: Coming in future version
-- `mobile_optimization`: Responsive nav, touch-friendly UI
+- `search`: Full-text search with tag, difficulty, owner, and writer filtering
 
 ### UI Text Customization
 
@@ -305,26 +434,41 @@ Customize user-facing text for internationalization or branding:
 
 ```yaml
 ui_text:
-  # Navigation
-  home: "Home"
-  previous: "Previous"
-  next: "Next"
+  # Header
+  logo_text: "MD"
+  toggle_menu_aria: "Toggle menu"
   
-  # Export buttons
+  # Sidebar
+  sidebar_title: "Documentation"
+  no_documents_message: "No documents yet. Add .md files to the docs/ folder."
+  
+  # Navigation
+  nav_previous: "Previous"
+  nav_next: "Next"
+  
+  # Table of Contents
+  toc_title: "On This Page"
+  
+  # Footer
+  footer_text: "This site was built using NCMDS a tool by"
+  footer_copyright: "© {{ year }} {{ author }}. All rights reserved."
+  
+  # Code blocks
   copy_button: "Copy"
   copy_button_copied: "Copied!"
-  export_pdf: "Export to PDF"
-  export_qmd: "Export to QMD"
-  export_all: "All Docs"
   
-  # AI Chat
-  ai_chat_title: "AI Assistant"
-  ai_chat_placeholder: "Ask a question about this page..."
-  ai_chat_send: "Send"
+  # Theme toggle
+  theme_toggle_dark: "Switch to light mode"
+  theme_toggle_light: "Switch to dark mode"
   
-  # Errors
-  page_not_found: "Page not found"
-  error_occurred: "An error occurred"
+  # Sidebar and TOC toggles
+  toggle_sidebar: "Toggle navigation sidebar"
+  toggle_toc: "Toggle table of contents"
+  
+  # Error pages
+  error_404_title: "404 - Page Not Found"
+  error_404_heading: "404 - Page Not Found"
+  error_404_message: "The page you are looking for does not exist."
 ```
 
 **Use cases:**
@@ -541,9 +685,6 @@ cp config/config.yaml config/config.yaml.backup
 
 Add comments explaining your choices:
 ```yaml
-# Using forest theme to match brand colors
-theme_name: "forest"
-
 # Port 8080 because 5000 conflicts with MacOS AirPlay
 server:
   port: 8080
@@ -565,14 +706,12 @@ server:
 
 **Export buttons missing:**
 - Confirm `export.show_on_all_pages: true`
-- Check `export.pdf.enabled` and/or `export.qmd.enabled`
-- Verify WeasyPrint installed for PDF export
+- Check `export.qmd.enabled: true`
 - Clear browser cache
 
 **Theme not applying:**
-- Ensure `theme_name` matches available theme
-- For custom theme, verify all colors are hex codes
-- Check for typos in color keys
+- Ensure `theme.dark` and `theme.light` sections have valid hex color codes
+- Check for typos in color property names
 - Refresh browser with hard reload (Ctrl+Shift+R)
 
 ## 📚 Next Steps
@@ -581,32 +720,20 @@ server:
 - **[Theme Creation](05-themes.md)** - Design custom themes in depth
 - **[Deployment](06-deployment.md)** - Deploy with your configuration
 
-- Use descriptive site names
-- Keep debug mode off in production
-- Test theme changes with different content
-- Backup your config before major changes
-- Use environment variables for sensitive data
-
 ## 🔧 Advanced Configuration
 
 ### Environment Variables
 
-You can override config values with environment variables:
+You can override config values with environment variables. See `.env.example` for the template:
 
 ```bash
-export NCMDS_PORT=8000
-export NCMDS_DEBUG=false
+LLM7_API_KEY=your-api-key-here
 ```
 
 ### Dynamic Configuration
 
-The configuration is loaded through `ConfigManager` which supports:
+The configuration is loaded through `ConfigManager` (in `config/settings.py`) which supports:
+- Deep merge of user config with defaults
 - Hot reloading (in development mode)
 - Theme switching without restart
-- Validation of configuration values
-
-## 📚 Next Steps
-
-- Customize your [Theme](05-themes.md)
-- Explore [Markdown Features](04-markdown-guide.md)
-- Learn about [Deployment](06-deployment.md)
+- Dot-notation config access (e.g., `config_manager.get('ai_chat.enabled')`)
