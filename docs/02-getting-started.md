@@ -14,15 +14,14 @@ This comprehensive guide will take you from installation to creating your first 
 ### System Requirements
 
 **Minimum Requirements:**
-- Python 3.7 or higher (Python 3.10+ recommended)
+- Python 3.8 or higher (Python 3.11+ recommended)
 - pip package manager
 - 100 MB free disk space
 - Any modern web browser
 
-**For PDF Export (optional):**
-- WeasyPrint dependencies (automatically installed)
-- On Windows: GTK+ libraries (usually included)
-- On Linux: `libpango`, `libcairo2` (install via package manager)
+**For QMD Export (optional, requires Quarto CLI for rendering):**
+- Install Quarto from [quarto.org](https://quarto.org/docs/get-started/)
+- NCMDS generates QMD files natively; Quarto renders them to PDF, HTML, or DOCX
 
 ### Step-by-Step Installation
 
@@ -61,13 +60,13 @@ pip install -r requirements.txt
 
 ```bash
 # Check if all dependencies are installed
-pip list | grep -E "Flask|markdown|PyYAML|weasyprint"
+pip list | grep -E "Flask|markdown|PyYAML|Pygments"
 
 # Should show:
-# Flask==2.x.x
-# Markdown==3.x.x
-# PyYAML==6.x.x
-# weasyprint==xx.x
+# Flask==3.0.0
+# Markdown==3.5.1
+# PyYAML==6.0.1
+# Pygments==2.17.2
 ```
 
 #### 4. Start the Server
@@ -207,34 +206,15 @@ docs/
 
 ## 📤 Exporting Documentation
 
-NCMDS can export your documentation to PDF or QMD (Quarto Markdown) formats.
+NCMDS can export your documentation to QMD (Quarto Markdown) format, which you can then render to PDF, HTML, or DOCX using Quarto CLI.
 
 ### Quick Export
 
-**To export any page:**
+**To export documentation:**
 
-1. Navigate to the page you want to export
-2. Look for the floating action buttons in the bottom-right corner
-3. Click one of these buttons:
-   - **📄 Export to PDF** - Download current page as PDF
-   - **📑 All Docs (PDF)** - Download entire site as single PDF
-   - **📋 Export to QMD** - Download current page as Quarto Markdown
-   - **📚 All Docs (QMD)** - Download all pages as QMD files (ZIP)
-
-### PDF Export Features
-
-**What you get:**
-- Professional cover page with your project name
-- Automatic table of contents
-- Syntax-highlighted code blocks
-- Optimized for printing and digital reading
-- Page numbers and headers/footers
-
-**Example uses:**
-- Offline reading
-- Sharing with non-technical stakeholders
-- Archiving documentation versions
-- Printing user manuals
+1. Look in the sidebar for the **Export Documentation** button
+2. Click to download all documentation as a single QMD file
+3. Use Quarto CLI to render to your desired format
 
 ### QMD Export Features
 
@@ -268,16 +248,11 @@ Edit `config/config.yaml`:
 export:
   show_on_all_pages: true  # Show export buttons on all pages
   
-  pdf:
-    enabled: true
-    project_name: "My Project"  # Appears on cover page
-    paper_size: "A4"  # Or "Letter"
-    margins: "2cm"
-  
   qmd:
     enabled: true
-    project_name: "My Project"
-    default_format: "pdf"  # Or "html", "docx"
+    button_text: "Export Documentation"
+    project_name: ""  # Leave empty to use site_name
+    default_format: "pdf"  # Options: pdf, html, docx
 ```
 
 ## 💡 Best Practices
@@ -374,38 +349,76 @@ Understanding NCMDS file organization:
 ```
 ncmds/
 ├── ncmds.py                 # Main application entry point
+├── pyproject.toml           # Project metadata and build config
 ├── requirements.txt         # Python dependencies
-├── README.md               # Project README
+├── runtime.txt              # Python version (for Vercel/Heroku)
+├── vercel.json              # Vercel deployment config
+├── .env.example             # Environment variables template
+├── README.md                # Project README
 │
-├── config/                 # Configuration files
-│   ├── config.yaml        # Main site configuration
-│   └── settings.py        # Config management code
+├── api/                     # Vercel serverless entry point
+│   └── index.py             # Imports and exports the Flask app
 │
-├── docs/                   # YOUR DOCUMENTATION GOES HERE
-│   ├── 01-index.md        # Homepage
-│   └── *.md               # Your Markdown files
+├── config/                  # Configuration files
+│   ├── __init__.py          # Config package exports
+│   ├── config.yaml          # Main site configuration
+│   └── settings.py          # ConfigManager & ThemeLoader
 │
-├── templates/              # HTML templates (Jinja2)
-│   ├── layout.html        # Base page layout
-│   ├── home.html          # Homepage template
-│   └── components/        # Reusable components
+├── docs/                    # YOUR DOCUMENTATION GOES HERE
+│   ├── 01-index.md          # Homepage
+│   └── *.md                 # Your Markdown files
 │
-├── static/                 # Static assets
-│   ├── main.css           # Main stylesheet
-│   ├── ai_chat.js         # AI chat functionality
-│   └── default_theme/     # Theme CSS files
+├── templates/               # HTML templates (Jinja2)
+│   ├── layout.html          # Base page layout
+│   ├── home.html            # Hero landing page
+│   └── components/          # Reusable components
+│       ├── html/            # HTML template components
+│       │   ├── head.html           # Meta tags, CSS, theme variables
+│       │   ├── header.html         # Site header with toggles
+│       │   ├── sidebar.html        # Navigation sidebar
+│       │   ├── toc.html            # Table of contents
+│       │   ├── doc_navigation.html # Prev/Next buttons
+│       │   ├── footer.html         # Site footer
+│       │   ├── ai_chat.html        # AI chat widget
+│       │   ├── export_buttons.html # QMD export button
+│       │   └── text_to_speech_button.html  # Read aloud button
+│       └── scripts/         # JavaScript components
+│           └── scripts.html # Theme toggle, copy buttons, etc.
 │
-├── export/                 # Export functionality
-│   ├── pdf_export.py      # PDF generation
-│   ├── qmd_export.py      # QMD generation
-│   └── export_routes.py   # Export API routes
+├── static/                  # Static assets
+│   ├── main.css             # Main CSS entry point (imports modules)
+│   ├── style.css            # Legacy stylesheet (backup)
+│   ├── ai_chat.css          # AI chat widget styles
+│   ├── ai_chat.js           # AI chat widget logic
+│   ├── search.js            # Full-text search implementation
+│   ├── default_theme/       # Modular CSS files
+│   │   ├── base.css         # Reset & typography
+│   │   ├── header.css       # Header styles
+│   │   ├── hero.css         # Hero section styles
+│   │   ├── sidebar.css      # Sidebar styles
+│   │   ├── toc.css          # Table of contents styles
+│   │   ├── content.css      # Main content & markdown
+│   │   ├── code.css         # Code blocks & syntax highlighting
+│   │   ├── navigation.css   # Navigation & footer
+│   │   ├── search.css       # Search styles
+│   │   ├── responsive.css   # Media queries
+│   │   └── utilities.css    # Utility classes
+│   └── images/              # Static images (logo, etc.)
 │
-├── ai_chat/                # AI chat functionality
-│   ├── llm_client.py      # LLM API client
-│   └── routes.py          # Chat API routes
+├── export/                  # Export functionality
+│   ├── __init__.py          # Export package exports
+│   ├── qmd_export.py        # QMD generation (QMDExporter class)
+│   └── export_routes.py     # Export API routes
 │
-└── utils/                  # Utility modules
-    └── math_render.py      # Math rendering
+├── ai_chat/                 # AI chat functionality
+│   ├── __init__.py          # AI chat package exports
+│   ├── llm_client.py        # LLM API client (LLMClient class)
+│   └── routes.py            # Chat API routes
+│
+├── utils/                   # Utility modules
+│   └── math_render.py       # LaTeX math rendering
+│
+└── images/                  # Project images (screenshots, etc.)
 ```
 
 ### What You Should Edit
@@ -417,6 +430,7 @@ ncmds/
 **Sometimes edit:**
 - `templates/` - If customizing HTML structure
 - `static/main.css` or `static/default_theme/` - If customizing styles
+- `.env.example` - If adding new environment variables
 
 **Rarely edit:**
 - `ncmds.py` - Only if adding core features
@@ -459,64 +473,8 @@ pip install -r requirements.txt
 
 **Export buttons don't appear:**
 - Check `export.show_on_all_pages: true` in config
-- Ensure WeasyPrint is installed for PDF export
+- Check `export.qmd.enabled: true` in config
 - Check browser console for JavaScript errors
-├── docs/                      # Documentation source files
-│   ├── 01-index.md
-│   ├── 02-getting-started.md
-│   ├── 03-configuration.md
-│   ├── 04-markdown-guide.md
-│   ├── 05-themes.md
-│   └── 06-deployment.md
-├── templates/
-│   ├── home.html             # Hero landing page
-│   ├── layout.html           # Main layout (modular)
-│   └── components/           # Template components (organized by type)
-│       ├── html/             # HTML template components
-│       │   ├── head.html     # Meta tags, CSS, theme variables
-│       │   ├── header.html   # Site header with logo and toggles
-│       │   ├── sidebar.html  # Navigation sidebar
-│       │   ├── toc.html      # Table of contents
-│       │   ├── doc_navigation.html  # Prev/Next buttons
-│       │   └── footer.html   # Site footer
-│       └── scripts/          # JavaScript components
-│           └── scripts.html  # All JavaScript functionality
-├── static/
-│   ├── main.css              # Main CSS entry point
-│   ├── style.css             # Legacy stylesheet (backup)
-│   ├── default_theme/        # Modular CSS files for default theme
-│   │   ├── base.css          # Reset & typography
-│   │   ├── header.css        # Header component styles
-│   │   ├── hero.css          # Hero section styles
-│   │   ├── sidebar.css       # Sidebar styles
-│   │   ├── toc.css           # Table of contents styles
-│   │   ├── content.css       # Main content & markdown
-│   │   ├── code.css          # Code blocks & syntax highlighting
-│   │   ├── navigation.css    # Navigation & footer
-│   │   ├── responsive.css    # Media queries
-│   │   └── utilities.css     # Utility classes
-│   └── images/               # Static images
-├── images/                    # Project images
-├── ncmds.py                   # Main application
-├── requirements.txt          # Python dependencies
-├── config.yaml               # Alternative config location
-└── tests.txt                 # Testing documentation
-```
-
-### Template Components
-
-The layout system is now modular and organized by file type. Components in `templates/components/` are separated into:
-
-**HTML Components (`html/`):**
-- **head.html**: Document head with meta tags, CSS links, and theme CSS variables
-- **header.html**: Site header with logo, theme toggle, sidebar/TOC toggles
-- **sidebar.html**: Documentation navigation with auto-generated links
-- **toc.html**: Table of contents for the current document
-- **doc_navigation.html**: Previous/Next navigation buttons
-- **footer.html**: Site footer with author information
-
-**JavaScript Components (`scripts/`):**
-- **scripts.html**: All JavaScript functionality (theme switching, toggles, copy buttons, etc.)
 
 ## 🔧 Next Steps
 
@@ -524,5 +482,4 @@ The layout system is now modular and organized by file type. Components in `temp
 - Explore [Markdown Features](04-markdown-guide.md)
 - Customize [Themes](05-themes.md)
 - Understand [Template Components](07-components.md)
-- Learn about [Deployment](06-deployment.md)
 - Learn about [Deployment](06-deployment.md)

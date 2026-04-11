@@ -15,7 +15,7 @@ All template components are located in `templates/components/`, organized by typ
 
 ```
 templates/
-├── layout.html              # Main layout (30 lines)
+├── layout.html              # Main layout (includes all components)
 ├── home.html                # Hero landing page
 └── components/
     ├── html/                # HTML template components
@@ -24,7 +24,10 @@ templates/
     │   ├── sidebar.html     # Navigation sidebar
     │   ├── toc.html         # Table of contents
     │   ├── doc_navigation.html  # Prev/Next buttons
-    │   └── footer.html      # Site footer
+    │   ├── footer.html      # Site footer
+    │   ├── ai_chat.html     # AI chat widget
+    │   ├── export_buttons.html  # QMD export button
+    │   └── text_to_speech_button.html  # Read aloud button
     └── scripts/             # JavaScript components
         └── scripts.html     # JavaScript functionality
 ```
@@ -77,9 +80,33 @@ templates/
 #### footer.html
 **Purpose:** Site footer
 **Includes:**
-- Footer text (configurable)
+- Footer link groups (configurable in `config.yaml`)
 - Author link
 - Copyright information
+
+#### ai_chat.html
+**Purpose:** AI chat widget (Explain with AI)
+**Includes:**
+- Chat widget container with model selector
+- Message input and send button
+- Fullscreen toggle
+- Streaming response display
+- Configurable via `ai_chat` section in `config.yaml`
+
+#### export_buttons.html
+**Purpose:** QMD export button
+**Includes:**
+- Export to QMD button (visible in sidebar)
+- Conditional rendering based on `export` config
+- Downloads all documentation as a single QMD file
+
+#### text_to_speech_button.html
+**Purpose:** Read aloud button
+**Includes:**
+- Listen/Stop toggle button
+- Uses browser's Web Speech API
+- Configurable speech rate, pitch, and language
+- Position configurable via `text_to_speech` section in `config.yaml`
 
 ### JavaScript Components (`components/scripts/`)
 
@@ -111,6 +138,19 @@ The main `layout.html` file is extremely simple and clean:
 
         <main class="main-content">
             <div class="content-wrapper">
+                {% if doc_last_updated %}
+                <div class="doc-meta" aria-label="Document metadata">
+                    <span class="doc-meta-label">Last updated</span>
+                    <time class="doc-meta-value">{{ doc_last_updated }}</time>
+                </div>
+                {% endif %}
+
+                {% if doc_tags or doc_difficulty or doc_owner or doc_writer %}
+                <div class="doc-taxonomy" aria-label="Document metadata tags">
+                    <!-- Difficulty, owner, writer chips and tag badges -->
+                </div>
+                {% endif %}
+
                 <article class="markdown-body">
                     {{ content|safe }}
                 </article>
@@ -123,6 +163,9 @@ The main `layout.html` file is extremely simple and clean:
     </div>
 
     {% include 'components/html/footer.html' %}
+    {% include 'components/html/export_buttons.html' %}
+    {% include 'components/html/text_to_speech_button.html' %}
+    {% include 'components/html/ai_chat.html' %}
     {% include 'components/scripts/scripts.html' %}
 </body>
 </html>
@@ -177,20 +220,42 @@ templates/components/html/header.html
 
 Some components depend on:
 - **Config variables**: Passed from `ncmds.py` via Jinja2 context
-- **CSS classes**: Defined in `static/style.css`
-- **JavaScript**: Often in `scripts.html` for interactive components
+- **CSS classes**: Defined in modular CSS files under `static/default_theme/` (imported by `static/main.css`)
+- **JavaScript**: In `scripts.html` for interactive components, plus `static/ai_chat.js` and `static/search.js` for dedicated features
+- **External CSS**: `static/ai_chat.css` for AI chat widget styling
 
 ## 🎨 Styling Components
 
-All component styles are in `static/style.css`. Each component typically has its own CSS section:
+Component styles are organized in modular CSS files under `static/default_theme/`. Each component typically has its own CSS file:
+
+```
+static/
+├── main.css              # Entry point (imports all modules)
+├── ai_chat.css           # AI chat widget styles
+├── style.css             # Legacy stylesheet (backup)
+└── default_theme/
+    ├── base.css          # Reset & typography
+    ├── header.css        # Header component styles
+    ├── hero.css          # Hero section styles
+    ├── sidebar.css       # Sidebar styles
+    ├── toc.css           # Table of contents styles
+    ├── content.css       # Main content & markdown
+    ├── code.css          # Code blocks & syntax highlighting
+    ├── navigation.css    # Navigation & footer
+    ├── search.css        # Search functionality styles
+    ├── responsive.css    # Media queries
+    └── utilities.css     # Utility classes
+```
+
+Example CSS structure:
 
 ```css
-/* Header Component */
+/* Header Component (in default_theme/header.css) */
 .site-header { ... }
 .header-container { ... }
 .logo { ... }
 
-/* Sidebar Component */
+/* Sidebar Component (in default_theme/sidebar.css) */
 .sidebar { ... }
 .sidebar-nav { ... }
 .nav-list { ... }

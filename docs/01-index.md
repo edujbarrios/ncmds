@@ -12,7 +12,7 @@ tags:
 **Author:** Eduardo J. Barrios ([edujbarrios](https://github.com/edujbarrios))
 
 ![Status](https://img.shields.io/badge/Status-Active%20Development-0D8B8B?style=flat-square)
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Documentation%20Engine-000000?style=flat-square&logo=flask&logoColor=white)
 ![Export](https://img.shields.io/badge/Export-QMD-0D8B8B?style=flat-square)
 
@@ -26,8 +26,9 @@ NCMDS is a Flask-based documentation system that:
 - **Reads** your `.md` files from the `docs/` directory
 - **Converts** them to HTML with enhanced styling and features
 - **Serves** them as a navigable website with automatic menus and TOC
-- **Exports** documentation to PDF or Quarto Markdown (QMD) formats
+- **Exports** documentation to Quarto Markdown (QMD) format
 - **Assists** you with an AI-powered chat that answers questions about your docs
+- **Reads aloud** page content using the browser's built-in Text-to-Speech
 
 ### Perfect For
 
@@ -47,9 +48,9 @@ NCMDS is a Flask-based documentation system that:
 - Code blocks with syntax highlighting (Python, JavaScript, YAML, etc.)
 - Tables, lists, images, links—everything you expect
 
-### 🎨 Beautiful Theme
-- **Seven pre-built themes**: Ocean, Forest, Sunset, Purple Dream, Cyberpunk, Monochrome, and Turquoise
-- **Custom theme creation**: Define your own color palette
+### 🎨 Beautiful Themes
+- **Dark and Light modes** with full color customization via `config.yaml`
+- **Custom color palettes**: Define your own primary, secondary, background, surface, and accent colors
 - **Dark mode optimized** for comfortable reading
 - **Responsive design** that works on all devices
 
@@ -59,11 +60,15 @@ NCMDS is a Flask-based documentation system that:
 - **Context-aware**: The AI reads your current page for relevant answers
 - **Fullscreen mode** for extended conversations
 
-### 📤 Export Anywhere
-- **PDF Export**: Generate professional PDFs with cover pages and TOC
-- **QMD Export**: Export to Quarto Markdown for advanced rendering
+### 📤 Export to QMD
+- **QMD Export**: Export to Quarto Markdown for advanced rendering (PDF, HTML, DOCX via Quarto)
 - **Single page or entire site**: Export what you need
-- **One-click download**: Floating buttons on every page
+- **One-click download**: Export button in the sidebar
+
+### 🔊 Text-to-Speech
+- **Read aloud** any documentation page using the browser's Web Speech API
+- **No external services** required—works entirely in the browser
+- **Configurable** speech rate, pitch, and language
 
 ### 🚀 Zero Build Process
 - No compilation step required
@@ -124,8 +129,9 @@ Now that you've seen the basics, explore these guides:
 - **[Getting Started →](02-getting-started.md)** - Complete installation and first steps
 - **[Configuration →](03-configuration.md)** - Customize your site (themes, AI chat, export)
 - **[Markdown Guide →](04-markdown-guide.md)** - Learn all supported Markdown features
-- **[Deployment →](06-deployment.md)** - Deploy to production (Docker, Heroku, Railway)
-- **[Export Documentation →](03-configuration.md#export-settings)** - Generate PDFs and QMD files
+- **[Themes →](05-themes.md)** - Customize dark/light theme colors
+- **[Deployment →](06-deployment.md)** - Deploy to production (Vercel, Docker, Heroku, Railway)
+- **[Components →](07-components.md)** - Understand the modular template architecture
 
 ## 🎨 Theme Customization
 
@@ -175,9 +181,10 @@ Understanding the system will help you use it effectively:
 - Changes to `.md` files appear on page refresh (no restart needed)
 
 ### 5. Export & AI
-- Export buttons generate PDFs (via WeasyPrint) or QMD files on-demand
+- The export button generates QMD files on-demand (render to PDF, HTML, or DOCX via Quarto)
 - AI chat sends your question + current page content to the LLM API
 - Responses stream back in real-time
+- Text-to-Speech reads the current page aloud using the browser's Web Speech API
 
 ## 🛠️ Technical Stack
 
@@ -186,11 +193,13 @@ Built with modern, reliable technologies:
 - **Backend**: Flask (Python web framework)
 - **Markdown**: Python-Markdown with extensions
 - **Templating**: Jinja2
-- **Styling**: CSS with variables for theming
-- **Syntax Highlighting**: Highlight.js
-- **PDF Generation**: WeasyPrint
+- **Styling**: Modular CSS with variables for theming
+- **Syntax Highlighting**: Pygments (server-side) + Highlight.js (client-side)
+- **QMD Export**: Quarto Markdown generation (render with Quarto CLI)
 - **AI Integration**: LLM7.io API (supports multiple providers)
+- **Text-to-Speech**: Web Speech API (browser-native)
 - **Configuration**: YAML
+- **Deployment**: Vercel (serverless), Gunicorn, Docker, etc.
 
 ## 📄 License
 
