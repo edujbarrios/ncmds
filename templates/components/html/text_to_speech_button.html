@@ -17,35 +17,29 @@
 <style>
 .tts-btn {
     position: fixed;
-    {% if config.text_to_speech.ui.position == 'bottom-right' %}
-    right: 1.5rem;
-    {% else %}
-    left: 1.5rem;
-    {% endif %}
-    bottom: 1.5rem;
+    left: 20px;
+    bottom: 20px;
     z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 1.15rem;
-    border: 1px solid var(--border-color);
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
     border-radius: 50px;
-    background: var(--surface-color);
-    color: var(--text-color);
-    font-size: 0.875rem;
-    font-weight: 500;
+    background: var(--primary-color);
+    color: #1b1b1d;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
     font-family: inherit;
 }
 
 .tts-btn:hover {
-    background: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: var(--secondary-color);
 }
 
 .tts-btn:active {
@@ -53,15 +47,12 @@
 }
 
 .tts-btn.tts-speaking {
-    background: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
+    background: var(--secondary-color);
     animation: tts-pulse 2s ease-in-out infinite;
 }
 
 .tts-btn.tts-speaking:hover {
     background: #d9534f;
-    border-color: #d9534f;
     animation: none;
 }
 
@@ -85,24 +76,18 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .tts-btn {
-        bottom: 1rem;
-        {% if config.text_to_speech.ui.position == 'bottom-right' %}
-        right: 1rem;
-        {% else %}
-        left: 1rem;
-        {% endif %}
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
-    }
-
     .tts-btn .tts-label {
         display: none;
     }
 
     .tts-btn {
+        bottom: 10px;
+        left: 10px;
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        justify-content: center;
         border-radius: 50%;
-        padding: 0.7rem;
     }
 }
 </style>
