@@ -117,7 +117,9 @@
 
 
 .markdown-body code:hover {
-    box-shadow: 0 2px 6px rgba(64, 224, 208, 0.5), 0 0 8px rgba(64, 224, 208, 0.2);
+    box-shadow:
+        0 2px 6px color-mix(in srgb, var(--primary-color) 50%, transparent),
+        0 0 8px color-mix(in srgb, var(--primary-color) 20%, transparent);
     transform: translateY(-1px);
     border-color: var(--primary-color);
 }
@@ -125,8 +127,8 @@
 
 /* Code Blocks */
 .markdown-body pre {
-    background: #222224;
-    border: 2.5px solid rgba(72, 255, 240, 0.2);
+    background: var(--code-background);
+    border: 2.5px solid color-mix(in srgb, var(--primary-color) 28%, var(--border-color));
     border-radius: 12px;
     padding: 1.75rem;
     overflow-x: auto;
@@ -134,7 +136,7 @@
     box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.3),
         0 1px 3px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(64, 224, 208, 0.05);
+        inset 0 1px 0 color-mix(in srgb, var(--primary-color) 5%, transparent);
     position: relative;
     transition: all 0.3s ease;
 }
@@ -143,68 +145,68 @@
 .markdown-body pre:hover {
     box-shadow: 
         0 12px 24px rgba(0, 0, 0, 0.4),
-        0 4px 16px rgba(64, 224, 208, 0.25),
-        0 0 32px rgba(64, 224, 208, 0.25),
-        inset 0 1px 0 rgba(64, 224, 208, 0.15);
+        0 4px 16px color-mix(in srgb, var(--primary-color) 28%, transparent),
+        0 0 32px color-mix(in srgb, var(--primary-color) 28%, transparent),
+        inset 0 1px 0 color-mix(in srgb, var(--primary-color) 15%, transparent);
     transform: translateY(-2px);
-    border-color: #48FFF0;
+    border-color: var(--primary-color);
 }
 
 
 
 /* Dark Theme Code Blocks */
 [data-theme="dark"] .markdown-body pre {
-    background-color: #222224;
-    border-color: rgba(72, 255, 240, 0.2);
+    background-color: var(--code-background);
+    border-color: color-mix(in srgb, var(--primary-color) 28%, var(--border-color));
     box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.4),
         0 1px 3px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 #00E5D011;
+        inset 0 1px 0 color-mix(in srgb, var(--primary-color) 7%, transparent);
 }
 
 [data-theme="dark"] .markdown-body pre:hover {
     box-shadow: 
         0 12px 24px rgba(0, 0, 0, 0.5),
-        0 4px 8px rgba(64, 224, 208, 0.25),
-        inset 0 1px 0 rgba(64, 224, 208, 0.1),
-        0 0 20px rgba(64, 224, 208, 0.2);
-    border-color: #48FFF0;
+        0 4px 8px color-mix(in srgb, var(--primary-color) 28%, transparent),
+        inset 0 1px 0 color-mix(in srgb, var(--primary-color) 10%, transparent),
+        0 0 20px color-mix(in srgb, var(--primary-color) 22%, transparent);
+    border-color: var(--primary-color);
 }
 
 /* Light Theme Code Blocks */
 [data-theme="light"] .markdown-body pre {
-    background: #f8fcfc;
-    border-color: rgba(15, 118, 110, 0.24);
+    background: var(--code-background);
+    border-color: color-mix(in srgb, var(--primary-color) 22%, var(--border-color));
     box-shadow: 
-        0 8px 18px rgba(15, 118, 110, 0.1),
-        0 2px 6px rgba(8, 145, 178, 0.08),
+        0 8px 18px color-mix(in srgb, var(--primary-color) 12%, transparent),
+        0 2px 6px color-mix(in srgb, var(--secondary-color) 10%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="light"] .markdown-body pre:hover {
-    border-color: rgba(15, 118, 110, 0.35);
+    border-color: color-mix(in srgb, var(--primary-color) 40%, var(--border-color));
     box-shadow: 
-        0 12px 24px rgba(15, 118, 110, 0.13),
-        0 4px 10px rgba(8, 145, 178, 0.1),
+        0 12px 24px color-mix(in srgb, var(--primary-color) 15%, transparent),
+        0 4px 10px color-mix(in srgb, var(--secondary-color) 13%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 [data-theme="light"] .markdown-body code {
-    background: #e8f5f4;
-    color: #0f766e;
-    border-color: rgba(15, 118, 110, 0.25);
-    box-shadow: 0 1px 3px rgba(15, 118, 110, 0.08);
+    background: color-mix(in srgb, var(--primary-color) 9%, var(--surface-color));
+    color: var(--primary-color);
+    border-color: color-mix(in srgb, var(--primary-color) 25%, var(--border-color));
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 [data-theme="light"] .markdown-body code:hover {
-    box-shadow: 0 3px 8px rgba(15, 118, 110, 0.14);
-    border-color: rgba(15, 118, 110, 0.45);
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--primary-color) 18%, transparent);
+    border-color: color-mix(in srgb, var(--primary-color) 45%, var(--border-color));
 }
 
 /* Code within pre */
 .markdown-body pre code {
     background-color: transparent;
-    color: #E0E0E0;
+    color: var(--text-color);
     padding: 0;
     border-radius: 0;
     border: none;
@@ -220,7 +222,7 @@
 }
 
 [data-theme="light"] .markdown-body pre code {
-    color: #1f2f35;
+    color: var(--text-color);
 }
 
 /* Code Block Wrapper */
@@ -332,17 +334,17 @@
 
 /* Highlighted code lines in dark mode */
 [data-theme="dark"] .highlighted-code-line {
-    background-color: rgba(0, 229, 208, 0.3);
+    background-color: color-mix(in srgb, var(--primary-color) 30%, transparent);
     display: block;
     margin: 0 -1.75rem;
     padding: 0 1.75rem;
-    border-left: 3px solid #00E5D0;
+    border-left: 3px solid var(--primary-color);
 }
 
 [data-theme="light"] .highlighted-code-line {
-    background-color: rgba(15, 118, 110, 0.12);
+    background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
     display: block;
     margin: 0 -1.75rem;
     padding: 0 1.75rem;
-    border-left: 3px solid rgba(15, 118, 110, 0.65);
+    border-left: 3px solid var(--primary-color);
 }
