@@ -1,0 +1,256 @@
+<!-- Text-to-Speech (Read Aloud) Button Component -->
+{% if config.text_to_speech and config.text_to_speech.enabled %}
+<button class="tts-btn" id="ttsButton"
+    aria-label="{{ config.text_to_speech.ui.button_aria_label or 'Read page content aloud' }}"
+    title="{{ config.text_to_speech.ui.button_aria_label or 'Read page content aloud' }}">
+    <svg class="tts-icon tts-icon-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    </svg>
+    <svg class="tts-icon tts-icon-stop" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <rect x="6" y="6" width="12" height="12" rx="2"/>
+    </svg>
+    <span class="tts-label">{{ config.text_to_speech.ui.button_text or 'Listen' }}</span>
+</button>
+
+<style>
+.tts-btn {
+    position: fixed;
+    {% if config.text_to_speech.ui.position == 'bottom-right' %}
+    right: 1.5rem;
+    {% else %}
+    left: 1.5rem;
+    {% endif %}
+    bottom: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.15rem;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.tts-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.tts-btn:active {
+    transform: translateY(0);
+}
+
+.tts-btn.tts-speaking {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    animation: tts-pulse 2s ease-in-out infinite;
+}
+
+.tts-btn.tts-speaking:hover {
+    background: #d9534f;
+    border-color: #d9534f;
+    animation: none;
+}
+
+.tts-icon {
+    flex-shrink: 0;
+}
+
+@keyframes tts-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+    50% { box-shadow: 0 4px 20px rgba(64, 224, 208, 0.4); }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .tts-btn {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .tts-btn:hover {
+    box-shadow: 0 6px 20px rgba(64, 224, 208, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tts-btn {
+        bottom: 1rem;
+        {% if config.text_to_speech.ui.position == 'bottom-right' %}
+        right: 1rem;
+        {% else %}
+        left: 1rem;
+        {% endif %}
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .tts-btn .tts-label {
+        display: none;
+    }
+
+    .tts-btn {
+        border-radius: 50%;
+        padding: 0.7rem;
+    }
+}
+</style>
+
+<script>
+(function () {
+    'use strict';
+
+    var btn = document.getElementById('ttsButton');
+    if (!btn || !('speechSynthesis' in window)) {
+        if (btn) btn.style.display = 'none';
+        return;
+    }
+
+    var synth = window.speechSynthesis;
+    var playIcon = btn.querySelector('.tts-icon-play');
+    var stopIcon = btn.querySelector('.tts-icon-stop');
+    var label = btn.querySelector('.tts-label');
+    var labelPlay = '{{ config.text_to_speech.ui.button_text or "Listen" }}';
+    var labelStop = '{{ config.text_to_speech.ui.button_text_stop or "Stop" }}';
+    var speechRate = Math.max(0.1, Math.min(10, parseFloat('{{ config.text_to_speech.speech.rate if config.text_to_speech.speech.rate is not none else 1.0 }}') || 1.0));
+    var speechPitch = Math.max(0, Math.min(2, parseFloat('{{ config.text_to_speech.speech.pitch if config.text_to_speech.speech.pitch is not none else 1.0 }}') || 1.0));
+    {% if config.text_to_speech.speech.language %}
+    var speechLang = '{{ config.text_to_speech.speech.language }}';
+    {% else %}
+    var speechLang = '';
+    {% endif %}
+
+    function getPageText() {
+        var article = document.querySelector('.markdown-body');
+        if (!article) return '';
+
+        // Clone to avoid modifying the DOM
+        var clone = article.cloneNode(true);
+
+        // Remove code blocks, scripts, and styles from the clone
+        var removable = clone.querySelectorAll('pre, script, style, .code-block-wrapper');
+        for (var i = 0; i < removable.length; i++) {
+            removable[i].remove();
+        }
+
+        return (clone.textContent || clone.innerText || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function setPlayState() {
+        btn.classList.remove('tts-speaking');
+        playIcon.style.display = '';
+        stopIcon.style.display = 'none';
+        if (label) label.textContent = labelPlay;
+    }
+
+    function setSpeakingState() {
+        btn.classList.add('tts-speaking');
+        playIcon.style.display = 'none';
+        stopIcon.style.display = '';
+        if (label) label.textContent = labelStop;
+    }
+
+    // Chrome pauses speech after ~15 seconds. This workaround resumes it.
+    var resumeTimer = null;
+    function startResumeTimer() {
+        clearInterval(resumeTimer);
+        resumeTimer = setInterval(function () {
+            if (synth.speaking && !synth.paused) {
+                synth.pause();
+                synth.resume();
+            }
+        }, 10000);
+    }
+
+    function stopResumeTimer() {
+        clearInterval(resumeTimer);
+        resumeTimer = null;
+    }
+
+    function stopSpeaking() {
+        stopResumeTimer();
+        synth.cancel();
+        setPlayState();
+    }
+
+    function startSpeaking() {
+        var text = getPageText();
+        if (!text) return;
+
+        synth.cancel();
+
+        // Split into chunks to handle browser limits on utterance length.
+        // Most browsers silently fail on very long utterances; 3000 chars
+        // is a safe threshold that works across Chrome, Firefox, and Safari.
+        var maxLen = 3000;
+        var chunks = [];
+        while (text.length > 0) {
+            if (text.length <= maxLen) {
+                chunks.push(text);
+                break;
+            }
+            var idx = text.lastIndexOf('. ', maxLen);
+            if (idx === -1) idx = text.lastIndexOf(' ', maxLen);
+            if (idx === -1) idx = maxLen;
+            chunks.push(text.substring(0, idx + 1));
+            text = text.substring(idx + 1).trim();
+        }
+
+        var current = 0;
+
+        function speakNext() {
+            if (current >= chunks.length) {
+                stopSpeaking();
+                return;
+            }
+
+            var utterance = new SpeechSynthesisUtterance(chunks[current]);
+            utterance.rate = speechRate;
+            utterance.pitch = speechPitch;
+            if (speechLang) utterance.lang = speechLang;
+
+            utterance.onend = function () {
+                current++;
+                speakNext();
+            };
+
+            utterance.onerror = function (e) {
+                if (e.error !== 'canceled') {
+                    stopSpeaking();
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        setSpeakingState();
+        startResumeTimer();
+        speakNext();
+    }
+
+    btn.addEventListener('click', function () {
+        if (synth.speaking) {
+            stopSpeaking();
+        } else {
+            startSpeaking();
+        }
+    });
+
+    // Ensure cleanup on page unload
+    window.addEventListener('beforeunload', function () {
+        synth.cancel();
+    });
+})();
+</script>
+{% endif %}
