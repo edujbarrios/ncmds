@@ -250,7 +250,7 @@ text_to_speech:
   speech:
     rate: 1.0      # Speech rate: 0.1 (slowest) to 10 (fastest), 1.0 is normal
     pitch: 1.0     # Speech pitch: 0 (lowest) to 2 (highest), 1.0 is normal
-    # language: "en-US"  # Optional: BCP 47 language tag. If omitted, uses the browser default.
+    language: "en-US"  # BCP 47 language tag for English voice
 
 # AI Chat Configuration (Explain with AI feature)
 ai_chat:
