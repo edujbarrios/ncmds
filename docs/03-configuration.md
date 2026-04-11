@@ -423,7 +423,7 @@ features:
 
 **Feature Details:**
 
-- `table_of_contents`: Shows clickable TOC for current page (H1, H2 headings)
+- `table_of_contents`: Shows clickable TOC for current page (H1 and H2 headings by default)
 - `syntax_highlighting`: Uses Pygments (server-side) and Highlight.js (client-side) for code blocks
 - `auto_reload`: Browser auto-refreshes when files change (dev only)
 - `search`: Full-text search with tag, difficulty, owner, and writer filtering
