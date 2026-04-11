@@ -29,7 +29,6 @@
     const inputField = document.getElementById('ai-chat-input');
     const sendButton = document.getElementById('ai-chat-send');
     const modelSelect = document.getElementById('ai-chat-model-select');
-    const pageContentContainer = document.getElementById('page-content-for-ai');
     
     // Check if widget exists (AI chat is enabled)
     if (!widget) {
@@ -305,11 +304,7 @@
      * Get the current page content for context
      */
     function getPageContent() {
-        if (pageContentContainer) {
-            return pageContentContainer.textContent.trim();
-        }
-        
-        // Fallback: get content from the main article
+        // Get content from the main article
         const article = document.querySelector('.markdown-body');
         if (article) {
             return article.textContent.trim();
