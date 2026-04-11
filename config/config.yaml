@@ -233,6 +233,25 @@ export:
     # Quarto output format
     default_format: "pdf"  # pdf, html, docx
 
+# Text-to-Speech Configuration (Read Aloud feature)
+# Uses the browser's built-in Web Speech API - no external APIs or services required
+text_to_speech:
+  # Enable/disable the text-to-speech button on documentation pages
+  enabled: true
+
+  # UI Configuration
+  ui:
+    button_text: "Listen"
+    button_text_stop: "Stop"
+    button_aria_label: "Read page content aloud"
+    position: "bottom-left"  # bottom-right, bottom-left
+
+  # Speech Configuration
+  speech:
+    rate: 1.0      # Speech rate: 0.1 (slowest) to 10 (fastest), 1.0 is normal
+    pitch: 1.0     # Speech pitch: 0 (lowest) to 2 (highest), 1.0 is normal
+    # language: "en-US"  # Optional: BCP 47 language tag. If omitted, uses the browser default.
+
 # AI Chat Configuration (Explain with AI feature)
 ai_chat:
   # Enable/disable the AI chat feature
