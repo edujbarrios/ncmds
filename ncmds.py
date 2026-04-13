@@ -648,6 +648,12 @@ def search_docs():
             results.append({
                 'title': title,
                 'path': nav_item['path'],
+                'url': f'/docs/{nav_item["path"]}',
+                'title_match': title_match,
+                'tags': doc_tags,
+                'difficulty': doc_difficulty,
+                'owner': doc_owner,
+                'writer': doc_writer,
                 'context': context
             })
 
