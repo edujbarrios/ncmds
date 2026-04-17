@@ -19,6 +19,7 @@
 .sidebar.hidden {
     transform: translateX(-100%);
     left: -280px;
+    display: block !important;
 }
 
 /* Scrollbar Styling */

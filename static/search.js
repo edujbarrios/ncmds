@@ -473,7 +473,7 @@
      * Returns true when viewport is mobile size
      */
     function isMobileView() {
-        return window.innerWidth <= 768;
+        return window.innerWidth <= 900;
     }
 
     /**
