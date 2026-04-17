@@ -18,6 +18,7 @@
 .toc-sidebar.hidden {
     transform: translateX(100%);
     right: -280px;
+    display: block !important;
 }
 
 .toc-container {

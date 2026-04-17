@@ -488,7 +488,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .search-container {
         position: fixed;
         top: 70px;
@@ -545,7 +545,7 @@
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 901px) {
     .search-mobile-trigger,
     .search-mobile-close,
     .search-backdrop {
@@ -558,12 +558,5 @@
     .search-container {
         max-width: 300px;
         margin: 0 1rem;
-    }
-}
-
-/* Small desktop - hide on very small screens */
-@media (max-width: 900px) {
-    .search-container:not(.mobile-open) {
-        display: none;
     }
 }

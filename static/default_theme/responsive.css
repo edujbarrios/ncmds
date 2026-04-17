@@ -51,6 +51,7 @@
     .sidebar.hidden {
         transform: translateX(-100%);
         left: 0;
+        display: block !important;
     }
 
     /* Ensure .active always overrides .hidden on mobile */
