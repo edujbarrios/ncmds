@@ -144,6 +144,7 @@
 }
 
 /* Sidebar & TOC Toggle Buttons */
+.accessibility-toggle,
 .sidebar-toggle,
 .toc-toggle {
     background: none;
@@ -161,6 +162,18 @@
     margin-right: 0.5rem;
 }
 
+.accessibility-toggle[aria-pressed="true"] {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.accessibility-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.accessibility-toggle:hover,
 .sidebar-toggle:hover,
 .toc-toggle:hover {
     border-color: var(--accent-color);
@@ -185,6 +198,7 @@
 }
 
 [data-theme="light"] .theme-toggle,
+[data-theme="light"] .accessibility-toggle,
 [data-theme="light"] .sidebar-toggle,
 [data-theme="light"] .toc-toggle {
     background: rgba(255, 255, 255, 0.9);
@@ -193,6 +207,7 @@
 }
 
 [data-theme="light"] .theme-toggle:hover,
+[data-theme="light"] .accessibility-toggle:hover,
 [data-theme="light"] .sidebar-toggle:hover,
 [data-theme="light"] .toc-toggle:hover {
     background: #f0f8f7;

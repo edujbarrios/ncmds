@@ -69,6 +69,12 @@
                     <path d="m21 21-4.35-4.35"/>
                 </svg>
             </button>
+            <button class="accessibility-toggle" id="accessibilityToggle" type="button" aria-label="Enable larger text" aria-pressed="false" title="Enable larger text">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M6 20L12 4L18 20"/>
+                    <line x1="8.5" y1="14" x2="15.5" y2="14"/>
+                </svg>
+            </button>
             {% if config.theme.toggle_enabled %}
             <button class="theme-toggle" id="themeToggle" type="button" aria-label="{{ config.ui_text.theme_toggle_dark }}" aria-pressed="false" title="{{ config.ui_text.theme_toggle_dark }}">
                 <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

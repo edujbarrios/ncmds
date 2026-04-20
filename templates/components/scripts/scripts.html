@@ -17,6 +17,7 @@
     const sidebarToggle = document.getElementById('sidebarToggle');
     const tocToggle = document.getElementById('tocToggle');
     const themeToggle = document.getElementById('themeToggle');
+    const accessibilityToggle = document.getElementById('accessibilityToggle');
     const tocSidebar = document.querySelector('.toc-sidebar');
 
     // Mobile menu toggle
@@ -82,6 +83,7 @@
     const darkThemeStylesheet = document.getElementById('hljs-theme-dark');
     const lightThemeStylesheet = document.getElementById('hljs-theme-light');
     const defaultTheme = "{{ config.theme.default | lower }}" === "light" ? "light" : "dark";
+    const fontScaleStorageKey = 'fontScalePreference';
 
     function updateThemeToggleState(theme) {
         if (!themeToggle) {
@@ -151,6 +153,55 @@
             const currentTheme = htmlElement.getAttribute('data-theme');
             const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
             applyTheme(nextTheme, true);
+        });
+    }
+
+    function updateAccessibilityToggleState(fontScale) {
+        if (!accessibilityToggle) {
+            return;
+        }
+
+        const isLargeText = fontScale === 'large';
+        const buttonLabel = isLargeText ? 'Disable larger text' : 'Enable larger text';
+        accessibilityToggle.setAttribute('aria-label', buttonLabel);
+        accessibilityToggle.setAttribute('title', buttonLabel);
+        accessibilityToggle.setAttribute('aria-pressed', String(isLargeText));
+    }
+
+    function applyFontScale(fontScale, persistPreference = false) {
+        const normalizedFontScale = fontScale === 'large' ? 'large' : 'normal';
+        htmlElement.setAttribute('data-font-scale', normalizedFontScale);
+        updateAccessibilityToggleState(normalizedFontScale);
+
+        if (persistPreference) {
+            try {
+                localStorage.setItem(fontScaleStorageKey, normalizedFontScale);
+            } catch (error) {
+                // Ignore storage errors (private browsing, blocked storage).
+            }
+        }
+    }
+
+    function getInitialFontScale() {
+        try {
+            const savedFontScale = localStorage.getItem(fontScaleStorageKey);
+            if (savedFontScale === 'large') {
+                return 'large';
+            }
+        } catch (error) {
+            return 'normal';
+        }
+
+        return 'normal';
+    }
+
+    applyFontScale(getInitialFontScale());
+
+    if (accessibilityToggle) {
+        accessibilityToggle.addEventListener('click', () => {
+            const currentFontScale = htmlElement.getAttribute('data-font-scale');
+            const nextFontScale = currentFontScale === 'large' ? 'normal' : 'large';
+            applyFontScale(nextFontScale, true);
         });
     }
 
