@@ -130,7 +130,7 @@
 .markdown-body td {
     padding: 0.75rem 1rem;
     border: 1px solid var(--border-color);
-    text-align: justify;
+    text-align: left;
 }
 
 .markdown-body th {

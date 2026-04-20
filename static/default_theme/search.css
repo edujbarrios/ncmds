@@ -326,7 +326,7 @@
 /* No Results Message */
 .search-no-results {
     padding: 24px;
-    text-align: justify;
+    text-align: center;
     color: var(--text-secondary, #9aa5a8);
 }
 
@@ -345,7 +345,7 @@
 /* Loading State */
 .search-loading {
     padding: 24px;
-    text-align: justify;
+    text-align: center;
     color: var(--text-secondary, #9aa5a8);
 }
 
