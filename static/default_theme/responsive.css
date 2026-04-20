@@ -64,7 +64,7 @@
     .main-content {
         margin-left: 0;
         max-width: 100%;
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
     }
     
     .main-content.sidebar-hidden,
@@ -73,17 +73,22 @@
         max-width: 100%;
     }
     
+    .markdown-body {
+        font-size: 1.05rem;
+        line-height: 1.65;
+    }
+
     /* Markdown Typography */
     .markdown-body h1 {
-        font-size: 2rem;
-    }
-    
-    .markdown-body h2 {
         font-size: 1.75rem;
     }
     
+    .markdown-body h2 {
+        font-size: 1.5rem;
+    }
+    
     .markdown-body h3 {
-        font-size: 1.35rem;
+        font-size: 1.2rem;
     }
 
     /* Table overflow handling */
@@ -104,11 +109,11 @@
     }
     
     .hero-title {
-        font-size: 2.75rem;
+        font-size: 2.2rem;
     }
     
     .hero-tagline {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
     
     .hero-description {
