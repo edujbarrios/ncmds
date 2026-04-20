@@ -189,7 +189,7 @@
                 return 'large';
             }
         } catch (error) {
-            return 'normal';
+            // Ignore storage errors (private browsing, blocked storage).
         }
 
         return 'normal';

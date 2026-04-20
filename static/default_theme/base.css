@@ -29,6 +29,7 @@ html {
 }
 
 html[data-font-scale="large"] {
+    /* 112.5% maps the default 16px browser base to 18px for improved readability. */
     font-size: 112.5%;
 }
 
