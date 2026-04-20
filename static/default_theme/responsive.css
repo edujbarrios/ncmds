@@ -191,14 +191,14 @@
     
     .nav-button-next .nav-button-content {
         align-items: flex-start;
-        text-align: left;
+        text-align: justify;
     }
 
     /* Footer */
     .footer-links {
         flex-direction: column;
         gap: 1.5rem;
-        text-align: center;
+        text-align: justify;
     }
 
     .footer-link-group {

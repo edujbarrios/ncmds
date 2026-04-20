@@ -28,7 +28,7 @@
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
+    text-align: justify;
 }
 
 /* Hero Badge */
@@ -434,7 +434,7 @@
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-color);
-    text-align: center;
+    text-align: justify;
     position: relative;
     z-index: 1;
     transition: color 0.3s ease;
@@ -451,7 +451,7 @@
 }
 
 .cards-title {
-    text-align: center;
+    text-align: justify;
     font-size: 2rem;
     font-weight: 700;
     color: #ffffff;
@@ -702,7 +702,7 @@
 .home-hero .hero-content {
     max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+    text-align: justify;
 }
 
 /* ========================================

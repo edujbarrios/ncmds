@@ -419,7 +419,7 @@
 .ai-chat-notice {
     font-size: 11px;
     color: var(--text-secondary, #b4b4b4);
-    text-align: center;
+    text-align: justify;
     margin-bottom: 8px;
 }
 

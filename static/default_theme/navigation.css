@@ -71,7 +71,7 @@
 
 .nav-button-next .nav-button-content {
     align-items: flex-end;
-    text-align: right;
+    text-align: justify;
 }
 
 .nav-button-label {
@@ -108,7 +108,7 @@
     background-color: var(--surface-color);
     border-top: 1px solid var(--border-color);
     padding: 3rem 2rem 1.5rem;
-    text-align: center;
+    text-align: justify;
     margin-top: 4rem;
 }
 
@@ -121,7 +121,7 @@
     display: flex;
     justify-content: center;
     gap: 4rem;
-    text-align: left;
+    text-align: justify;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
@@ -170,7 +170,7 @@
 }
 
 .footer-bottom {
-    text-align: center;
+    text-align: justify;
 }
 
 .footer-branding {
