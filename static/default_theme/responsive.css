@@ -212,3 +212,13 @@
         padding: 2rem 1rem 1.5rem;
     }
 }
+
+@media (max-width: 360px) {
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .nav-button {
+        min-width: 0;
+    }
+}
