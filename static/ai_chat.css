@@ -515,3 +515,15 @@
     top: 80px;
     bottom: auto;
 }
+
+@media (max-width: 768px) {
+    .ai-chat-widget.position-bottom-right {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .ai-chat-widget.position-bottom-left {
+        bottom: 10px;
+        left: 10px;
+    }
+}
