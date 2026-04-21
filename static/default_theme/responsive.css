@@ -186,17 +186,14 @@
     
     /* Navigation Buttons */
     .nav-buttons {
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: row;
+        gap: 0.75rem;
     }
-    
+
     .nav-button {
-        max-width: 100%;
-    }
-    
-    .nav-button-next .nav-button-content {
-        align-items: flex-start;
-        text-align: left;
+        max-width: none;
+        min-width: 0;
+        padding: 1rem;
     }
 
     /* Footer */
