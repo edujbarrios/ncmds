@@ -193,7 +193,7 @@
 
     .nav-button {
         max-width: none;
-        min-width: 140px;
+        min-width: 35%;
         padding: 1rem;
     }
 
@@ -216,9 +216,5 @@
 @media (max-width: 360px) {
     .nav-buttons {
         gap: 0.5rem;
-    }
-
-    .nav-button {
-        min-width: 0;
     }
 }
