@@ -69,6 +69,14 @@ def register_ai_chat_routes(app, config_manager):
             }), 400
 
         question = question.strip()
+
+        # Limit question length to prevent oversized requests to the LLM API
+        max_question_length = 2000
+        if len(question) > max_question_length:
+            return jsonify({
+                'error': f'Field "question" must not exceed {max_question_length} characters'
+            }), 400
+
         selected_model = data.get('model', model)  # Use selected model or default
         
         # Limit page content length

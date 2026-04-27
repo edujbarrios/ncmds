@@ -4,6 +4,7 @@ Exports documentation to QMD format for Quarto rendering
 Created by: edujbarrios
 """
 
+import re
 from pathlib import Path
 from datetime import datetime
 from io import BytesIO
@@ -49,12 +50,16 @@ format:
     
     def _clean_markdown_content(self, markdown_text):
         """Clean and prepare markdown content for QMD"""
-        # Remove any existing frontmatter
-        if markdown_text.startswith('---'):
-            parts = markdown_text.split('---', 2)
-            if len(parts) >= 3:
-                markdown_text = parts[2].strip()
-        
+        # Remove any existing frontmatter using a line-aware pattern so that
+        # '---' embedded inside YAML values does not cause a premature split.
+        markdown_text = re.sub(
+            r'^---\s*\r?\n.*?\r?\n---\s*\r?\n?',
+            '',
+            markdown_text,
+            count=1,
+            flags=re.DOTALL
+        ).strip()
+
         return markdown_text
     
     def export_document(self, markdown_content, title=None, project_name=None):

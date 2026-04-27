@@ -162,16 +162,22 @@ class MarkdownProcessor:
         """
         lines = content.splitlines()
         converted_lines = []
-        in_fenced_code = False
+        fence_char = None  # None when outside a fence; '`' or '~' when inside one
 
         for line in lines:
             stripped = line.lstrip()
             if stripped.startswith('```') or stripped.startswith('~~~'):
-                in_fenced_code = not in_fenced_code
+                current_char = stripped[0]
+                if fence_char is None:
+                    # Opening a fenced block
+                    fence_char = current_char
+                elif fence_char == current_char:
+                    # Closing the fenced block (must match opening char)
+                    fence_char = None
                 converted_lines.append(line)
                 continue
 
-            if in_fenced_code:
+            if fence_char is not None:
                 converted_lines.append(line)
                 continue
 
@@ -357,8 +363,12 @@ class DocumentationSite:
             url_path = str(rel_path.with_suffix('')).replace('\\', '/')
 
             # Read title and metadata from file
-            with open(md_file, 'r', encoding='utf-8') as f:
-                content = f.read()
+            try:
+                with open(md_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+            except OSError as e:
+                print(f"⚠️  Could not read {md_file}: {e}")
+                continue
 
             front_matter, markdown_content = self._extract_front_matter(content)
             title = self._normalize_text_value(front_matter.get('title'))
