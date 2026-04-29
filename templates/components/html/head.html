@@ -4,11 +4,21 @@
     <meta name="description" content="{{ config.description }}">
     <meta name="author" content="{{ config.author }}">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="/static/default_theme/base.css">
+    <link rel="stylesheet" href="/static/default_theme/header.css">
+    <link rel="stylesheet" href="/static/default_theme/hero.css">
+    <link rel="stylesheet" href="/static/default_theme/sidebar.css">
+    <link rel="stylesheet" href="/static/default_theme/toc.css">
+    <link rel="stylesheet" href="/static/default_theme/content.css">
+    <link rel="stylesheet" href="/static/default_theme/code.css">
+    <link rel="stylesheet" href="/static/default_theme/navigation.css">
+    <link rel="stylesheet" href="/static/default_theme/search.css">
+    <link rel="stylesheet" href="/static/default_theme/responsive.css">
+    <link rel="stylesheet" href="/static/default_theme/utilities.css">
     <link rel="stylesheet" href="/static/ai_chat.css">
     <link rel="stylesheet" id="hljs-theme-dark" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_dark }}.min.css">
     <link rel="stylesheet" id="hljs-theme-light" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/styles/{{ config.highlighting.theme_light }}.min.css" disabled>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ config.highlighting.cdn_version }}/highlight.min.js"></script>
     <style>
         :root {
             /* Dark theme (default) */
