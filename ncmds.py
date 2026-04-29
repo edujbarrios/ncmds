@@ -19,6 +19,7 @@ For production deployment (optional), see wsgi.py and DEPLOYMENT.md
 import os
 import sys
 import re
+import threading
 import markdown
 import yaml
 from datetime import datetime
@@ -253,6 +254,8 @@ class DocumentationSite:
         self.config_manager = config_manager
         self.processor = MarkdownProcessor()
         self.docs_dir = Path(DOCS_DIR)
+        self._doc_cache = {}  # str(doc_path) -> {'mtime': float, 'doc': dict}
+        self._doc_cache_lock = threading.Lock()
         self.navigation = self.build_navigation()
 
     def _extract_front_matter(self, content):
@@ -428,7 +431,14 @@ class DocumentationSite:
 
         if not doc_path.exists():
             return None
-        
+
+        cache_key = str(doc_path)
+        mtime = doc_path.stat().st_mtime
+        with self._doc_cache_lock:
+            cached = self._doc_cache.get(cache_key)
+            if cached is not None and cached['mtime'] == mtime:
+                return cached['doc']
+
         with open(doc_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -448,10 +458,12 @@ class DocumentationSite:
             result['metadata']['title'] = [frontmatter_title]
 
         # Expose file modification time for per-document metadata in the UI.
-        modified_at = datetime.fromtimestamp(doc_path.stat().st_mtime)
+        modified_at = datetime.fromtimestamp(mtime)
         result['last_updated_display'] = modified_at.strftime('%d/%m/%Y %H:%M')
         result['last_updated_iso'] = modified_at.isoformat(timespec='seconds')
-        
+
+        with self._doc_cache_lock:
+            self._doc_cache[cache_key] = {'mtime': mtime, 'doc': result}
         return result
 
 

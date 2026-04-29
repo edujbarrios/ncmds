@@ -6,7 +6,18 @@
     <meta name="description" content="{{ config.description }}">
     <meta name="author" content="{{ config.author }}">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="/static/default_theme/base.css">
+    <link rel="stylesheet" href="/static/default_theme/header.css">
+    <link rel="stylesheet" href="/static/default_theme/hero.css">
+    <link rel="stylesheet" href="/static/default_theme/sidebar.css">
+    <link rel="stylesheet" href="/static/default_theme/toc.css">
+    <link rel="stylesheet" href="/static/default_theme/content.css">
+    <link rel="stylesheet" href="/static/default_theme/code.css">
+    <link rel="stylesheet" href="/static/default_theme/navigation.css">
+    <link rel="stylesheet" href="/static/default_theme/search.css">
+    <link rel="stylesheet" href="/static/default_theme/responsive.css">
+    <link rel="stylesheet" href="/static/default_theme/utilities.css">
     <style>
         :root {
             /* Dark theme (default) */
@@ -47,10 +58,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        * {
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-        }
-
         .theme-toggle:focus-visible {
             outline: 2px solid var(--accent-color);
             outline-offset: 2px;
@@ -95,6 +102,7 @@
             background-size: 50px 50px;
             opacity: 0.1;
             animation: gridMove 20s linear infinite;
+            will-change: transform;
         }
         
         @keyframes gridMove {
@@ -118,6 +126,7 @@
             opacity: 0.3;
             animation: float 15s infinite ease-in-out;
             box-shadow: 0 0 10px var(--primary-color);
+            will-change: transform;
         }
         
         .particle:nth-child(odd) {
