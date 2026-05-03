@@ -147,7 +147,18 @@ class LLMClient:
             List of model dictionaries with 'id' and 'name'
         """
         # Try to fetch models from API
-        models_url = self.api_url.replace('/chat/completions', '/models')
+        # Build the models URL from the API base.
+        # For OpenAI-compatible APIs the chat endpoint is at <base>/chat/completions
+        # and the models endpoint is at <base>/models.
+        from urllib.parse import urlparse, urlunparse
+        parsed = urlparse(self.api_url)
+        path = parsed.path
+        if path.endswith('/chat/completions'):
+            models_path = path[:-len('/chat/completions')] + '/models'
+        else:
+            # Best-effort fallback: go up one level and append /models.
+            models_path = path.rsplit('/', 1)[0] + '/models'
+        models_url = urlunparse(parsed._replace(path=models_path))
         
         headers = {
             "Authorization": f"Bearer {self.api_key}"

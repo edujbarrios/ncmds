@@ -19,11 +19,15 @@ class QMDExporter:
         """Generate YAML frontmatter for QMD file"""
         author_text = author or self.config.get('author', 'Unknown Author')
         date_text = date or datetime.now().strftime('%Y-%m-%d')
+
+        # Escape double quotes to avoid breaking YAML string values.
+        safe_title = project_name.replace('"', '\\"')
+        safe_author = author_text.replace('"', '\\"')
         
         frontmatter = f"""---
-title: "{project_name}"
+title: "{safe_title}"
 subtitle: "Documentation"
-author: "{author_text}"
+author: "{safe_author}"
 date: "{date_text}"
 format:
   {format_type}:
@@ -123,15 +127,18 @@ For more information about Quarto, visit: https://quarto.org
     def create_quarto_project(self, documents_data, navigation, project_name=None):
         """Create a complete Quarto project structure"""
         project_name = project_name or self.config.get('site_name', 'Documentation')
-        
+
+        safe_title = project_name.replace('"', '\\"')
+        safe_author = self.config.get('author', 'Unknown Author').replace('"', '\\"')
+
         # Create _quarto.yml configuration
         quarto_config = f"""project:
   type: book
   output-dir: _output
 
 book:
-  title: "{project_name}"
-  author: "{self.config.get('author', 'Unknown Author')}"
+  title: "{safe_title}"
+  author: "{safe_author}"
   date: "{datetime.now().strftime('%Y-%m-%d')}"
   chapters:
 """
