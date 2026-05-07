@@ -287,7 +287,7 @@
         const item = document.createElement('a');
         item.className = 'search-result-item';
         item.href = result.url;
-        item.dataset.index = index;
+        item.dataset.index = String(index);
         item.dataset.titleMatch = result.title_match ? 'true' : 'false';
         // Highlight query in title
         const highlightedTitle = highlightText(result.title, query);
@@ -374,7 +374,7 @@
     function setActiveResult(index) {
         const resultItems = searchResultsContent.querySelectorAll('.search-result-item');
         // Remove all active classes
-        resultItems.forEach(item => item.classList.remove('active'));
+        resultItems.forEach((item) => item.classList.remove('active'));
         // Add active class to specific item
         if (index >= 0 && index < resultItems.length) {
             currentResultIndex = index;

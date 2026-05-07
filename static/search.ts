@@ -3,6 +3,26 @@
  * Handles search functionality with keyboard shortcuts
  */
 
+interface SearchFilters {
+    tag: string;
+    difficulty: string;
+    owner: string;
+    writer: string;
+    [key: string]: string;
+}
+
+interface SearchResult {
+    url: string;
+    title: string;
+    title_match?: boolean;
+    context?: string;
+    tags?: string[];
+    difficulty?: string;
+    owner?: string;
+    writer?: string;
+    path?: string;
+}
+
 (function() {
     'use strict';
     
@@ -11,22 +31,22 @@
     const MIN_QUERY_LENGTH = 2;
     
     // DOM Elements
-    let searchInput = null;
-    let searchResults = null;
-    let searchResultsContent = null;
-    let searchTimeout = null;
+    let searchInput: HTMLInputElement | null = null;
+    let searchResults: HTMLElement | null = null;
+    let searchResultsContent: Element | null = null;
+    let searchTimeout: ReturnType<typeof setTimeout> | null = null;
     let currentResultIndex = -1;
-    let currentResults = [];
-    let searchContainer = null;
-    let mobileSearchTrigger = null;
-    let mobileSearchClose = null;
-    let searchBackdrop = null;
+    let currentResults: SearchResult[] = [];
+    let searchContainer: Element | null = null;
+    let mobileSearchTrigger: HTMLElement | null = null;
+    let mobileSearchClose: HTMLElement | null = null;
+    let searchBackdrop: HTMLElement | null = null;
     
     /**
      * Initialize search functionality
      */
     function initSearch() {
-        searchInput = document.getElementById('searchInput');
+        searchInput = document.getElementById('searchInput') as HTMLInputElement | null;
         searchResults = document.getElementById('searchResults');
         searchResultsContent = searchResults?.querySelector('.search-results-content');
         searchContainer = document.querySelector('.search-container');
@@ -63,16 +83,16 @@
      * Parse search text and extract inline filters like:
      * tag:api difficulty:beginner owner:docs-team
      */
-    function parseSearchInput(rawInput) {
-        const filters = {
+    function parseSearchInput(rawInput: string) {
+        const filters: SearchFilters = {
             tag: '',
             difficulty: '',
             owner: '',
             writer: ''
         };
-        const terms = [];
+        const terms: string[] = [];
 
-        rawInput.split(/\s+/).filter(Boolean).forEach((token) => {
+        rawInput.split(/\s+/).filter(Boolean).forEach((token: string) => {
             const separatorIndex = token.indexOf(':');
 
             if (separatorIndex > 0) {
@@ -97,14 +117,14 @@
     /**
      * Check if at least one filter is active.
      */
-    function hasActiveFilters(filters) {
+    function hasActiveFilters(filters: SearchFilters) {
         return Boolean(filters.tag || filters.difficulty || filters.owner || filters.writer);
     }
 
     /**
      * Format active filters for the result footer.
      */
-    function formatActiveFilters(filters) {
+    function formatActiveFilters(filters: SearchFilters) {
         const chips = [];
 
         if (filters.tag) {
@@ -126,8 +146,8 @@
     /**
      * Handle search input with debouncing
      */
-    function handleSearchInput(e) {
-        const rawInput = e.target.value.trim();
+    function handleSearchInput(e: Event) {
+        const rawInput = (e.target as HTMLInputElement).value.trim();
         const parsed = parseSearchInput(rawInput);
         
         // Clear previous timeout
@@ -163,7 +183,7 @@
     /**
      * Handle keyboard navigation in search
      */
-    function handleSearchKeydown(e) {
+    function handleSearchKeydown(e: KeyboardEvent) {
         if (!searchResults.style.display || searchResults.style.display === 'none') {
             return;
         }
@@ -192,7 +212,7 @@
     /**
      * Handle global keyboard shortcuts
      */
-    function handleGlobalKeydown(e) {
+    function handleGlobalKeydown(e: KeyboardEvent) {
         // Ctrl+K or Cmd+K to focus search
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
@@ -213,12 +233,12 @@
     /**
      * Handle clicks outside search
      */
-    function handleClickOutside(e) {
-        if (mobileSearchTrigger && mobileSearchTrigger.contains(e.target)) {
+    function handleClickOutside(e: MouseEvent) {
+        if (mobileSearchTrigger && mobileSearchTrigger.contains(e.target as Node)) {
             return;
         }
 
-        if (searchContainer && !searchContainer.contains(e.target)) {
+        if (searchContainer && !searchContainer.contains(e.target as Node)) {
             hideResults();
 
             if (isMobileView()) {
@@ -230,7 +250,7 @@
     /**
      * Perform search API call
      */
-    async function performSearch(rawInput) {
+    async function performSearch(rawInput: string) {
         const parsed = parseSearchInput(rawInput);
         const params = new URLSearchParams({
             q: parsed.query,
@@ -271,7 +291,7 @@
     /**
      * Display search results
      */
-    function displayResults(results, query, filters) {
+    function displayResults(results: SearchResult[], query: string, filters: SearchFilters) {
         if (!searchResultsContent) return;
         
         searchResultsContent.innerHTML = '';
@@ -298,7 +318,7 @@
         }
         
         // Create result items
-        results.forEach((result, index) => {
+        results.forEach((result: SearchResult, index: number) => {
             const resultItem = createResultItem(result, query, index);
             searchResultsContent.appendChild(resultItem);
         });
@@ -328,11 +348,11 @@
     /**
      * Create a single result item element
      */
-    function createResultItem(result, query, index) {
+    function createResultItem(result: SearchResult, query: string, index: number) {
         const item = document.createElement('a');
         item.className = 'search-result-item';
         item.href = result.url;
-        item.dataset.index = index;
+        item.dataset.index = String(index);
         item.dataset.titleMatch = result.title_match ? 'true' : 'false';
         
         // Highlight query in title
@@ -358,7 +378,7 @@
         if (result.writer) {
             metadataChips.push(`<span class="search-result-chip search-result-chip-writer">${escapeHtml(result.writer)}</span>`);
         }
-        tags.slice(0, 2).forEach((tag) => {
+        tags.slice(0, 2).forEach((tag: string) => {
             metadataChips.push(`<span class="search-result-chip search-result-chip-tag">#${escapeHtml(tag)}</span>`);
         });
         
@@ -394,7 +414,7 @@
     /**
      * Highlight query text in content
      */
-    function highlightText(text, query) {
+    function highlightText(text: string, query: string) {
         if (!text || !query) return escapeHtml(text);
         
         const escapedText = escapeHtml(text);
@@ -406,8 +426,8 @@
     /**
      * Navigate through results with arrow keys
      */
-    function navigateResults(direction) {
-        const resultItems = searchResultsContent.querySelectorAll('.search-result-item');
+    function navigateResults(direction: 'up' | 'down') {
+        const resultItems = searchResultsContent!.querySelectorAll('.search-result-item');
         
         if (resultItems.length === 0) return;
         
@@ -430,11 +450,11 @@
     /**
      * Set active result by index
      */
-    function setActiveResult(index) {
-        const resultItems = searchResultsContent.querySelectorAll('.search-result-item');
+    function setActiveResult(index: number) {
+        const resultItems = searchResultsContent!.querySelectorAll('.search-result-item');
         
         // Remove all active classes
-        resultItems.forEach(item => item.classList.remove('active'));
+        resultItems.forEach((item: Element) => item.classList.remove('active'));
         
         // Add active class to specific item
         if (index >= 0 && index < resultItems.length) {
@@ -462,7 +482,7 @@
     /**
      * Navigate to result URL
      */
-    function navigateToResult(url) {
+    function navigateToResult(url: string) {
         hideResults();
         closeMobileSearch();
         searchInput.blur();
@@ -544,7 +564,7 @@
     /**
      * Show error message
      */
-    function showError(message) {
+    function showError(message: string) {
         if (!searchResultsContent) return;
         
         searchResultsContent.innerHTML = `
@@ -582,7 +602,7 @@
     /**
      * Escape HTML to prevent XSS
      */
-    function escapeHtml(text) {
+    function escapeHtml(text: string) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
@@ -591,7 +611,7 @@
     /**
      * Escape regex special characters
      */
-    function escapeRegex(text) {
+    function escapeRegex(text: string) {
         return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
