@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
@@ -317,7 +318,7 @@ function pickPreviousNext(docPath: string): { prevDoc: NavItem | null; nextDoc: 
     const prefixedMatch =
       Boolean(docPath) &&
       navPath.endsWith(`-${docPath}`) &&
-      /^\\d+$/.test(navPath.slice(0, -(docPath.length + 1)).replace(/-/g, ''));
+      /^\d+$/.test(navPath.slice(0, -(docPath.length + 1)).replace(/-/g, ''));
     if (navPath === docPath || prefixedMatch) {
       return {
         prevDoc: i > 0 ? navigation[i - 1] : null,
@@ -332,27 +333,13 @@ const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use('/static', express.static(staticDir));
 
-function createRateLimiter(windowMs: number, maxRequests: number) {
-  const hits = new Map<string, number[]>();
-  return (req: Request, res: Response, next: NextFunction) => {
-    const key = `${req.ip}:${req.path}`;
-    const now = Date.now();
-    const windowStart = now - windowMs;
-    const existing = hits.get(key) ?? [];
-    const recent = existing.filter((timestamp) => timestamp > windowStart);
-
-    if (recent.length >= maxRequests) {
-      res.status(429).json({ error: 'Too many requests. Please try again shortly.' });
-      return;
-    }
-
-    recent.push(now);
-    hits.set(key, recent);
-    next();
-  };
-}
-
-const exportRateLimiter = createRateLimiter(60_000, 10);
+const exportRateLimiter = rateLimit({
+  windowMs: 60_000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please try again shortly.' }
+});
 
 app.get('/', (_req: Request, res: Response) => {
   res.status(200).send(renderTemplate('home.html', { title: config.site_name, config }));
