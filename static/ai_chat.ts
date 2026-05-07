@@ -21,17 +21,17 @@
     
     // DOM elements
     const widget = document.getElementById('ai-chat-widget');
-    const toggleButton = document.getElementById('ai-chat-toggle');
-    const closeButton = document.getElementById('ai-chat-close');
-    const fullscreenButton = document.getElementById('ai-chat-fullscreen');
+    const toggleButton = document.getElementById('ai-chat-toggle') as HTMLButtonElement | null;
+    const closeButton = document.getElementById('ai-chat-close') as HTMLButtonElement | null;
+    const fullscreenButton = document.getElementById('ai-chat-fullscreen') as HTMLButtonElement | null;
     const chatWindow = document.getElementById('ai-chat-window');
     const messagesContainer = document.getElementById('ai-chat-messages');
-    const inputField = document.getElementById('ai-chat-input');
-    const sendButton = document.getElementById('ai-chat-send');
-    const modelSelect = document.getElementById('ai-chat-model-select');
+    const inputField = document.getElementById('ai-chat-input') as HTMLInputElement | HTMLTextAreaElement | null;
+    const sendButton = document.getElementById('ai-chat-send') as HTMLButtonElement | null;
+    const modelSelect = document.getElementById('ai-chat-model-select') as HTMLSelectElement | null;
     
     // Check if widget exists (AI chat is enabled)
-    if (!widget) {
+    if (!widget || !toggleButton || !closeButton || !fullscreenButton || !chatWindow || !messagesContainer || !inputField || !sendButton || !modelSelect) {
         return;
     }
     
@@ -182,14 +182,26 @@
         if (isFullscreen) {
             chatWindow.classList.add('fullscreen');
             // Swap icons
-            fullscreenButton.querySelector('.fullscreen-icon').style.display = 'none';
-            fullscreenButton.querySelector('.minimize-icon').style.display = 'block';
+            const fullscreenIcon = fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
+            const minimizeIcon = fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
+            if (fullscreenIcon) {
+                fullscreenIcon.style.display = 'none';
+            }
+            if (minimizeIcon) {
+                minimizeIcon.style.display = 'block';
+            }
             fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
         } else {
             chatWindow.classList.remove('fullscreen');
             // Swap icons back
-            fullscreenButton.querySelector('.fullscreen-icon').style.display = 'block';
-            fullscreenButton.querySelector('.minimize-icon').style.display = 'none';
+            const fullscreenIcon = fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
+            const minimizeIcon = fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
+            if (fullscreenIcon) {
+                fullscreenIcon.style.display = 'block';
+            }
+            if (minimizeIcon) {
+                minimizeIcon.style.display = 'none';
+            }
             fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
         }
         
