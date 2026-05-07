@@ -177,7 +177,6 @@ Full documentation available at `/docs` when running the server, or view:
 - [Template Components](docs/07-components.md)
 
 ## 🛠️ Tech Stack
-## 🛠️ Tech Stack
 
 - **Node.js + Express** - Web server and API routes
 - **TypeScript** - Typed backend implementation

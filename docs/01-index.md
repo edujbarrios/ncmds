@@ -191,8 +191,8 @@ Understanding the system will help you use it effectively:
 Built with modern, reliable technologies:
 
 - **Backend**: Express (Node.js web framework)
-- **Markdown**: Python-Markdown with extensions
-- **Templating**: Jinja2
+- **Markdown**: Markdown-it with anchors and linkify
+- **Templating**: Nunjucks
 - **Styling**: Modular CSS with variables for theming
 - **Syntax Highlighting**: Pygments (server-side) + Highlight.js (client-side)
 - **QMD Export**: Quarto Markdown generation (render with Quarto CLI)

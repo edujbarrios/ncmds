@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
@@ -22,6 +22,7 @@ type NavItem = {
 
 type DocumentData = {
   html: string;
+  plain_text: string;
   metadata: Record<string, any>;
   toc: string;
   path: string;
@@ -293,6 +294,7 @@ function getDocument(docPath: string): DocumentData | null {
 
   return {
     html,
+    plain_text: content,
     metadata: mdMetadata,
     toc: buildToc(content),
     path: docPath,
@@ -312,7 +314,11 @@ function renderTemplate(template: string, context: Record<string, any>): string 
 function pickPreviousNext(docPath: string): { prevDoc: NavItem | null; nextDoc: NavItem | null } {
   for (let i = 0; i < navigation.length; i += 1) {
     const navPath = navigation[i].path;
-    if (navPath === docPath || navPath.match(new RegExp(`^\\d+-${docPath}$`))) {
+    const prefixedMatch =
+      Boolean(docPath) &&
+      navPath.endsWith(`-${docPath}`) &&
+      /^\\d+$/.test(navPath.slice(0, -(docPath.length + 1)).replace(/-/g, ''));
+    if (navPath === docPath || prefixedMatch) {
       return {
         prevDoc: i > 0 ? navigation[i - 1] : null,
         nextDoc: i < navigation.length - 1 ? navigation[i + 1] : null
@@ -325,6 +331,28 @@ function pickPreviousNext(docPath: string): { prevDoc: NavItem | null; nextDoc: 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use('/static', express.static(staticDir));
+
+function createRateLimiter(windowMs: number, maxRequests: number) {
+  const hits = new Map<string, number[]>();
+  return (req: Request, res: Response, next: NextFunction) => {
+    const key = `${req.ip}:${req.path}`;
+    const now = Date.now();
+    const windowStart = now - windowMs;
+    const existing = hits.get(key) ?? [];
+    const recent = existing.filter((timestamp) => timestamp > windowStart);
+
+    if (recent.length >= maxRequests) {
+      res.status(429).json({ error: 'Too many requests. Please try again shortly.' });
+      return;
+    }
+
+    recent.push(now);
+    hits.set(key, recent);
+    next();
+  };
+}
+
+const exportRateLimiter = createRateLimiter(60_000, 10);
 
 app.get('/', (_req: Request, res: Response) => {
   res.status(200).send(renderTemplate('home.html', { title: config.site_name, config }));
@@ -400,7 +428,7 @@ app.get('/api/search', (req: Request, res: Response) => {
     if (ownerFilter && doc.owner.toLowerCase() !== ownerFilter) continue;
     if (writerFilter && doc.writer.toLowerCase() !== writerFilter) continue;
 
-    const plainText = doc.html.replace(/<[^>]+>/g, '');
+    const plainText = doc.plain_text;
     const plainLower = plainText.toLowerCase();
 
     const titleMatch = query ? navItem.title.toLowerCase().includes(queryLower) : false;
@@ -590,7 +618,7 @@ app.get('/export/config', (_req: Request, res: Response) => {
   });
 });
 
-app.get('/export/qmd/all', (_req: Request, res: Response) => {
+app.get('/export/qmd/all', exportRateLimiter, (_req: Request, res: Response) => {
   navigation = buildNavigation();
 
   const chunks: string[] = ['---', `title: "${String(config.site_name ?? 'Documentation')}"`, 'format: gfm', '---', ''];
