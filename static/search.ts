@@ -426,7 +426,7 @@ interface SearchResult {
     /**
      * Navigate through results with arrow keys
      */
-    function navigateResults(direction: string) {
+    function navigateResults(direction: 'up' | 'down') {
         const resultItems = searchResultsContent!.querySelectorAll('.search-result-item');
         
         if (resultItems.length === 0) return;
