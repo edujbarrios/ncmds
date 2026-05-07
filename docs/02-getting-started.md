@@ -389,8 +389,8 @@ ncmds/
 │   ├── main.css             # Main CSS entry point (imports modules)
 │   ├── style.css            # Legacy stylesheet (backup)
 │   ├── ai_chat.css          # AI chat widget styles
-│   ├── ai_chat.js           # AI chat widget logic
-│   ├── search.js            # Full-text search implementation
+│   ├── ai_chat.ts           # AI chat widget logic
+│   ├── search.ts            # Full-text search implementation
 │   ├── default_theme/       # Modular CSS files
 │   │   ├── base.css         # Reset & typography
 │   │   ├── header.css       # Header styles

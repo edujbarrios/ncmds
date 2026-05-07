@@ -221,7 +221,7 @@ templates/components/html/header.html
 Some components depend on:
 - **Config variables**: Passed from `ncmds.py` via Jinja2 context
 - **CSS classes**: Defined in modular CSS files under `static/default_theme/` (imported by `static/main.css`)
-- **JavaScript**: In `scripts.html` for interactive components, plus `static/ai_chat.js` and `static/search.js` for dedicated features
+- **JavaScript**: In `scripts.html` for interactive components, plus `static/ai_chat.ts` and `static/search.ts` for dedicated features
 - **External CSS**: `static/ai_chat.css` for AI chat widget styling
 
 ## 🎨 Styling Components

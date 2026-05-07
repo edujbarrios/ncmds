@@ -8,9 +8,13 @@
   },
   "scripts": {
     "dev": "tsx src/server.ts",
-    "build": "tsc",
+    "build": "npm run build:server && npm run build:frontend",
     "start": "node dist/src/server.js",
-    "test": "echo \"No automated tests configured\""
+    "test": "echo \"No automated tests configured\"",
+    "predev": "npm run build:frontend",
+    "build:server": "tsc",
+    "build:frontend": "tsc -p tsconfig.frontend.json",
+    "prestart": "npm run build:frontend"
   },
   "repository": {
     "type": "git",
