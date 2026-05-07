@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "none",
+    "lib": ["DOM", "ES2020"],
+    "strict": false,
+    "skipLibCheck": true,
+    "rootDir": "static",
+    "outDir": "static"
+  },
+  "include": ["static/ai_chat.ts", "static/search.ts"]
+}
