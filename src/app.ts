@@ -56,6 +56,15 @@ const slugify = (value: string): string =>
 
 const md = new MarkdownIt({ html: true, linkify: true }).use(markdownItAnchor, { slugify });
 
+function parseFrontMatter(raw: string): { data: Record<string, any>; content: string } {
+  try {
+    const parsed = matter(raw);
+    return { data: (parsed.data as Record<string, any>) ?? {}, content: parsed.content };
+  } catch {
+    return { data: {}, content: raw };
+  }
+}
+
 function deepMerge(base: any, update: any): any {
   if (!update || typeof update !== 'object') return base;
   const result = { ...base };
@@ -174,7 +183,7 @@ function buildNavigation(): NavItem[] {
   for (const file of listMarkdownFiles(docsDir)) {
     const relative = path.relative(docsDir, file);
     const urlPath = relative.replace(/\\/g, '/').replace(/\.md$/, '');
-    const { data, content } = matter(fs.readFileSync(file, 'utf8'));
+    const { data, content } = parseFrontMatter(fs.readFileSync(file, 'utf8'));
     const fileStem = path.basename(file, '.md');
     let title = normalizeText((data as any).title) || firstHeading(content, fileStem);
     let order = Number.parseInt(String((data as any).order ?? '999'), 10);
@@ -273,7 +282,7 @@ function getDocument(docPath: string): DocumentData | null {
   if (!filePath) return null;
 
   const raw = fs.readFileSync(filePath, 'utf8');
-  const { data, content } = matter(raw);
+  const { data, content } = parseFrontMatter(raw);
   const html = md.render(content);
   const metadata = buildDocMetadata((data as Record<string, any>) ?? {});
   const stat = fs.statSync(filePath);
