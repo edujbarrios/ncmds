@@ -42,48 +42,30 @@ git clone https://github.com/edujbarrios/ncmds.git
 cd ncmds
 
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
 # Run locally (default)
-python ncmds.py
+npm run dev
 ```
 
 Open `http://localhost:5000` in your browser.
 
 **That's it!** The tool is designed to run on localhost by default. No additional configuration needed.
 
-## � Development Mode (Package Installation)
-
-If you want to use NCMDS as a reusable module in development:
+## 🧪 Development Mode
 
 ```bash
-# Install in editable mode (one time only)
-pip install -e .
+# Start development server with hot reload
+npm run dev
+
+# Build production output
+npm run build
+
+# Run production build
+npm start
 ```
 
-This allows you to:
-- Run `ncmds` command from anywhere
-- Import NCMDS in other Python projects
-- Use changes immediately without reinstalling
-
-```bash
-# Run via CLI command
-ncmds
-
-# Or with custom port
-PORT=8000 ncmds
-
-# Or still use the traditional way
-python ncmds.py
-```
-
-### Import in Other Projects
-
-```python
-from ncmds import app, DocumentationSite, config_manager
-from ai_chat import register_ai_chat_routes
-from export import register_export_routes
-```
+Use `PORT=8000 npm run dev` to change the local port.
 
 ## �📝 Usage
 
@@ -195,10 +177,12 @@ Full documentation available at `/docs` when running the server, or view:
 - [Template Components](docs/07-components.md)
 
 ## 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-- **Flask** - Web framework
-- **Python-Markdown** - Markdown processing with extensions
-- **PyYAML** - Configuration management
+- **Node.js + Express** - Web server and API routes
+- **TypeScript** - Typed backend implementation
+- **Markdown-it** - Markdown rendering with heading anchors
+- **Nunjucks** - Template rendering
 - **Highlight.js** - Syntax highlighting
 - **LLM7.io** - AI chat integration with model switching
 - **Quarto** - QMD rendering support in PDF format (optional)
@@ -220,4 +204,3 @@ Inspired by Docusaurus, MkDocs, Read the Docs, and Quarto.
 ## 📞 Contact
 
 - **Author:** [edujbarrios](https://github.com/edujbarrios) - eduardojbarriosgarcia@gmail.com
-

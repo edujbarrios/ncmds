@@ -17,11 +17,11 @@ tags:
 ![Export](https://img.shields.io/badge/Export-QMD-0D8B8B?style=flat-square)
 
 > [!NOTE]
-> NCMDS is local-first. You can run it instantly with `python ncmds.py` and start writing docs right away.
+> NCMDS is local-first. You can run it instantly with `npm run dev` and start writing docs right away.
 
 ## 🎯 What is NCMDS?
 
-NCMDS is a Flask-based documentation system that:
+NCMDS is a TypeScript + Express based documentation system that:
 
 - **Reads** your `.md` files from the `docs/` directory
 - **Converts** them to HTML with enhanced styling and features
@@ -94,10 +94,10 @@ git clone https://github.com/edujbarrios/ncmds.git
 cd ncmds
 
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
 # Start the server
-python ncmds.py
+npm run dev
 ```
 
 ### 2. Create Your First Document
@@ -176,7 +176,7 @@ Understanding the system will help you use it effectively:
 - Themes apply your chosen colors via CSS variables
 
 ### 4. Live Serving
-- Flask serves the site on `localhost:5000` by default
+- The Node.js server serves the site on `localhost:5000` by default
 - Each page request renders the Markdown fresh
 - Changes to `.md` files appear on page refresh (no restart needed)
 
@@ -190,7 +190,7 @@ Understanding the system will help you use it effectively:
 
 Built with modern, reliable technologies:
 
-- **Backend**: Flask (Python web framework)
+- **Backend**: Express (Node.js web framework)
 - **Markdown**: Python-Markdown with extensions
 - **Templating**: Jinja2
 - **Styling**: Modular CSS with variables for theming
