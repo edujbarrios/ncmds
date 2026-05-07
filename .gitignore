@@ -54,3 +54,7 @@ config/config.local.yaml
 *.db
 
 tests.txt
+# Node / TypeScript
+node_modules/
+dist/
+.npm/

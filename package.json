@@ -1,13 +1,16 @@
 {
   "name": "ncmds",
-  "version": "1.0.0",
-  "description": "<div align=\"center\">",
-  "main": "index.js",
+  "version": "5.0.0",
+  "description": "No Code Markdown Documentation Sites",
+  "main": "dist/src/server.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/src/server.js",
+    "test": "echo \"No automated tests configured\""
   },
   "repository": {
     "type": "git",
@@ -15,7 +18,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/edujbarrios/ncmds/issues"
@@ -36,5 +39,8 @@
     "@types/nunjucks": "^3.2.6",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
