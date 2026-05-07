@@ -108,8 +108,8 @@
     var label = btn.querySelector('.tts-label');
     var labelPlay = '{{ config.text_to_speech.ui.button_text or "Listen" }}';
     var labelStop = '{{ config.text_to_speech.ui.button_text_stop or "Stop" }}';
-    var speechRate = Math.max(0.1, Math.min(10, parseFloat('{{ config.text_to_speech.speech.rate if config.text_to_speech.speech.rate is not none else 1.0 }}') || 1.0));
-    var speechPitch = Math.max(0, Math.min(2, parseFloat('{{ config.text_to_speech.speech.pitch if config.text_to_speech.speech.pitch is not none else 1.0 }}') || 1.0));
+    var speechRate = Math.max(0.1, Math.min(10, parseFloat('{{ config.text_to_speech.speech.rate | default(1.0) }}') || 1.0));
+    var speechPitch = Math.max(0, Math.min(2, parseFloat('{{ config.text_to_speech.speech.pitch | default(1.0) }}') || 1.0));
     {% if config.text_to_speech.speech.language %}
     var speechLang = '{{ config.text_to_speech.speech.language }}';
     {% else %}

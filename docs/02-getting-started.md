@@ -41,7 +41,7 @@ cd ncmds
 
 ```bash
 # Install all required packages
-pip install -r requirements.txt
+npm install
 
 # Or using virtual environment (recommended)
 python -m venv venv
@@ -53,7 +53,7 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Then install dependencies
-pip install -r requirements.txt
+npm install
 ```
 
 #### 3. Verify Installation
@@ -72,7 +72,7 @@ pip list | grep -E "Flask|markdown|PyYAML|Pygments"
 #### 4. Start the Server
 
 ```bash
-python ncmds.py
+npm run dev
 ```
 
 You should see:
@@ -459,7 +459,7 @@ Common issues and solutions:
 **Server won't start:**
 ```bash
 # Check if dependencies are installed
-pip install -r requirements.txt
+npm install
 
 # Check if port 5000 is already in use
 # Change port in config.yaml if needed

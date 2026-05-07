@@ -10,8 +10,8 @@
                      height="{{ config.logo.height }}"
                      style="border-radius: 6px; object-fit: contain;">
                 {% else %}
-                <svg width="{{ config.logo.width if config.logo else 32 }}" 
-                     height="{{ config.logo.height if config.logo else 32 }}" 
+                <svg width="{% if config.logo %}{{ config.logo.width }}{% else %}32{% endif %}" 
+                     height="{% if config.logo %}{{ config.logo.height }}{% else %}32{% endif %}" 
                      viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -21,7 +21,7 @@
                         </linearGradient>
                     </defs>
                     <rect width="32" height="32" rx="6" fill="url(#logoGradient)"/>
-                    <text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="sans-serif">{{ config.logo.text if config.logo else config.ui_text.logo_text }}</text>
+                    <text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="sans-serif">{% if config.logo %}{{ config.logo.text }}{% else %}{{ config.ui_text.logo_text }}{% endif %}</text>
                 </svg>
                 {% endif %}
                 <span>{{ config.site_name }}</span>

@@ -620,7 +620,7 @@ If `debug: false`:
 2. Restart the server:
    ```bash
    # Stop server (Ctrl+C)
-   python ncmds.py
+   npm run dev
    ```
 3. Configuration loads on startup
 
@@ -669,7 +669,7 @@ config/config.yaml.local
 
 After major config changes:
 1. Stop the server
-2. Start with `python ncmds.py`
+2. Start with `npm run dev`
 3. Check terminal for errors
 4. Test in browser
 5. Review browser console (F12) for JavaScript errors
