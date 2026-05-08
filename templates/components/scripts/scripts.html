@@ -225,6 +225,67 @@
         }
     });
 
+    // Reading progress bar
+    (function () {
+        const progressBar = document.getElementById('readingProgress');
+        const mainContent = document.querySelector('.main-content');
+        if (!progressBar || !mainContent) return;
+
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        updateProgress();
+    })();
+
+    // TOC scroll-spy: highlight the active heading as you scroll
+    (function () {
+        const tocLinks = document.querySelectorAll('.toc-content a');
+        if (!tocLinks.length) return;
+
+        const headingIds = Array.from(tocLinks).map(link => {
+            const href = link.getAttribute('href');
+            return href && href.startsWith('#') ? href.slice(1) : null;
+        }).filter(Boolean);
+
+        const headings = headingIds
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+
+        if (!headings.length) return;
+
+        function getActiveHeading() {
+            let active = headings[0];
+            for (const heading of headings) {
+                if (heading.getBoundingClientRect().top <= 100) {
+                    active = heading;
+                } else {
+                    break;
+                }
+            }
+            return active;
+        }
+
+        function updateTocActive() {
+            const active = getActiveHeading();
+            tocLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + active.id) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateTocActive, { passive: true });
+        updateTocActive();
+    })();
+
     // Add copy buttons to code blocks
     document.querySelectorAll('pre > code').forEach((codeBlock) => {
         const pre = codeBlock.parentElement;
