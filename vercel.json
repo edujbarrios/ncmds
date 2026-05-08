@@ -13,12 +13,7 @@
   "functions": {
     "api/index.ts": {
       "maxDuration": 10,
-      "includeFiles": [
-        "docs/**",
-        "templates/**",
-        "config/**",
-        "static/**"
-      ]
+      "includeFiles": "{docs/**,templates/**,config/**,static/**}"
     }
   }
 }
