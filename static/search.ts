@@ -321,7 +321,9 @@ interface SearchResult {
         // Create result items
         results.forEach((result: SearchResult, index: number) => {
             const resultItem = createResultItem(result, query, index);
-            searchResultsContent!.appendChild(resultItem);
+            if (searchResultsContent) {
+                searchResultsContent.appendChild(resultItem);
+            }
         });
         
         // Add search info footer

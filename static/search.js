@@ -261,7 +261,9 @@
         // Create result items
         results.forEach((result, index) => {
             const resultItem = createResultItem(result, query, index);
-            searchResultsContent.appendChild(resultItem);
+            if (searchResultsContent) {
+                searchResultsContent.appendChild(resultItem);
+            }
         });
         // Add search info footer
         const searchInfo = document.createElement('div');
