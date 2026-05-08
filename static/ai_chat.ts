@@ -29,11 +29,22 @@
     const inputField = document.getElementById('ai-chat-input') as HTMLInputElement | HTMLTextAreaElement | null;
     const sendButton = document.getElementById('ai-chat-send') as HTMLButtonElement | null;
     const modelSelect = document.getElementById('ai-chat-model-select') as HTMLSelectElement | null;
-    
+
     // Check if widget exists (AI chat is enabled)
     if (!widget || !toggleButton || !closeButton || !fullscreenButton || !chatWindow || !messagesContainer || !inputField || !sendButton || !modelSelect) {
         return;
     }
+
+    // Non-null aliases used by closures (TypeScript doesn't narrow captured vars in nested functions)
+    const _widget = widget;
+    const _toggleButton = toggleButton;
+    const _closeButton = closeButton;
+    const _fullscreenButton = fullscreenButton;
+    const _chatWindow = chatWindow;
+    const _messagesContainer = messagesContainer;
+    const _inputField = inputField;
+    const _sendButton = sendButton;
+    const _modelSelect = modelSelect;
     
     /**
      * Initialize the AI chat widget
@@ -43,18 +54,18 @@
         checkStatus();
         
         // Event listeners
-        toggleButton.addEventListener('click', toggleChat);
-        closeButton.addEventListener('click', closeChat);
-        fullscreenButton.addEventListener('click', toggleFullscreen);
-        sendButton.addEventListener('click', sendMessage);
-        inputField.addEventListener('keypress', handleKeyPress);
+        _toggleButton.addEventListener('click', toggleChat);
+        _closeButton.addEventListener('click', closeChat);
+        _fullscreenButton.addEventListener('click', toggleFullscreen);
+        _sendButton.addEventListener('click', sendMessage);
+        _inputField.addEventListener('keypress', handleKeyPress);
         
         // Keyboard shortcuts
         document.addEventListener('keydown', handleKeyboardShortcuts);
         
         // Load position from config
-        const position = widget.getAttribute('data-position') || 'bottom-right';
-        widget.classList.add(`position-${position}`);
+        const position = _widget.getAttribute('data-position') || 'bottom-right';
+        _widget.classList.add(`position-${position}`);
     }
     
     /**
@@ -67,8 +78,8 @@
             
             if (!data.enabled || !data.configured) {
                 // Disable the widget if not configured
-                toggleButton.disabled = true;
-                toggleButton.title = 'AI chat is not configured';
+                _toggleButton.disabled = true;
+                _toggleButton.title = 'AI chat is not configured';
                 console.warn('AI chat is not properly configured');
             }
         } catch (error) {
@@ -91,13 +102,13 @@
      * Open chat window
      */
     function openChat() {
-        chatWindow.style.display = 'flex';
-        toggleButton.classList.add('hidden');
+        _chatWindow.style.display = 'flex';
+        _toggleButton.classList.add('hidden');
         isOpen = true;
-        inputField.focus();
+        _inputField.focus();
         
         // Add welcome message if messages container is empty
-        if (messagesContainer.children.length === 0) {
+        if (_messagesContainer.children.length === 0) {
             const welcomeMsg = document.createElement('div');
             welcomeMsg.className = 'ai-chat-message ai-message';
             welcomeMsg.innerHTML = `
@@ -112,7 +123,7 @@
                     <p>Hi! I can help you understand this page. Ask me anything about the content.</p>
                 </div>
             `;
-            messagesContainer.appendChild(welcomeMsg);
+            _messagesContainer.appendChild(welcomeMsg);
         }
         
         // Load models if not already loaded
@@ -131,7 +142,7 @@
             
             if (data.success && data.models && data.models.length > 0) {
                 // Clear existing options
-                modelSelect.innerHTML = '';
+                _modelSelect.innerHTML = '';
                 
                 // Get default model from status
                 const statusResponse = await fetch(config.statusEndpoint);
@@ -139,7 +150,7 @@
                 const defaultModel = statusData.default_model || data.models[0].id;
                 
                 // Populate dropdown
-                data.models.forEach(model => {
+                data.models.forEach((model: { id: string; name: string }) => {
                     const option = document.createElement('option');
                     option.value = model.id;
                     option.textContent = model.name;
@@ -148,7 +159,7 @@
                         option.selected = true;
                     }
                     
-                    modelSelect.appendChild(option);
+                    _modelSelect.appendChild(option);
                 });
                 
                 modelsLoaded = true;
@@ -163,8 +174,8 @@
      * Close chat window
      */
     function closeChat() {
-        chatWindow.style.display = 'none';
-        toggleButton.classList.remove('hidden');
+        _chatWindow.style.display = 'none';
+        _toggleButton.classList.remove('hidden');
         isOpen = false;
         
         // Exit fullscreen if active
@@ -180,29 +191,29 @@
         isFullscreen = !isFullscreen;
         
         if (isFullscreen) {
-            chatWindow.classList.add('fullscreen');
+            _chatWindow.classList.add('fullscreen');
             // Swap icons
-            const fullscreenIcon = fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
+            const fullscreenIcon = _fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
+            const minimizeIcon = _fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
             if (fullscreenIcon) {
                 fullscreenIcon.style.display = 'none';
             }
             if (minimizeIcon) {
                 minimizeIcon.style.display = 'block';
             }
-            fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
+            _fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
         } else {
-            chatWindow.classList.remove('fullscreen');
+            _chatWindow.classList.remove('fullscreen');
             // Swap icons back
-            const fullscreenIcon = fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
+            const fullscreenIcon = _fullscreenButton.querySelector<HTMLElement>('.fullscreen-icon');
+            const minimizeIcon = _fullscreenButton.querySelector<HTMLElement>('.minimize-icon');
             if (fullscreenIcon) {
                 fullscreenIcon.style.display = 'block';
             }
             if (minimizeIcon) {
                 minimizeIcon.style.display = 'none';
             }
-            fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
+            _fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
         }
         
         // Scroll to bottom after resize
@@ -212,7 +223,7 @@
     /**
      * Handle Enter key press in input field
      */
-    function handleKeyPress(event) {
+    function handleKeyPress(event: KeyboardEvent) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
@@ -222,7 +233,7 @@
     /**
      * Handle keyboard shortcuts
      */
-    function handleKeyboardShortcuts(event) {
+    function handleKeyboardShortcuts(event: KeyboardEvent) {
         // Only process if chat is open
         if (!isOpen) return;
         
@@ -249,7 +260,7 @@
      * Send a message to the AI
      */
     async function sendMessage() {
-        const question = inputField.value.trim();
+        const question = _inputField.value.trim();
         
         if (!question || isProcessing) {
             return;
@@ -262,16 +273,16 @@
         addMessage(question, 'user');
         
         // Clear input
-        inputField.value = '';
+        _inputField.value = '';
         
         // Show loading state
         isProcessing = true;
-        sendButton.disabled = true;
+        _sendButton.disabled = true;
         const loadingMessage = addLoadingMessage();
         
         try {
             // Get selected model
-            const selectedModel = modelSelect.value;
+            const selectedModel = _modelSelect.value;
             
             // Send request to backend
             const response = await fetch(config.apiEndpoint, {
@@ -307,8 +318,8 @@
             console.error('AI chat error:', error);
         } finally {
             isProcessing = false;
-            sendButton.disabled = false;
-            inputField.focus();
+            _sendButton.disabled = false;
+            _inputField.focus();
         }
     }
     
@@ -328,7 +339,7 @@
     /**
      * Add a message to the chat
      */
-    function addMessage(text, type) {
+    function addMessage(text: string, type: 'user' | 'ai') {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ai-chat-message ${type}-message`;
         
@@ -361,7 +372,7 @@
         
         messageDiv.appendChild(avatarDiv);
         messageDiv.appendChild(contentDiv);
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         
         // Scroll to bottom
         scrollToBottom();
@@ -393,7 +404,7 @@
             </div>
         `;
         
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         scrollToBottom();
         
         return messageDiv;
@@ -402,7 +413,7 @@
     /**
      * Add an error message
      */
-    function addErrorMessage(text) {
+    function addErrorMessage(text: string) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'ai-chat-message error ai-message';
         
@@ -419,7 +430,7 @@
             </div>
         `;
         
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         scrollToBottom();
         
         return messageDiv;
@@ -428,7 +439,7 @@
     /**
      * Remove a message from the chat
      */
-    function removeMessage(messageElement) {
+    function removeMessage(messageElement: HTMLElement) {
         if (messageElement && messageElement.parentNode) {
             messageElement.parentNode.removeChild(messageElement);
         }
@@ -438,13 +449,13 @@
      * Scroll chat to bottom
      */
     function scrollToBottom() {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        _messagesContainer.scrollTop = _messagesContainer.scrollHeight;
     }
     
     /**
      * Format text with basic markdown-like syntax
      */
-    function formatText(text) {
+    function formatText(text: string): string {
         // Escape HTML first
         text = escapeHtml(text);
         
@@ -468,7 +479,7 @@
     /**
      * Escape HTML special characters
      */
-    function escapeHtml(text) {
+    function escapeHtml(text: string): string {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
