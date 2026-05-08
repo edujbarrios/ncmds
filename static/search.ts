@@ -48,7 +48,7 @@ interface SearchResult {
     function initSearch() {
         searchInput = document.getElementById('searchInput') as HTMLInputElement | null;
         searchResults = document.getElementById('searchResults');
-        searchResultsContent = searchResults?.querySelector('.search-results-content');
+        searchResultsContent = searchResults?.querySelector('.search-results-content') ?? null;
         searchContainer = document.querySelector('.search-container');
         mobileSearchTrigger = document.getElementById('searchMobileTrigger');
         mobileSearchClose = document.getElementById('searchMobileClose');
@@ -174,6 +174,7 @@ interface SearchResult {
      * Handle search input focus
      */
     function handleSearchFocus() {
+        if (!searchInput) return;
         const parsed = parseSearchInput(searchInput.value.trim());
         if ((parsed.query.length >= MIN_QUERY_LENGTH || hasActiveFilters(parsed.filters)) && currentResults.length > 0) {
             showResults();
@@ -184,7 +185,7 @@ interface SearchResult {
      * Handle keyboard navigation in search
      */
     function handleSearchKeydown(e: KeyboardEvent) {
-        if (!searchResults.style.display || searchResults.style.display === 'none') {
+        if (!searchResults || !searchResults.style.display || searchResults.style.display === 'none') {
             return;
         }
         
@@ -204,7 +205,7 @@ interface SearchResult {
             case 'Escape':
                 e.preventDefault();
                 hideResults();
-                searchInput.blur();
+                searchInput?.blur();
                 break;
         }
     }
@@ -225,7 +226,7 @@ interface SearchResult {
         
         // Escape to blur search
         if (e.key === 'Escape' && document.activeElement === searchInput) {
-            searchInput.blur();
+            searchInput?.blur();
             hideResults();
         }
     }
@@ -320,7 +321,7 @@ interface SearchResult {
         // Create result items
         results.forEach((result: SearchResult, index: number) => {
             const resultItem = createResultItem(result, query, index);
-            searchResultsContent.appendChild(resultItem);
+            searchResultsContent!.appendChild(resultItem);
         });
         
         // Add search info footer
@@ -485,7 +486,7 @@ interface SearchResult {
     function navigateToResult(url: string) {
         hideResults();
         closeMobileSearch();
-        searchInput.blur();
+        searchInput?.blur();
         window.location.href = url;
     }
 
