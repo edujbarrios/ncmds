@@ -37,3 +37,26 @@ button:focus {
     white-space: nowrap;
     border-width: 0;
 }
+
+/* ========================================
+   READING PROGRESS BAR
+   Thin bar at top of header showing scroll progress
+   ======================================== */
+
+.reading-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color), var(--accent-color));
+    background-size: 200% auto;
+    transition: width 0.1s linear;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+[data-theme="light"] .reading-progress {
+    background: linear-gradient(90deg, #0f766e, #14b8a6, #0891b2);
+    background-size: 200% auto;
+}

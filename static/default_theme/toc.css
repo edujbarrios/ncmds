@@ -57,6 +57,23 @@
     color: var(--accent-color);
 }
 
+.toc-content a.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left: 2px solid var(--primary-color);
+    padding-left: 0.5rem;
+    margin-left: -0.5rem;
+}
+
+/* Nested heading indentation */
+.toc-content ul ul {
+    padding-left: 1rem;
+}
+
+.toc-content ul ul ul {
+    padding-left: 1rem;
+}
+
 [data-theme="light"] .toc-sidebar {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 252, 251, 0.96));
 }
@@ -68,4 +85,5 @@
 [data-theme="light"] .toc-content a.active {
     color: #0f766e;
     font-weight: 600;
+    border-left-color: #0f766e;
 }

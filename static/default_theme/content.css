@@ -35,8 +35,7 @@
     color: var(--text-color);
     font-size: 1.25rem;
     line-height: 1.7;
-    text-align: justify;
-    text-justify: inter-word;
+    text-align: left;
 }
 
 /* Headings */
@@ -51,6 +50,7 @@
     font-weight: 600;
     line-height: 1.25;
     color: var(--text-color);
+    scroll-margin-top: 80px;
 }
 
 .markdown-body h1 {
@@ -77,7 +77,7 @@
 .markdown-body p {
     margin-bottom: 1.25rem;
     line-height: 1.8;
-    text-align: justify;
+    text-align: left;
 }
 
 .markdown-body a {
@@ -102,7 +102,7 @@
 .markdown-body li {
     margin-bottom: 0.5rem;
     line-height: 1.7;
-    text-align: justify;
+    text-align: left;
 }
 
 /* Blockquotes */
@@ -411,6 +411,47 @@
 
 .markdown-body > h1:first-child {
     margin-top: 0.55rem;
+}
+
+/* Table zebra striping for easier row scanning */
+.markdown-body tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="light"] .markdown-body tbody tr:nth-child(even) {
+    background-color: rgba(15, 118, 110, 0.04);
+}
+
+/* Heading anchor link — visible on hover */
+.markdown-body .header-anchor {
+    opacity: 0;
+    margin-left: 0.45em;
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    border-bottom: none !important;
+    font-weight: 400;
+}
+
+.markdown-body h1:hover .header-anchor,
+.markdown-body h2:hover .header-anchor,
+.markdown-body h3:hover .header-anchor,
+.markdown-body h4:hover .header-anchor,
+.markdown-body h5:hover .header-anchor,
+.markdown-body h6:hover .header-anchor {
+    opacity: 1;
+}
+
+.markdown-body .header-anchor:hover {
+    color: var(--primary-color) !important;
+    border-bottom: none !important;
+}
+
+/* Default (no data-theme) strong color — same as dark */
+.markdown-body strong {
+    color: var(--primary-color);
+    font-weight: 700;
 }
 
 @media (max-width: 768px) {
