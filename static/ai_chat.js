@@ -30,6 +30,16 @@
     if (!widget || !toggleButton || !closeButton || !fullscreenButton || !chatWindow || !messagesContainer || !inputField || !sendButton || !modelSelect) {
         return;
     }
+    // Non-null aliases used by closures (TypeScript doesn't narrow captured vars in nested functions)
+    const _widget = widget;
+    const _toggleButton = toggleButton;
+    const _closeButton = closeButton;
+    const _fullscreenButton = fullscreenButton;
+    const _chatWindow = chatWindow;
+    const _messagesContainer = messagesContainer;
+    const _inputField = inputField;
+    const _sendButton = sendButton;
+    const _modelSelect = modelSelect;
     /**
      * Initialize the AI chat widget
      */
@@ -37,16 +47,16 @@
         // Check AI chat status
         checkStatus();
         // Event listeners
-        toggleButton.addEventListener('click', toggleChat);
-        closeButton.addEventListener('click', closeChat);
-        fullscreenButton.addEventListener('click', toggleFullscreen);
-        sendButton.addEventListener('click', sendMessage);
-        inputField.addEventListener('keypress', handleKeyPress);
+        _toggleButton.addEventListener('click', toggleChat);
+        _closeButton.addEventListener('click', closeChat);
+        _fullscreenButton.addEventListener('click', toggleFullscreen);
+        _sendButton.addEventListener('click', sendMessage);
+        _inputField.addEventListener('keypress', handleKeyPress);
         // Keyboard shortcuts
         document.addEventListener('keydown', handleKeyboardShortcuts);
         // Load position from config
-        const position = widget.getAttribute('data-position') || 'bottom-right';
-        widget.classList.add(`position-${position}`);
+        const position = _widget.getAttribute('data-position') || 'bottom-right';
+        _widget.classList.add(`position-${position}`);
     }
     /**
      * Check if AI chat is properly configured
@@ -57,8 +67,8 @@
             const data = await response.json();
             if (!data.enabled || !data.configured) {
                 // Disable the widget if not configured
-                toggleButton.disabled = true;
-                toggleButton.title = 'AI chat is not configured';
+                _toggleButton.disabled = true;
+                _toggleButton.title = 'AI chat is not configured';
                 console.warn('AI chat is not properly configured');
             }
         }
@@ -81,12 +91,12 @@
      * Open chat window
      */
     function openChat() {
-        chatWindow.style.display = 'flex';
-        toggleButton.classList.add('hidden');
+        _chatWindow.style.display = 'flex';
+        _toggleButton.classList.add('hidden');
         isOpen = true;
-        inputField.focus();
+        _inputField.focus();
         // Add welcome message if messages container is empty
-        if (messagesContainer.children.length === 0) {
+        if (_messagesContainer.children.length === 0) {
             const welcomeMsg = document.createElement('div');
             welcomeMsg.className = 'ai-chat-message ai-message';
             welcomeMsg.innerHTML = `
@@ -101,7 +111,7 @@
                     <p>Hi! I can help you understand this page. Ask me anything about the content.</p>
                 </div>
             `;
-            messagesContainer.appendChild(welcomeMsg);
+            _messagesContainer.appendChild(welcomeMsg);
         }
         // Load models if not already loaded
         if (!modelsLoaded) {
@@ -117,20 +127,20 @@
             const data = await response.json();
             if (data.success && data.models && data.models.length > 0) {
                 // Clear existing options
-                modelSelect.innerHTML = '';
+                _modelSelect.innerHTML = '';
                 // Get default model from status
                 const statusResponse = await fetch(config.statusEndpoint);
                 const statusData = await statusResponse.json();
                 const defaultModel = statusData.default_model || data.models[0].id;
                 // Populate dropdown
-                data.models.forEach(model => {
+                data.models.forEach((model) => {
                     const option = document.createElement('option');
                     option.value = model.id;
                     option.textContent = model.name;
                     if (model.id === defaultModel) {
                         option.selected = true;
                     }
-                    modelSelect.appendChild(option);
+                    _modelSelect.appendChild(option);
                 });
                 modelsLoaded = true;
             }
@@ -144,8 +154,8 @@
      * Close chat window
      */
     function closeChat() {
-        chatWindow.style.display = 'none';
-        toggleButton.classList.remove('hidden');
+        _chatWindow.style.display = 'none';
+        _toggleButton.classList.remove('hidden');
         isOpen = false;
         // Exit fullscreen if active
         if (isFullscreen) {
@@ -158,30 +168,30 @@
     function toggleFullscreen() {
         isFullscreen = !isFullscreen;
         if (isFullscreen) {
-            chatWindow.classList.add('fullscreen');
+            _chatWindow.classList.add('fullscreen');
             // Swap icons
-            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon');
+            const fullscreenIcon = _fullscreenButton.querySelector('.fullscreen-icon');
+            const minimizeIcon = _fullscreenButton.querySelector('.minimize-icon');
             if (fullscreenIcon) {
                 fullscreenIcon.style.display = 'none';
             }
             if (minimizeIcon) {
                 minimizeIcon.style.display = 'block';
             }
-            fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
+            _fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
         }
         else {
-            chatWindow.classList.remove('fullscreen');
+            _chatWindow.classList.remove('fullscreen');
             // Swap icons back
-            const fullscreenIcon = fullscreenButton.querySelector('.fullscreen-icon');
-            const minimizeIcon = fullscreenButton.querySelector('.minimize-icon');
+            const fullscreenIcon = _fullscreenButton.querySelector('.fullscreen-icon');
+            const minimizeIcon = _fullscreenButton.querySelector('.minimize-icon');
             if (fullscreenIcon) {
                 fullscreenIcon.style.display = 'block';
             }
             if (minimizeIcon) {
                 minimizeIcon.style.display = 'none';
             }
-            fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
+            _fullscreenButton.setAttribute('aria-label', 'Toggle fullscreen');
         }
         // Scroll to bottom after resize
         setTimeout(() => scrollToBottom(), 100);
@@ -224,7 +234,7 @@
      * Send a message to the AI
      */
     async function sendMessage() {
-        const question = inputField.value.trim();
+        const question = _inputField.value.trim();
         if (!question || isProcessing) {
             return;
         }
@@ -233,14 +243,14 @@
         // Add user message to chat
         addMessage(question, 'user');
         // Clear input
-        inputField.value = '';
+        _inputField.value = '';
         // Show loading state
         isProcessing = true;
-        sendButton.disabled = true;
+        _sendButton.disabled = true;
         const loadingMessage = addLoadingMessage();
         try {
             // Get selected model
-            const selectedModel = modelSelect.value;
+            const selectedModel = _modelSelect.value;
             // Send request to backend
             const response = await fetch(config.apiEndpoint, {
                 method: 'POST',
@@ -274,8 +284,8 @@
         }
         finally {
             isProcessing = false;
-            sendButton.disabled = false;
-            inputField.focus();
+            _sendButton.disabled = false;
+            _inputField.focus();
         }
     }
     /**
@@ -321,7 +331,7 @@
         contentDiv.innerHTML = `<p>${formattedText}</p>`;
         messageDiv.appendChild(avatarDiv);
         messageDiv.appendChild(contentDiv);
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         // Scroll to bottom
         scrollToBottom();
         return messageDiv;
@@ -348,7 +358,7 @@
                 </div>
             </div>
         `;
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         scrollToBottom();
         return messageDiv;
     }
@@ -370,7 +380,7 @@
                 <p>${escapeHtml(text)}</p>
             </div>
         `;
-        messagesContainer.appendChild(messageDiv);
+        _messagesContainer.appendChild(messageDiv);
         scrollToBottom();
         return messageDiv;
     }
@@ -386,7 +396,7 @@
      * Scroll chat to bottom
      */
     function scrollToBottom() {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        _messagesContainer.scrollTop = _messagesContainer.scrollHeight;
     }
     /**
      * Format text with basic markdown-like syntax
