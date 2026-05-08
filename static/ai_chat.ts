@@ -223,8 +223,9 @@
     /**
      * Handle Enter key press in input field
      */
-    function handleKeyPress(event: KeyboardEvent) {
-        if (event.key === 'Enter' && !event.shiftKey) {
+    function handleKeyPress(event: Event) {
+        const keyEvent = event as KeyboardEvent;
+        if (keyEvent.key === 'Enter' && !keyEvent.shiftKey) {
             event.preventDefault();
             sendMessage();
         }
