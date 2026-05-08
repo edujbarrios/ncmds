@@ -36,15 +36,15 @@
     }
 
     // Non-null aliases used by closures (TypeScript doesn't narrow captured vars in nested functions)
-    const _widget = widget!;
-    const _toggleButton = toggleButton!;
-    const _closeButton = closeButton!;
-    const _fullscreenButton = fullscreenButton!;
-    const _chatWindow = chatWindow!;
-    const _messagesContainer = messagesContainer!;
-    const _inputField = inputField!;
-    const _sendButton = sendButton!;
-    const _modelSelect = modelSelect!;
+    const _widget = widget;
+    const _toggleButton = toggleButton;
+    const _closeButton = closeButton;
+    const _fullscreenButton = fullscreenButton;
+    const _chatWindow = chatWindow;
+    const _messagesContainer = messagesContainer;
+    const _inputField = inputField;
+    const _sendButton = sendButton;
+    const _modelSelect = modelSelect;
     
     /**
      * Initialize the AI chat widget
@@ -339,7 +339,7 @@
     /**
      * Add a message to the chat
      */
-    function addMessage(text: string, type: string) {
+    function addMessage(text: string, type: 'user' | 'ai') {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ai-chat-message ${type}-message`;
         
