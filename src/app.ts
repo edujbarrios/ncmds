@@ -226,7 +226,7 @@ function buildToc(markdownText: string): string {
     const token = tokens[i];
     if (token.type !== 'heading_open') continue;
     const level = Number.parseInt(token.tag.replace('h', ''), 10);
-    if (![1, 2, 3].includes(level)) continue;
+    if (![1, 2, 3].includes(level)) continue; // TOC includes h1, h2, and h3
     const next = tokens[i + 1];
     const title = next?.content?.trim() ?? '';
     if (!title) continue;
