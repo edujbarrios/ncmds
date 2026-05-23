@@ -81,7 +81,7 @@
 }
 
 .markdown-body a {
-    color: #00b8b8;
+    color: var(--link-color);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     font-weight: 700;

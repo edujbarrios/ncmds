@@ -127,7 +127,7 @@ function exportAllToQMD() {
 
 // Show loading indicator during export
 document.addEventListener('DOMContentLoaded', function() {
-    const exportButtons = document.querySelectorAll('.export-btn');
+    const exportButtons = document.querySelectorAll('.export-btn, .sidebar-export-btn');
     
     exportButtons.forEach(button => {
         button.addEventListener('click', function() {

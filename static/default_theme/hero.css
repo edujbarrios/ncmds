@@ -468,6 +468,18 @@
     margin: 0 auto;
 }
 
+.info-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    outline-offset: 4px;
+}
+
+.info-card-link:focus-visible {
+    outline: 2px solid var(--primary-color);
+    border-radius: 16px;
+}
+
 .info-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid var(--border-color);

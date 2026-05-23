@@ -226,7 +226,7 @@ function buildToc(markdownText: string): string {
     const token = tokens[i];
     if (token.type !== 'heading_open') continue;
     const level = Number.parseInt(token.tag.replace('h', ''), 10);
-    if (![1, 2].includes(level)) continue;
+    if (![1, 2, 3].includes(level)) continue; // TOC includes h1, h2, and h3
     const next = tokens[i + 1];
     const title = next?.content?.trim() ?? '';
     if (!title) continue;
@@ -346,15 +346,21 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.get('/docs', (_req: Request, res: Response) => {
-  res.redirect('/docs/01-index');
+  const first = navigation[0];
+  if (first) {
+    res.redirect(`/docs/${first.path}`);
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get(/^\/docs\/(.+)$/, (req: Request, res: Response) => {
-  navigation = buildNavigation();
   const docPath = String(req.params[0] ?? '');
   const doc = getDocument(docPath);
   if (!doc) {
-    res.status(404).send('404 - Page Not Found');
+    res.status(404).send(
+      renderTemplate('404.html', { title: `404 - ${config.site_name}`, config, navigation })
+    );
     return;
   }
 
@@ -382,7 +388,6 @@ app.get(/^\/docs\/(.+)$/, (req: Request, res: Response) => {
 });
 
 app.get('/api/search', (req: Request, res: Response) => {
-  navigation = buildNavigation();
 
   const query = String(req.query.q ?? '').trim();
   const tagFilter = String(req.query.tag ?? '').trim().toLowerCase();

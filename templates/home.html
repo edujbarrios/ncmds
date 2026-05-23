@@ -412,16 +412,7 @@
                     {% endif %}
                     <div class="hero-cards">
                         {% for card in config.hero.cards.list %}
-                        {% set card_url = '/docs/01-index' %}
-                        {% if card.url %}
-                          {% set card_url = card.url %}
-                        {% elif loop.index0 == 0 %}
-                          {% set card_url = '/docs/02-getting-started' %}
-                        {% elif loop.index0 == 1 %}
-                          {% set card_url = '/docs/04-markdown-guide' %}
-                        {% elif loop.index0 == 2 %}
-                          {% set card_url = '/docs/05-themes' %}
-                        {% endif %}
+                        {% set card_url = card.url if card.url else '/docs' %}
                         <a class="info-card-link" href="{{ card_url }}" aria-label="Open {{ card.title }} documentation section">
                         <div class="info-card">
                             <div class="card-icon">
