@@ -588,27 +588,6 @@ app.post('/api/ai-chat', async (req: Request, res: Response) => {
   const temperature = Number(config.ai_chat?.behavior?.temperature ?? 0.7);
   const maxTokens = Number(config.ai_chat?.behavior?.max_tokens ?? 1000);
 
-  // Validate and select model: security measure to restrict which models can be used
-  // If config.ai_chat.allowed_models is defined, only those models are permitted.
-  // Otherwise, only the default model specified in config.ai_chat.model is allowed.
-  // This prevents clients from requesting arbitrary or unauthorized models.
-  let selectedModel = defaultModel;
-  if (typeof model === 'string') {
-    const rawAllowedModels = config.ai_chat?.allowed_models;
-    let allowedModels: string[] = [defaultModel];
-    
-    // Validate allowed_models if present and is an array
-    if (Array.isArray(rawAllowedModels) && rawAllowedModels.every((m: any) => typeof m === 'string')) {
-      allowedModels = rawAllowedModels;
-    }
-    
-    // Only use the model if it's in the allowed list
-    const trimmedModel = model.trim();
-    if (allowedModels.includes(trimmedModel)) {
-      selectedModel = trimmedModel;
-    }
-  }
-
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -617,7 +596,7 @@ app.post('/api/ai-chat', async (req: Request, res: Response) => {
         Authorization: `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: selectedModel,
+        model: typeof model === 'string' && model.trim() ? model.trim() : defaultModel,
         messages: [
           { role: 'system', content: systemPrompt },
           {
