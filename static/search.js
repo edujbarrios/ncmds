@@ -58,8 +58,16 @@
         const shortcutElement = document.querySelector('.search-shortcut');
         if (!shortcutElement)
             return;
-        // Detect if user is on Mac
-        const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+        // Detect if user is on Mac using userAgentData API if available, fallback to platform
+        let isMac = false;
+        if (navigator.userAgentData) {
+            // Modern API - check platform directly
+            isMac = navigator.userAgentData.platform.toLowerCase().includes('mac');
+        }
+        else {
+            // Fallback for older browsers
+            isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+        }
         shortcutElement.textContent = isMac ? 'Cmd+K' : 'Ctrl+K';
     }
     /**
