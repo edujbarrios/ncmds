@@ -59,6 +59,9 @@ interface SearchResult {
             return;
         }
         
+        // Update keyboard shortcut display based on OS
+        updateKeyboardShortcutDisplay();
+        
         // Event listeners
         searchInput.addEventListener('input', handleSearchInput);
         searchInput.addEventListener('focus', handleSearchFocus);
@@ -77,6 +80,18 @@ interface SearchResult {
 
         // Keep mobile overlay state in sync when resizing
         window.addEventListener('resize', syncMobileSearchState);
+    }
+
+    /**
+     * Update keyboard shortcut display based on OS
+     */
+    function updateKeyboardShortcutDisplay() {
+        const shortcutElement = document.querySelector('.search-shortcut') as HTMLElement | null;
+        if (!shortcutElement) return;
+        
+        // Detect if user is on Mac
+        const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+        shortcutElement.textContent = isMac ? 'Cmd+K' : 'Ctrl+K';
     }
 
     /**

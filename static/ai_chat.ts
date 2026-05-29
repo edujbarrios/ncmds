@@ -298,6 +298,12 @@
                 })
             });
             
+            // Check for HTTP errors first
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP Error: ${response.status}`);
+            }
+            
             const data = await response.json();
             
             // Remove loading message
@@ -315,7 +321,8 @@
             removeMessage(loadingMessage);
             
             // Show error
-            addErrorMessage('Network error. Please try again.');
+            const errorMessage = error instanceof Error ? error.message : 'Network error. Please try again.';
+            addErrorMessage(errorMessage);
             console.error('AI chat error:', error);
         } finally {
             isProcessing = false;

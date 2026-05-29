@@ -588,16 +588,6 @@ app.post('/api/ai-chat', async (req: Request, res: Response) => {
   const temperature = Number(config.ai_chat?.behavior?.temperature ?? 0.7);
   const maxTokens = Number(config.ai_chat?.behavior?.max_tokens ?? 1000);
 
-  // Validate model: use provided model if valid, otherwise use default
-  let selectedModel = defaultModel;
-  if (typeof model === 'string') {
-    // Only allow models from the API response or the default model
-    const allowedModels = Array.isArray(config.ai_chat?.allowed_models) ? config.ai_chat.allowed_models : [defaultModel];
-    if (allowedModels.includes(model.trim())) {
-      selectedModel = model.trim();
-    }
-  }
-
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -606,7 +596,7 @@ app.post('/api/ai-chat', async (req: Request, res: Response) => {
         Authorization: `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: selectedModel,
+        model: typeof model === 'string' && model.trim() ? model.trim() : defaultModel,
         messages: [
           { role: 'system', content: systemPrompt },
           {
