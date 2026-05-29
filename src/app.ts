@@ -594,9 +594,18 @@ app.post('/api/ai-chat', async (req: Request, res: Response) => {
   // This prevents clients from requesting arbitrary or unauthorized models.
   let selectedModel = defaultModel;
   if (typeof model === 'string') {
-    const allowedModels = Array.isArray(config.ai_chat?.allowed_models) ? config.ai_chat.allowed_models : [defaultModel];
-    if (allowedModels.includes(model.trim())) {
-      selectedModel = model.trim();
+    const rawAllowedModels = config.ai_chat?.allowed_models;
+    let allowedModels: string[] = [defaultModel];
+    
+    // Validate allowed_models if present and is an array
+    if (Array.isArray(rawAllowedModels) && rawAllowedModels.every((m: any) => typeof m === 'string')) {
+      allowedModels = rawAllowedModels;
+    }
+    
+    // Only use the model if it's in the allowed list
+    const trimmedModel = model.trim();
+    if (allowedModels.includes(trimmedModel)) {
+      selectedModel = trimmedModel;
     }
   }
 

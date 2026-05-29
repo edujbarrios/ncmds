@@ -60,12 +60,16 @@
             return;
         // Detect if user is on Mac using userAgentData API if available, fallback to platform
         let isMac = false;
-        if (navigator.userAgentData) {
-            // Modern API - check platform directly
-            isMac = navigator.userAgentData.platform.toLowerCase().includes('mac');
+        try {
+            if (navigator.userAgentData?.platform?.toLowerCase().includes('mac')) {
+                isMac = true;
+            }
+            else if (/Mac|iPhone|iPad|iPod/.test(navigator.platform)) {
+                isMac = true;
+            }
         }
-        else {
-            // Fallback for older browsers
+        catch {
+            // Fallback to platform detection if userAgentData fails
             isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
         }
         shortcutElement.textContent = isMac ? 'Cmd+K' : 'Ctrl+K';

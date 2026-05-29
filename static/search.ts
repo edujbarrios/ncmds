@@ -92,11 +92,14 @@ interface SearchResult {
         // Detect if user is on Mac using userAgentData API if available, fallback to platform
         let isMac = false;
         
-        if ((navigator as any).userAgentData) {
-            // Modern API - check platform directly
-            isMac = (navigator as any).userAgentData.platform.toLowerCase().includes('mac');
-        } else {
-            // Fallback for older browsers
+        try {
+            if ((navigator as any).userAgentData?.platform?.toLowerCase().includes('mac')) {
+                isMac = true;
+            } else if (/Mac|iPhone|iPad|iPod/.test(navigator.platform)) {
+                isMac = true;
+            }
+        } catch {
+            // Fallback to platform detection if userAgentData fails
             isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
         }
         
