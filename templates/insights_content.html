@@ -1,0 +1,75 @@
+<h1>{{ config.ui_text.insights_title or 'Insights' }}</h1>
+
+<p class="insights-lede">
+    {{ config.ui_text.insights_description or 'Site-wide stats, internal link health, and page discoverability.' }}
+</p>
+
+<div class="insights-grid" role="list" aria-label="Documentation insights">
+    <div class="insights-card" role="listitem">
+        <div class="insights-card-label">Pages</div>
+        <div class="insights-card-value">{{ total_pages }}</div>
+    </div>
+    <div class="insights-card" role="listitem">
+        <div class="insights-card-label">Total words</div>
+        <div class="insights-card-value">{{ total_words }}</div>
+    </div>
+    <div class="insights-card" role="listitem">
+        <div class="insights-card-label">Total reading time</div>
+        <div class="insights-card-value">{{ total_reading_minutes }} min</div>
+    </div>
+    <div class="insights-card" role="listitem">
+        <div class="insights-card-label">Broken links</div>
+        <div class="insights-card-value">{{ broken_links.length }}</div>
+    </div>
+</div>
+
+<h2>Recently updated</h2>
+{% if recently_updated and recently_updated.length %}
+<ul class="insights-list">
+    {% for page in recently_updated %}
+    <li class="insights-list-item">
+        <a href="/docs/{{ page.path }}">{{ page.title }}</a>
+        <span class="insights-list-meta">
+            {% if page.reading_time_minutes %}{{ page.reading_time_minutes }} min read{% endif %}
+            {% if page.last_updated_display %} • {{ page.last_updated_display }}{% endif %}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No documents found.</p>
+{% endif %}
+
+<h2 id="health">Link health</h2>
+{% if broken_links and broken_links.length %}
+<div class="insights-callout insights-callout-warn" role="note">
+    Showing up to {{ broken_links.length }} broken links. Fix these to improve navigation and AI context quality.
+</div>
+<ul class="insights-list">
+    {% for link in broken_links %}
+    <li class="insights-list-item">
+        <code class="insights-code">{{ link.source }}</code>
+        <span class="insights-arrow">→</span>
+        <code class="insights-code">{{ link.href }}</code>
+        <span class="insights-list-meta">({{ link.reason }})</span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<div class="insights-callout insights-callout-ok" role="note">No broken internal links detected.</div>
+{% endif %}
+
+<h2>Orphan pages</h2>
+{% if orphan_docs and orphan_docs.length %}
+<div class="insights-callout" role="note">
+    Orphan pages have no inbound links. Consider linking to them from an index page for better discoverability.
+</div>
+<ul class="insights-list">
+    {% for page in orphan_docs %}
+    <li class="insights-list-item"><a href="/docs/{{ page }}">{{ page }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<div class="insights-callout insights-callout-ok" role="note">No orphan pages detected.</div>
+{% endif %}
+
