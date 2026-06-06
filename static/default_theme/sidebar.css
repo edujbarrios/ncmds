@@ -55,6 +55,12 @@
     list-style: none;
 }
 
+.nav-list-utility {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
 .nav-item {
     margin-bottom: 0.25rem;
 }

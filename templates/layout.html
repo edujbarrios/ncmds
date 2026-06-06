@@ -10,10 +10,22 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="content-wrapper">
-                {% if doc_last_updated %}
+                {% if doc_last_updated or doc_reading_time_minutes or doc_word_count %}
                 <div class="doc-meta" aria-label="Document metadata">
+                    {% if doc_last_updated %}
                     <span class="doc-meta-label">{{ config.ui_text.last_updated_label or 'Last updated' }}</span>
                     <time class="doc-meta-value" {% if doc_last_updated_iso %}datetime="{{ doc_last_updated_iso }}"{% endif %}>{{ doc_last_updated }}</time>
+                    {% endif %}
+
+                    {% if doc_reading_time_minutes %}
+                    <span class="doc-meta-sep" aria-hidden="true">•</span>
+                    <span class="doc-meta-value">{{ doc_reading_time_minutes }} min read</span>
+                    {% endif %}
+
+                    {% if doc_word_count %}
+                    <span class="doc-meta-sep" aria-hidden="true">•</span>
+                    <span class="doc-meta-value">{{ doc_word_count }} words</span>
+                    {% endif %}
                 </div>
                 {% endif %}
 
@@ -40,6 +52,8 @@
                 <article class="markdown-body">
                     {{ content|safe }}
                 </article>
+
+                {% include 'components/html/backlinks.html' %}
                 
                 {% include 'components/html/doc_navigation.html' %}
             </div>

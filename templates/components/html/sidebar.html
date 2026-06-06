@@ -2,6 +2,14 @@
 <aside class="sidebar" id="sidebar">
     <nav class="sidebar-nav">
         <h3 class="sidebar-title">{{ config.ui_text.sidebar_title }}</h3>
+        <ul class="nav-list nav-list-utility" aria-label="Site navigation">
+            <li class="nav-item">
+                <a href="/" class="nav-link">{{ config.ui_text.home_label or 'Home' }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="/insights" class="nav-link">{{ config.ui_text.insights_label or 'Insights' }}</a>
+            </li>
+        </ul>
         {% if navigation %}
         <ul class="nav-list">
             {% for item in navigation %}

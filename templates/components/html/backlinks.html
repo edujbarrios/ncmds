@@ -1,0 +1,13 @@
+{% if doc_backlinks and doc_backlinks.length %}
+<section class="doc-backlinks" aria-label="Backlinks">
+    <h2 class="doc-backlinks-title">{{ config.ui_text.backlinks_title or 'Referenced by' }}</h2>
+    <ul class="doc-backlinks-list">
+        {% for item in doc_backlinks %}
+        <li class="doc-backlinks-item">
+            <a href="/docs/{{ item.path }}" class="doc-backlinks-link">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+

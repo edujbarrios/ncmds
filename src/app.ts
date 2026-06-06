@@ -31,6 +31,8 @@ type DocumentData = {
   difficulty: string;
   owner: string;
   writer: string;
+  word_count: number;
+  reading_time_minutes: number;
   last_updated_display: string;
   last_updated_iso: string;
 };
@@ -217,6 +219,24 @@ function buildNavigation(): NavItem[] {
 
 let navigation = buildNavigation();
 
+type BrokenLink = {
+  source: string;
+  href: string;
+  reason: string;
+};
+
+type DocsGraph = {
+  fingerprint: number;
+  outgoing: Map<string, Set<string>>;
+  incoming: Map<string, Set<string>>;
+  broken_links: BrokenLink[];
+  orphan_docs: string[];
+  page_word_count: Map<string, number>;
+  page_reading_time_minutes: Map<string, number>;
+};
+
+let docsGraphCache: DocsGraph | null = null;
+
 function buildToc(markdownText: string): string {
   const tokens = md.parse(markdownText, {});
   const slugCount = new Map<string, number>();
@@ -279,8 +299,41 @@ function resolveDocumentPath(docPath: string): string | null {
   return direct;
 }
 
+function canonicalizeDocPath(docPath: string): string {
+  if (!docPath || docPath === 'index') {
+    return navigation[0]?.path ?? 'index';
+  }
+
+  if (navigation.some((item) => item.path === docPath)) return docPath;
+
+  for (const item of navigation) {
+    const match = item.path.match(/^(\d+)-(.+)$/);
+    if (match && match[2] === docPath) return item.path;
+  }
+
+  return docPath;
+}
+
+function countWords(markdownText: string): number {
+  const withoutCodeBlocks = markdownText.replace(/```[\s\S]*?```/g, ' ');
+  const withoutInlineCode = withoutCodeBlocks.replace(/`[^`]*`/g, ' ');
+  const words = withoutInlineCode
+    .replace(/[#>*_[\]()-]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  return words.length;
+}
+
+function estimateReadingTimeMinutes(wordCount: number): number {
+  // 200 wpm baseline; minimum 1 minute for non-empty pages
+  if (wordCount <= 0) return 0;
+  return Math.max(1, Math.round(wordCount / 200));
+}
+
 function getDocument(docPath: string): DocumentData | null {
-  const filePath = resolveDocumentPath(docPath);
+  const canonicalPath = canonicalizeDocPath(docPath);
+  const filePath = resolveDocumentPath(canonicalPath);
   if (!filePath) return null;
 
   const raw = fs.readFileSync(filePath, 'utf8');
@@ -288,6 +341,7 @@ function getDocument(docPath: string): DocumentData | null {
   const html = md.render(content);
   const metadata = buildDocMetadata((data as Record<string, any>) ?? {});
   const stat = fs.statSync(filePath);
+  const wordCount = countWords(content);
 
   const title = normalizeText((data as any).title);
   const mdMetadata: Record<string, any> = {};
@@ -298,11 +352,13 @@ function getDocument(docPath: string): DocumentData | null {
     plain_text: content,
     metadata: mdMetadata,
     toc: buildToc(content),
-    path: docPath,
+    path: canonicalPath,
     tags: metadata.tags,
     difficulty: metadata.difficulty,
     owner: metadata.owner,
     writer: metadata.writer,
+    word_count: wordCount,
+    reading_time_minutes: estimateReadingTimeMinutes(wordCount),
     last_updated_display: formatDate(stat.mtime),
     last_updated_iso: stat.mtime.toISOString().slice(0, 19)
   };
@@ -310,6 +366,199 @@ function getDocument(docPath: string): DocumentData | null {
 
 function renderTemplate(template: string, context: Record<string, any>): string {
   return env.render(template, context);
+}
+
+function getDocsFingerprint(): number {
+  let maxMtime = 0;
+  for (const file of listMarkdownFiles(docsDir)) {
+    try {
+      const stat = fs.statSync(file);
+      if (stat.mtimeMs > maxMtime) maxMtime = stat.mtimeMs;
+    } catch {
+      // Ignore transient file errors
+    }
+  }
+  return maxMtime;
+}
+
+function buildHeadingSlugSet(markdownText: string): Set<string> {
+  const tokens = md.parse(markdownText, {});
+  const slugCount = new Map<string, number>();
+  const slugs = new Set<string>();
+
+  for (let i = 0; i < tokens.length; i += 1) {
+    const token = tokens[i];
+    if (token.type !== 'heading_open') continue;
+    const next = tokens[i + 1];
+    const title = next?.content?.trim() ?? '';
+    if (!title) continue;
+    const base = slugify(title);
+    const seen = slugCount.get(base) ?? 0;
+    slugCount.set(base, seen + 1);
+    const slug = seen > 0 ? `${base}-${seen}` : base;
+    slugs.add(slug);
+  }
+
+  return slugs;
+}
+
+function splitHref(href: string): { pathPart: string; anchor: string } {
+  const hashIndex = href.indexOf('#');
+  const base = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
+  const anchor = hashIndex >= 0 ? href.slice(hashIndex + 1).trim() : '';
+  const queryIndex = base.indexOf('?');
+  const pathPart = (queryIndex >= 0 ? base.slice(0, queryIndex) : base).trim();
+  return { pathPart, anchor };
+}
+
+function isExternalHref(href: string): boolean {
+  const trimmed = href.trim().toLowerCase();
+  return (
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('mailto:') ||
+    trimmed.startsWith('tel:') ||
+    trimmed.startsWith('javascript:')
+  );
+}
+
+function normalizeDocPath(value: string): string {
+  return value
+    .replace(/\\/g, '/')
+    .replace(/^\/+/, '')
+    .replace(/\.md$/i, '')
+    .replace(/\/$/, '');
+}
+
+function resolveHrefToDocTarget(
+  sourceDocPath: string,
+  href: string
+): { targetDocPath: string; anchor: string } | null {
+  const trimmed = href.trim();
+  if (!trimmed) return null;
+  if (isExternalHref(trimmed)) return null;
+
+  const { pathPart, anchor } = splitHref(trimmed);
+
+  // Anchor-only link within the same page.
+  if (!pathPart && anchor) {
+    return { targetDocPath: sourceDocPath, anchor };
+  }
+
+  // Ignore absolute non-doc links (e.g. /static/..., /images/...)
+  if (pathPart.startsWith('/') && !pathPart.startsWith('/docs/')) {
+    return null;
+  }
+
+  let target = '';
+  if (pathPart.startsWith('/docs/')) {
+    target = normalizeDocPath(pathPart.slice('/docs/'.length));
+  } else if (pathPart.startsWith('docs/')) {
+    target = normalizeDocPath(pathPart.slice('docs/'.length));
+  } else if (!pathPart) {
+    target = sourceDocPath;
+  } else {
+    const sourceDir = path.posix.dirname(sourceDocPath.replace(/\\/g, '/'));
+    const joined = path.posix.normalize(path.posix.join(sourceDir, pathPart));
+    if (joined.startsWith('..')) return null;
+    target = normalizeDocPath(joined);
+  }
+
+  if (!target) target = sourceDocPath;
+  return { targetDocPath: target, anchor };
+}
+
+function getDocsGraph(): DocsGraph {
+  const fingerprint = getDocsFingerprint();
+  if (docsGraphCache && docsGraphCache.fingerprint === fingerprint) return docsGraphCache;
+
+  // Rebuild navigation to reflect any doc add/remove/rename while developing locally.
+  navigation = buildNavigation();
+
+  const docPathSet = new Set(navigation.map((item) => item.path));
+  const outgoing = new Map<string, Set<string>>();
+  const incoming = new Map<string, Set<string>>();
+  const broken_links: BrokenLink[] = [];
+  const page_word_count = new Map<string, number>();
+  const page_reading_time_minutes = new Map<string, number>();
+
+  const headingSlugsByDoc = new Map<string, Set<string>>();
+  const fileByDocPath = new Map<string, string>();
+  for (const item of navigation) {
+    fileByDocPath.set(item.path, path.join(docsDir, item.file));
+  }
+
+  for (const item of navigation) {
+    const source = item.path;
+    const filePath = fileByDocPath.get(source);
+    if (!filePath || !fs.existsSync(filePath)) continue;
+
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const { content } = parseFrontMatter(raw);
+    const wordCount = countWords(content);
+    page_word_count.set(source, wordCount);
+    page_reading_time_minutes.set(source, estimateReadingTimeMinutes(wordCount));
+    headingSlugsByDoc.set(source, buildHeadingSlugSet(content));
+
+    const tokens = md.parse(content, {});
+    for (const token of tokens) {
+      if (token.type !== 'link_open') continue;
+      const href = token.attrGet('href');
+      if (!href) continue;
+
+      const resolved = resolveHrefToDocTarget(source, href);
+      if (!resolved) continue;
+
+      const { targetDocPath, anchor } = resolved;
+      if (!docPathSet.has(targetDocPath)) {
+        broken_links.push({
+          source,
+          href,
+          reason: `Target document "${targetDocPath}" not found`
+        });
+        continue;
+      }
+
+      if (anchor) {
+        const slugs = headingSlugsByDoc.get(targetDocPath);
+        if (!slugs || !slugs.has(anchor)) {
+          broken_links.push({
+            source,
+            href,
+            reason: `Anchor "#${anchor}" not found in "${targetDocPath}"`
+          });
+          continue;
+        }
+      }
+
+      if (!outgoing.has(source)) outgoing.set(source, new Set<string>());
+      outgoing.get(source)!.add(targetDocPath);
+    }
+  }
+
+  for (const [source, targets] of outgoing.entries()) {
+    for (const target of targets) {
+      if (!incoming.has(target)) incoming.set(target, new Set<string>());
+      incoming.get(target)!.add(source);
+    }
+  }
+
+  const orphan_docs = navigation
+    .map((item) => item.path)
+    .filter((docPath) => !incoming.has(docPath))
+    .filter((docPath) => docPath !== navigation[0]?.path);
+
+  docsGraphCache = {
+    fingerprint,
+    outgoing,
+    incoming,
+    broken_links,
+    orphan_docs,
+    page_word_count,
+    page_reading_time_minutes
+  };
+
+  return docsGraphCache;
 }
 
 function pickPreviousNext(docPath: string): { prevDoc: NavItem | null; nextDoc: NavItem | null } {
@@ -345,6 +594,70 @@ app.get('/', (_req: Request, res: Response) => {
   res.status(200).send(renderTemplate('home.html', { title: config.site_name, config }));
 });
 
+app.get('/insights', (_req: Request, res: Response) => {
+  const graph = getDocsGraph();
+
+  const pages = navigation.map((item) => {
+    const filePath = path.join(docsDir, item.file);
+    const stat = fs.existsSync(filePath) ? fs.statSync(filePath) : null;
+    return {
+      title: item.title,
+      path: item.path,
+      last_updated_display: stat ? formatDate(stat.mtime) : '',
+      last_updated_iso: stat ? stat.mtime.toISOString().slice(0, 19) : '',
+      word_count: graph.page_word_count.get(item.path) ?? 0,
+      reading_time_minutes: graph.page_reading_time_minutes.get(item.path) ?? 0
+    };
+  });
+
+  const totalPages = pages.length;
+  const totalWords = pages.reduce((sum, page) => sum + (page.word_count ?? 0), 0);
+  const totalReadingMinutes = pages.reduce((sum, page) => sum + (page.reading_time_minutes ?? 0), 0);
+
+  const recentlyUpdated = [...pages]
+    .filter((page) => Boolean(page.last_updated_iso))
+    .sort((a, b) => String(b.last_updated_iso).localeCompare(String(a.last_updated_iso)))
+    .slice(0, 10);
+
+  const brokenLinks = graph.broken_links.slice(0, 50);
+  const orphanDocs = graph.orphan_docs.slice(0, 50);
+
+  const content = renderTemplate('insights_content.html', {
+    total_pages: totalPages,
+    total_words: totalWords,
+    total_reading_minutes: totalReadingMinutes,
+    recently_updated: recentlyUpdated,
+    broken_links: brokenLinks,
+    orphan_docs: orphanDocs,
+    config
+  });
+
+  res.status(200).send(
+    renderTemplate('layout.html', {
+      content,
+      title: `Insights - ${config.site_name}`,
+      toc: '',
+      navigation,
+      config
+    })
+  );
+});
+
+app.get('/api/insights', (_req: Request, res: Response) => {
+  const graph = getDocsGraph();
+
+  const incomingCounts = Object.fromEntries(
+    navigation.map((item) => [item.path, graph.incoming.get(item.path)?.size ?? 0])
+  );
+
+  res.json({
+    pages: navigation.length,
+    broken_links: graph.broken_links,
+    orphan_docs: graph.orphan_docs,
+    incoming_counts: incomingCounts
+  });
+});
+
 app.get('/docs', (_req: Request, res: Response) => {
   const first = navigation[0];
   if (first) {
@@ -366,7 +679,15 @@ app.get(/^\/docs\/(.+)$/, (req: Request, res: Response) => {
 
   const metadataTitle = Array.isArray(doc.metadata.title) ? doc.metadata.title[0] : '';
   const title = metadataTitle ? `${metadataTitle} - ${config.site_name}` : config.site_name;
-  const { prevDoc, nextDoc } = pickPreviousNext(docPath);
+  const canonicalPath = canonicalizeDocPath(docPath);
+  const { prevDoc, nextDoc } = pickPreviousNext(canonicalPath);
+
+  const graph = getDocsGraph();
+  const backlinkPaths = Array.from(graph.incoming.get(doc.path) ?? []);
+  const docBacklinks = backlinkPaths
+    .map((p) => navigation.find((n) => n.path === p))
+    .filter(Boolean) as NavItem[];
+  docBacklinks.sort((a, b) => a.title.localeCompare(b.title));
 
   res.status(200).send(
     renderTemplate('layout.html', {
@@ -382,6 +703,9 @@ app.get(/^\/docs\/(.+)$/, (req: Request, res: Response) => {
       doc_difficulty: doc.difficulty,
       doc_owner: doc.owner,
       doc_writer: doc.writer,
+      doc_word_count: doc.word_count,
+      doc_reading_time_minutes: doc.reading_time_minutes,
+      doc_backlinks: docBacklinks,
       config
     })
   );

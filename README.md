@@ -27,6 +27,7 @@ NCMDS is a zero-configuration documentation site builder that converts Markdown 
 - 🏠 **Local-First** - Runs on localhost by default, no cloud required
 - 🤖 **AI-Powered Chat** - Ask questions about documentation with built-in AI assistant and switchable models
 - 📤 **Export Functionality** - Export documentation to PDF and QMD (Quarto Markdown) formats
+- 🧭 **Backlinks + Insights** - See which pages reference a doc, and a site-wide dashboard with link health
 - 🎨 **Dark Theme** - Optimized for comfortable reading and coding
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 - 🔍 **Auto Navigation** - Automatic table of contents and page navigation
